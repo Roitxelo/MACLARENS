@@ -1,0 +1,16 @@
+# Texto con saltos de línea LF en el repo (Godot y Windows lo leen igual)
+* text=auto eol=lf
+*.gd text eol=lf
+*.tscn text eol=lf
+*.tres text eol=lf
+*.godot text eol=lf
+*.import text eol=lf
+*.uid text eol=lf
+*.md text eol=lf
+
+# Binarios
+*.png binary
+*.jpg binary
+*.ttf binary
+*.ogg binary
+*.wav binary

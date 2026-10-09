@@ -20,7 +20,6 @@ config/features=PackedStringArray("4.7")
 
 [autoload]
 
-GameState="*res://core/game_state.gd"
 Night="*res://night/night_state.gd"
 
 [display]

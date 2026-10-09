@@ -35,18 +35,7 @@ func setup(seed_value: int, kickoffs: Array) -> void:
 	for i in kickoffs.size():
 		var home_id: String = pairs[i][0]
 		var away_id: String = pairs[i][1]
-		var fact: MatchFact = null
-		if false:  # sin lesiones ocultas en la versión final
-			var affected: String = home_id if rng.randf() < 0.5 else away_id
-			var roster: Array = PLAYERS.get(affected, ["El Nueve"])
-			fact = MatchFact.new({
-				"affected_team": affected,
-				"affected_player": roster[rng.randi_range(0, roster.size() - 1)],
-				"attack_penalty": rng.randf_range(0.18, 0.32),
-				"injury_event_bonus": 0.3,
-				"active_from_minute": 0,
-				"active_until_minute": rng.randi_range(45, 90),
-			})
+		var fact: MatchFact = null   # sin hechos ocultos en la versión actual
 		var sim := MatchSimulator.new({
 			"id": "match_%d" % i,
 			"home_id": home_id,

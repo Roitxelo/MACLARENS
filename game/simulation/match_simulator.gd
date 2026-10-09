@@ -100,7 +100,6 @@ func snapshot() -> Dictionary:
 		"home_score": home_score,
 		"away_score": away_score,
 		"minute": minute,
-		"home_odds": OddsEngine.compute_home_odds(self),
 		"last_event": last_event_text,
 	}
 

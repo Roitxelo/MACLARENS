@@ -1,1 +1,17 @@
+# Godot: caché del editor e importaciones (se regeneran al abrir el proyecto)
 game/.godot/
+*.translation
+
+# Salidas de pruebas y builds
+game/tests/output/
+builds/
+game/export/
+*.log
+
+# Sincronización local (paquetes de git que deja Claude en la carpeta)
+.sync/
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
