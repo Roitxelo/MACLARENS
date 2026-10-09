@@ -38,7 +38,40 @@ const TEAMS := {
 		"discipline": 7.0,
 		"home_advantage": false,
 	},
+	"real_cunado": {
+		"display_name": "Real Cuñado",
+		"attack": 5.0,
+		"defense": 5.0,
+		"form": 5.0,
+		"discipline": 3.0,
+		"home_advantage": true,
+	},
+	"deportivo_siesta": {
+		"display_name": "Deportivo Siesta",
+		"attack": 4.0,
+		"defense": 5.0,
+		"form": 3.0,
+		"discipline": 8.0,
+		"home_advantage": false,
+	},
+	"union_tapas": {
+		"display_name": "Unión Tapas",
+		"attack": 7.0,
+		"defense": 3.0,
+		"form": 6.0,
+		"discipline": 5.0,
+		"home_advantage": true,
+	},
+	"racing_poligono": {
+		"display_name": "Racing Polígono",
+		"attack": 5.0,
+		"defense": 6.0,
+		"form": 5.0,
+		"discipline": 4.0,
+		"home_advantage": false,
+	},
 }
+
 
 static func get_team(id: String) -> Dictionary:
 	return TEAMS.get(id, {

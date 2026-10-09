@@ -1,17 +1,16 @@
-# Handoff — pantallas integradas
+# Handoff — versión final de jam (noche completa)
 
-## Resultado tangible
+## Estado
 
-- Contactos: tres fuentes seleccionables, coste de 1 minuto y pistas diferenciadas.
-- Lucía: conversación con pregunta, cambio de tema e invitación; modifica información, confianza, tiempo o dinero según la acción.
-- Mercado vivo: muestra datos reales para cuota capturada, cuota actual, cashout, ticket y último evento; explica la variación respecto al intervalo anterior.
-- Cierre diario: muestra banca, deuda, beneficio y días restantes; avanzar conserva el dinero y reinicia recursos diarios.
-- La apuesta sigue bloqueada hasta contrastar el periódico: contactos o Lucía no permiten saltarse el núcleo de investigación.
+Juego jugable de principio a fin: portada → bar → (máquina, TVs, periódico, contactos, Lucía, futbolín, cartas) → cierre con Tino. Diseño completo en `design/NIGHT_FLOW.md`.
 
-## Pruebas verificadas
+## Cómo probar
 
-- `BETTING_TEST_OK`, `INTERACTION_FLOW_OK`, `MARKET_TRUTH_OK`, `EXPANDED_SCREENS_OK`, `VISUAL_CAPTURE_OK`.
+- Abrir `game/project.godot` con Godot 4.7 y pulsar F5 (escena principal `scenes/night.tscn`).
+- Pruebas: `tests/night_sim_test.tscn` (lógica), `tests/night_capture.tscn` (capturas en `tests/output/n*.png`), `tests/night_soak_test.tscn` (dos noches enteras con apuestas aleatorias). Las tres pasan en Godot 4.7.1.
 
-## Siguiente tarea — Claude, F11
+## Pendiente / ideas si sobra tiempo
 
-Construir el módulo completo `game/information/` para fuentes recurrentes (Lucía, El Búho y Tino) con personalidad, coste, sesgo, fiabilidad y respuestas reproducibles.
+- Sonido (ambiente de bar, gol, campana de salida).
+- Afinar la dificultad del futbolín con jugadores reales (constantes en `ui/minigames/futbolin.gd`, rivales en `ui/screens/rivals_screen.gd`).
+- Exportar a Windows (Proyecto → Exportar) para entregar el ejecutable.

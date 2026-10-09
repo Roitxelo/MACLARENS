@@ -65,3 +65,26 @@
 - **D-047 — Causalidad del mercado:** durante una apuesta activa se muestran cuota capturada, cuota actual, cashout, último evento y causa de la variación en una sola pantalla.
 - **D-048 — Estructura de run:** el cierre diario compara banca con una deuda de 500 €, muestra beneficio del día y permite avanzar conservando dinero; el prototipo parte de 5 días.
 
+## Giro final de jam (usuario, 09/10)
+
+- **D-049 — Run de una noche:** la run pasa a ser una sola noche en el McLarens (18:00–02:00). Se empieza con 100 € y Tino cobra 500 € al cierre. Sustituye a D-048 (5 días).
+- **D-050 — Varias actividades apostables:** dentro del bar se apuesta a fútbol (2 partidos, 19:00 y 22:30, 1X2 en vivo con cobro), caballos (10 carreras, una cada 45 min), futbolín contra parroquianos y "¿Mayor o menor?" con El Chencho (el borracho).
+- **D-051 — Habilidad y azar autorizados:** el usuario autoriza añadir minijuegos de habilidad (futbolín) y de azar con decisión de cobrar/seguir (cartas) junto a las apuestas informadas. Cambio de pilar aprobado explícitamente.
+- **D-052 — Reloj continuo:** el tiempo corre solo (0,6 min/s, x1/x2/x4 y pausa). Llamadas, charlas y minijuegos consumen bloques de minutos; lo programado sucede igual mientras tanto.
+- **D-053 — Información:** periódico con partes médicos, favoritos y rumores de cuadra; contactos con fiabilidad distinta (3 llamadas cada uno). Corazonadas (3) dan información verdadera.
+- **D-054 — Escena principal:** `scenes/night.tscn`. El slice anterior (`scenes/main_bar.tscn`) se conserva intacto. Copia de seguridad del `project.godot` anterior: `game/project.godot.bak_slice`.
+
+## Versión 2 de la noche (usuario, 09/10 21:48)
+
+- **D-055 — Fuera rumores:** se retiran lesiones ocultas, rumores, periódico informativo y contactos con fiabilidad. El periódico pasa a cartelera y la libreta muestra gente, objetos y racha. `night/info_board.gd` queda sin uso.
+- **D-056 — Un personaje por juego con 3 niveles:** Búho (fútbol, ayuda), Cortado (caballos, ayuda), Chencho (cartas, rival que juega peor cuanto más bebe) suben con rondas en la barra; Tino (futbolín, rival) sube cuando le ganas y en Nv3 rebaja 100 € la deuda.
+- **D-057 — Tienda de Lucía:** rondas, 3 objetos rotativos (máx. 5 en inventario, 15 en el catálogo) y chupito de suerte.
+- **D-058 — Racha:** multiplicador del beneficio por victorias seguidas (+0,15) y por variedad de juegos (+0,25 por juego distinto). Solo apuestas de 10 € o más.
+- **D-059 — Corazonadas por juego:** gol de tu equipo, caballo +12, Tino distraído, ver la carta.
+
+## Versión 3: mejoras de habilidad (usuario, 09/10 22:19)
+
+- **D-060 — Sin recompensas exageradas:** fuera multiplicadores de pago (bufanda, boleto, abuela, copa, posavasos, hucha, llavero) y primas por gol. La racha queda en +0,1 por victoria con tope x1,5.
+- **D-061 — Mejoras = herramientas de habilidad:** Búho da el medidor de presión (momento del partido que la casa no incluye en la cuota) y en Nv3 un penalti de puntería; Cortado da arreos de timing en carreras simuladas en directo; Chencho borracho (Nv3) paga con probabilidades de baraja entera, así que contar cartas da ventaja; objetos del futbolín cambian el control (portero, mango, tiza).
+- **D-062 — Corazonadas de ejecución:** cámara lenta, arreo perfecto, engañar al portero y ver la carta. Ya no hay gol garantizado ni empujón fijo.
+- **D-063 — Calibración:** caballos con retorno ~91 % apostando a todo; dos noches de apuestas aleatorias acaban en 181 € y 2 €.

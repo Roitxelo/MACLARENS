@@ -15,12 +15,13 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="McLarens: La última combinada"
-run/main_scene="res://scenes/main_bar.tscn"
+run/main_scene="res://scenes/night.tscn"
 config/features=PackedStringArray("4.7")
 
 [autoload]
 
 GameState="*res://core/game_state.gd"
+Night="*res://night/night_state.gd"
 
 [display]
 
@@ -29,6 +30,10 @@ window/size/viewport_height=720
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"
+
+[gui]
+
+theme/custom_font="res://assets/fonts/Jersey10-Regular.ttf"
 
 [rendering]
 

@@ -42,6 +42,9 @@ var _home_stats: Dictionary
 var _away_stats: Dictionary
 var _match_fact: MatchFact
 var _fatigue_home := 0.0
+## Momento del partido (-1 visitante aprieta ... +1 local aprieta). Cambia
+## cada intervalo y sesga los ataques; la casa no lo incluye en la cuota.
+var momentum := 0.0
 var _fatigue_away := 0.0
 var _rng := RandomNumberGenerator.new()
 
@@ -78,6 +81,7 @@ func advance_interval() -> Dictionary:
 	minute = mini(minute + MINUTES_PER_TICK, MATCH_LENGTH_MINUTES)
 	_fatigue_home = minf(_fatigue_home + 0.01, 0.35)
 	_fatigue_away = minf(_fatigue_away + 0.01, 0.35)
+	momentum = clampf(momentum * 0.8 + _rng.randf_range(-0.45, 0.45), -1.0, 1.0)
 
 	var weights := _build_event_weights()
 	var event_type := _roll_event(weights)
@@ -100,6 +104,23 @@ func snapshot() -> Dictionary:
 		"last_event": last_event_text,
 	}
 
+## Probabilidad de que el próximo gol (si lo hay) sea del local, y de que
+## haya gol en los próximos ~10 minutos, con el momento actual.
+func pressure() -> Dictionary:
+	var w := _build_event_weights()
+	var total := 0.0
+	for v in w.values():
+		total += v
+	var gh: float = w[EventType.GOAL_HOME]
+	var ga: float = w[EventType.GOAL_AWAY]
+	var p_tick := (gh + ga) / total
+	return {
+		"home_share": gh / maxf(gh + ga, 0.001),
+		"goal_10": 1.0 - pow(1.0 - p_tick, 10.0 / float(MINUTES_PER_TICK)),
+		"home_10": 1.0 - pow(1.0 - gh / total, 10.0 / float(MINUTES_PER_TICK)),
+		"away_10": 1.0 - pow(1.0 - ga / total, 10.0 / float(MINUTES_PER_TICK)),
+	}
+
 func _build_event_weights() -> Dictionary:
 	var home_attack_penalty := 0.0
 	var away_attack_penalty := 0.0
@@ -116,6 +137,8 @@ func _build_event_weights() -> Dictionary:
 
 	var home_attack: float = float(_home_stats.get("attack", 5.0)) * (1.0 - home_attack_penalty) * (1.0 - _fatigue_home)
 	var away_attack: float = float(_away_stats.get("attack", 5.0)) * (1.0 - away_attack_penalty) * (1.0 - _fatigue_away)
+	home_attack *= 1.0 + 0.55 * momentum
+	away_attack *= 1.0 - 0.55 * momentum
 	var home_defense: float = float(_home_stats.get("defense", 5.0))
 	var away_defense: float = float(_away_stats.get("defense", 5.0))
 	var home_discipline: float = float(_home_stats.get("discipline", 5.0))
