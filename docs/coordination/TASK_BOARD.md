@@ -8,13 +8,14 @@ Dueño propuesto según `WORKFLOW.md`; se puede cambiar avisando aquí.
 
 | Id | Tarea | Dueño | Estado | Hecho cuando |
 |---|---|---|---|---|
-| T01 | Probar jugando y calibrar los minijuegos: velocidad de la aguja del arreo (`race_screen.gd`), mirilla del penalti (`penalty_overlay.gd: SPEED`), IA del futbolín por nivel (`Catalog.TINO_SKILL`, `futbolin.gd`) | Codex | Pendiente | Un jugador nuevo gana a Tino Nv1 en 2-3 intentos, Nv3 cuesta; el arreo perfecto sale ~1 de cada 3 intentando; el penalti pegado al palo se consigue con práctica |
+| T01 | Probar jugando y calibrar los minijuegos: velocidad de la aguja del arreo (`race_screen.gd`), mirilla del penalti (`penalty_overlay.gd: SPEED`), dificultad del billar (tras T19) | Codex | Pendiente | El billar Nv1 se gana en 2-3 intentos, Nv3 cuesta; el arreo perfecto sale ~1 de cada 3 intentando; el penalti pegado al palo se consigue con práctica |
 | T02 | Audio básico: ambiente de bar, gol, silbato, salida de caballos, cartas, monedas, golpes del futbolín, clic de botones. Bus de música/efectos | Codex | Pendiente | Cada acción importante suena; volumen ajustable en código |
 | T03 | Export a Windows (preset + `.exe` en `builds/`, fuera del repo) | Codex | Pendiente | El `.exe` arranca en un PC sin Godot |
 | T04 | Primera noche guiada: mensajes contextuales la primera vez que se entra en cada sitio (qué hacer, controles) | Codex (UI) + Claude (textos) | Pendiente | Un jugador nuevo entiende máquina, arreo, penalti, cartas y tienda sin leer el GDD |
 | T05 | Equilibrio de la deuda: bot "jugador hábil" que simula noches (arreos buenos, contar cartas, presión) y mide si 500 € es alcanzable; ajustar `START_DEBT`/precios | Claude | Pendiente | Informe en `docs/design/BALANCE.md`: jugador al azar < 15 % de éxito, hábil 50-70 % |
 | T06 | Avisos (toasts) que tapan contenido en carrera, lobby del futbolín y bar: moverlos o dar zona propia por pantalla | Codex | Pendiente | Ninguna captura de `night_capture` tiene texto tapado |
-| T07 | Poder rendirse/salir del futbolín y de una mano de cartas (ESC con confirmación) | Codex | Pendiente | Salir no deja el reloj en pausa ni el dinero inconsistente |
+| T07 | Poder salir de una mano de cartas (el billar ya trae botón de rendirse, T19) (ESC con confirmación) | Codex | Pendiente | Salir no deja el reloj en pausa ni el dinero inconsistente |
+| T19 | Sustituir el futbolín por billar "Tiro imposible": Tino prepara tiros retorcidos (a banda, carambola, sin tocar la negra, tronera marcada) en series de 3; ganar 2 = ganas la apuesta. Objetos y corazonada nuevos | Claude | En curso (Claude) | Minijuego jugable, cada mesa con solución comprobada por un buscador automático, docs al día |
 | T08 | Prueba de regresión de economía: test que verifica pagos, cobro, racha (tope x1,5), herradura, seguro del Chencho y perdón de Tino | Claude | Pendiente | `tests/economy_test.tscn` en `tools/run_tests` |
 
 ## P1 — Pulido
@@ -40,7 +41,6 @@ Dueño propuesto según `WORKFLOW.md`; se puede cambiar avisando aquí.
 ## Errores conocidos
 
 - Los avisos de la izquierda tapan parte de algunas pantallas (T06).
-- El futbolín no se puede abandonar a mitad (T07).
 - Sin sonido (T02).
 - El equilibrio no se ha probado con jugadores reales (T01, T05).
 

@@ -94,3 +94,7 @@
 - **D-064 — Repositorio:** el proyecto vive en GitHub `Roitxelo/maclarens`; `F:\JUEGOS\MacLarens` es un clon. Se trabaja por commits pequeños (ver `WORKFLOW.md`).
 - **D-065 — Código del slice retirado:** `main_bar`, `betting`, `core/game_state`, `contracts`, `odds`, `round_setup`, `info_board` y sus pruebas salen del árbol; quedan en la rama `archive/slice-julio`.
 - **D-066 — Trabajo a dos agentes:** Claude (reglas, equilibrio, pruebas, docs) y Codex (sensación de los minijuegos, UI, audio, export) con reparto por áreas en `WORKFLOW.md` y tareas en `TASK_BOARD.md`.
+
+## Billar (usuario, 09/10 23:24)
+
+- **D-067 — Billar en lugar de futbolín:** el minijuego contra Tino pasa a ser billar en modo "Tiro imposible": series de 3 mesas preparadas con una misión cada una (tronera marcada, a banda, carambola, sin tocar la negra); aciertas 2 de 3 y ganas la apuesta. Mismos niveles de Tino (20/40/60 €, Nv3 perdona 100 € la primera vez). Lo implementa Claude (T19) aunque `ui/minigames/` sea área de Codex.
