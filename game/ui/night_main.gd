@@ -24,6 +24,7 @@ var current: Control
 var current_name := ""
 var hud: Control
 var toast_box: VBoxContainer
+var toast_limit := 4
 var fade: ColorRect
 
 func _ready() -> void:
@@ -71,6 +72,7 @@ func go(screen_name: String, args: Dictionary = {}) -> void:
 	hud.visible = screen_name not in ["title", "end"]
 	hud.call("set_compact", screen_name in ["billar", "cards"])
 	toast_box.visible = screen_name not in ["title", "end", "notebook", "paper", "billar"]
+	_layout_toasts(screen_name)
 	fade.color.a = 0.7
 	create_tween().tween_property(fade, "color:a", 0.0, 0.25)
 	_on_changed()
@@ -97,12 +99,34 @@ func _on_toast(text: String, kind: String) -> void:
 	l.custom_minimum_size = Vector2(236, 0)
 	l.add_theme_stylebox_override("normal", UIKit.box(bg, color.darkened(0.4), 2, 3, 10))
 	toast_box.add_child(l)
-	while toast_box.get_child_count() > 4:
+	while toast_box.get_child_count() > toast_limit:
 		toast_box.get_child(0).free()
 	var t := create_tween()
 	t.tween_interval(3.6)
 	t.tween_property(l, "modulate:a", 0.0, 0.5)
 	t.tween_callback(l.queue_free)
+
+func _layout_toasts(screen_name: String) -> void:
+	# El HUD deja un hueco central arriba. En las TVs y el lobby se usa
+	# como carril de eventos para no tapar el contenido que cambia en vivo.
+	match screen_name:
+		"race_tv", "match_tv", "billar_lobby":
+			toast_box.position = Vector2(346, 8)
+			toast_box.size = Vector2(604, 96)
+			toast_box.alignment = BoxContainer.ALIGNMENT_BEGIN
+			toast_limit = 2
+		"cards":
+			toast_box.position = Vector2(958, 8)
+			toast_box.size = Vector2(314, 96)
+			toast_box.alignment = BoxContainer.ALIGNMENT_BEGIN
+			toast_limit = 2
+		_:
+			toast_box.position = Vector2(8, 104)
+			toast_box.size = Vector2(236, 262)
+			toast_box.alignment = BoxContainer.ALIGNMENT_BEGIN
+			toast_limit = 4
+	while toast_box.get_child_count() > toast_limit:
+		toast_box.get_child(0).free()
 
 func _on_night_over(reason: String) -> void:
 	# Se deja un instante para que se vean los últimos avisos.
