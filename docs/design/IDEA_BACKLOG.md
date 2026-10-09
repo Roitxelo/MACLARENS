@@ -1,5 +1,7 @@
 # Idea backlog
 
+> Escrito para el slice de julio (rumores e información). Muchas ideas ya no aplican tras la versión 3; las tareas actuales están en `docs/coordination/TASK_BOARD.md`.
+
 Este archivo conserva posibilidades; no amplía automáticamente el scope.
 
 ## Compatibles y candidatas tras validar el núcleo

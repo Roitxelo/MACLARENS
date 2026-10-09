@@ -1,8 +1,8 @@
-# Flujo de la noche (versión final de jam)
+# GDD — McLarens: La última combinada
 
-> Sustituye al slice de una sola apuesta (`scenes/main_bar.tscn`), que se conserva intacto como referencia.
-> Escena principal nueva: `scenes/night.tscn`.
-> Versión 3 (09/10 noche): sin rumores; cada juego tiene un personaje con 3 niveles, objetos de habilidad en la barra de Lucía y una racha moderada (máx. x1,5).
+> Documento de diseño **vivo**: si cambias una regla del juego, cámbiala aquí en el mismo commit.
+> Versión 3 (09/10/2026): sin rumores; cada juego tiene un personaje con 3 niveles, objetos de habilidad en la barra de Lucía y una racha moderada (máx. x1,5).
+> Escena principal: `game/scenes/night.tscn`. El prototipo anterior (slice de julio) está en la rama `archive/slice-julio` y en `docs/archive/`.
 
 ## La run
 
@@ -79,17 +79,12 @@ Rondas para subir de nivel, 3 objetos rotativos (cada 90 min o 5 €, máx. 5 en
 
 ## Código
 
-- `night/night_state.gd` (autoload `Night`): reloj, dinero, suerte, tickets, agenda, corazonadas, fin de noche.
-- `night/football_market.gd`: los dos partidos sobre `MatchSimulator` + cuotas 1X2.
-- `night/horse_races.gd`: 10 carreras, cuotas, orden de llegada y animación.
-- `night/catalog.gd`: personajes, niveles, objetos y fórmula de la racha.
-- `night/info_board.gd`: (sin uso) rumores de la versión anterior.
-- `ui/night_main.gd`: navegación entre pantallas, HUD y avisos.
-- `ui/screens/*`, `ui/minigames/*`, `ui/widgets/*`: pantallas, futbolín, cartas, TVs.
-- Pruebas: `tests/night_sim_test.tscn` (lógica, headless), `tests/night_capture.tscn` (capturas de todas las pantallas), `tests/night_soak_test.tscn` (dos noches completas con apuestas aleatorias).
+Mapa completo en [`docs/ARCHITECTURE.md`](../ARCHITECTURE.md). Pruebas: `tools/run_tests.sh` / `tools/run_tests.ps1`.
 
 ## Ajustes rápidos de equilibrio
 
-- Deuda, dinero inicial, duración: constantes al principio de `night/night_state.gd`.
-- Horario de carreras: `FIRST_RACE`, `INTERVAL` en `night/horse_races.gd`.
-- Niveles, precios de rondas, objetos: `night/catalog.gd`.
+- Deuda, dinero inicial, duración, horarios de fútbol: constantes al principio de `game/night/night_state.gd`.
+- Carreras (horario, velocidad, `SPEED_K`, margen): `game/night/horse_races.gd`.
+- Cuotas de fútbol (margen, cierre, comisión de cobro): `game/night/football_market.gd`.
+- Niveles, precios de rondas, objetos, racha: `game/night/catalog.gd`.
+- Minijuegos: `game/ui/minigames/futbolin.gd`, `penalty_overlay.gd` (`SPEED`), `game/ui/screens/race_screen.gd` (aguja del arreo).

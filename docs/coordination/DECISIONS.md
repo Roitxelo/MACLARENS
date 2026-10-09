@@ -88,3 +88,9 @@
 - **D-061 — Mejoras = herramientas de habilidad:** Búho da el medidor de presión (momento del partido que la casa no incluye en la cuota) y en Nv3 un penalti de puntería; Cortado da arreos de timing en carreras simuladas en directo; Chencho borracho (Nv3) paga con probabilidades de baraja entera, así que contar cartas da ventaja; objetos del futbolín cambian el control (portero, mango, tiza).
 - **D-062 — Corazonadas de ejecución:** cámara lenta, arreo perfecto, engañar al portero y ver la carta. Ya no hay gol garantizado ni empujón fijo.
 - **D-063 — Calibración:** caballos con retorno ~91 % apostando a todo; dos noches de apuestas aleatorias acaban en 181 € y 2 €.
+
+## Organización del proyecto (usuario, 09/10 22:50)
+
+- **D-064 — Repositorio:** el proyecto vive en GitHub `Roitxelo/maclarens`; `F:\JUEGOS\MacLarens` es un clon. Se trabaja por commits pequeños (ver `WORKFLOW.md`).
+- **D-065 — Código del slice retirado:** `main_bar`, `betting`, `core/game_state`, `contracts`, `odds`, `round_setup`, `info_board` y sus pruebas salen del árbol; quedan en la rama `archive/slice-julio`.
+- **D-066 — Trabajo a dos agentes:** Claude (reglas, equilibrio, pruebas, docs) y Codex (sensación de los minijuegos, UI, audio, export) con reparto por áreas en `WORKFLOW.md` y tareas en `TASK_BOARD.md`.

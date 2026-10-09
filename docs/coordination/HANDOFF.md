@@ -1,16 +1,26 @@
-# Handoff — versión final de jam (noche completa)
+# Handoff — estado a 09/10/2026, 23:30
 
-## Estado
+## Qué hay
 
-Juego jugable de principio a fin: portada → bar → (máquina, TVs, periódico, contactos, Lucía, futbolín, cartas) → cierre con Tino. Diseño completo en `design/NIGHT_FLOW.md`.
+Juego jugable de principio a fin en Godot 4.7: portada → bar → máquina (fútbol y caballos), TVs (partido con presión y penalti; carrera con arreo), futbolín contra Tino, Mayor o menor con el Chencho, barra de Lucía (tienda), periódico (cartelera), libreta → cierre con Tino a las 02:00.
 
-## Cómo probar
+- Diseño: `docs/design/GDD.md`.
+- Código: `docs/ARCHITECTURE.md`.
+- Cómo trabajar: `docs/coordination/WORKFLOW.md`.
+- Tareas: `docs/coordination/TASK_BOARD.md`.
 
-- Abrir `game/project.godot` con Godot 4.7 y pulsar F5 (escena principal `scenes/night.tscn`).
-- Pruebas: `tests/night_sim_test.tscn` (lógica), `tests/night_capture.tscn` (capturas en `tests/output/n*.png`), `tests/night_soak_test.tscn` (dos noches enteras con apuestas aleatorias). Las tres pasan en Godot 4.7.1.
+## Pruebas
 
-## Pendiente / ideas si sobra tiempo
+`tools/run_tests.sh todas` en verde en Godot 4.7.1 (Linux, xvfb): `NIGHT_SIM_OK`, `NIGHT_SOAK_OK`, `NIGHT_CAPTURE_OK`, `FUTBOLIN_TEST_DONE`.
 
-- Sonido (ambiente de bar, gol, campana de salida).
-- Afinar la dificultad del futbolín con jugadores reales (constantes en `ui/minigames/futbolin.gd`, rivales en `ui/screens/rivals_screen.gd`).
-- Exportar a Windows (Proyecto → Exportar) para entregar el ejecutable.
+## Lo más urgente
+
+1. **T01** — jugar y calibrar los minijuegos (nadie los ha probado con ratón todavía).
+2. **T02** — sonido.
+3. **T05** — comprobar que 500 € de deuda es alcanzable jugando bien y no jugando al azar.
+4. **T03** — export a Windows.
+
+## Avisos
+
+- La rama `archive/slice-julio` guarda el prototipo anterior (rumores, caso Bruno Salas). No se usa.
+- `MatchFact` sigue existiendo porque el simulador lo admite, pero la noche no crea hechos ocultos.
