@@ -23,12 +23,13 @@ Las mejoras no regalan dinero: dan **herramientas que premian jugar bien**. Apos
 | El Búho (ayuda) | Fútbol | Ronda (35 / 70 €) | Medidor de PRESIÓN (momento del partido; la casa no lo mete en la cuota) | Presión con % de gol a 10' y cobro anticipado sin comisión | Un penalti por partido que tiras tú (minijuego de puntería) |
 | El Cortado (ayuda) | Caballos | Ronda (35 / 70 €) | Ganador | 3 ARREOS de timing por carrera (TV 2) | 5 arreos y apuesta a COLOCADO (cuota/3) |
 | El Chencho (rival) | Mayor o menor | Ronda (25 / 60 €) | Calcula bien, mesa 20 € | Mesa 40 € y SEGURO por mano (si fallas tras acertar, salvas la mitad) | Mesa 60 € y paga con probabilidades de baraja entera: contar cartas da ventaja |
-| Tino (rival) | Futbolín | Ganándole | 20 € | 40 €, juega mejor | 60 €, difícil. La primera victoria rebaja 100 € de deuda |
+| Tino (rival) | Billar "Tiro imposible" | Ganándole una serie | 20 €, tiros de calentamiento | 40 €, tiros con truco (banda, carambola, pasillo) | 60 €, los imposibles. La primera serie ganada rebaja 100 € de deuda |
 
 ### Minijuegos de habilidad
 - **Arreo (caballos):** una aguja va y viene; ESPACIO en lo verde = acelerón (perfecto en lo verde claro); fuera = el caballo se asusta. La carrera se simula en directo.
 - **Penalti (fútbol):** la mirilla recorre la portería; el portero tapa un tercio al azar. Pegado al palo entra siempre; fuera de los palos es fuera.
 - **Presión (fútbol):** el partido tiene momento; quien aprieta tiene más opciones de gol durante unos minutos. Entrar o cobrar en el momento justo es la habilidad.
+- **Billar "Tiro imposible" (Tino):** una serie son 3 mesas preparadas de su nivel, cada una con una misión: tronera marcada, a banda (la blanca toca banda antes que ninguna bola), carambola (tocar primero otra bola), sin tocar la negra. Un tiro por mesa; con 2 aciertos ganas la apuesta. Se apunta con el ratón y se afina con ← →; se mantiene el clic para cargar la potencia (sube y baja) y se suelta. La guía básica marca la línea hasta el primer contacto y la bola fantasma. Física propia y determinista: cada mesa tiene solución comprobada (`tools/dev/billar_solver.gd`).
 - **Cartas:** siempre se ve el historial de la mano. Con el Chencho borracho las cuotas ignoran las cartas ya salidas.
 
 ## La barra de Lucía (tienda)
@@ -39,10 +40,10 @@ Rondas para subir de nivel, 3 objetos rotativos (cada 90 min o 5 €, máx. 5 en
 
 | Objeto | € | Efecto |
 |---|---|---|
-| Portero de plomo | 25 | Tu portero del futbolín es más ancho |
-| Mango de goma | 25 | Chut cargado: la ventana del clic dura más y la bola sale más fuerte |
-| Tiza azul | 20 | La bola del futbolín va un 15 % más lenta |
-| Muñeco cojo | 30 | Tu primer gol del futbolín vale doble |
+| Tiza azul | 20 | En el billar, la guía muestra la salida de la bola tocada y el rebote en banda |
+| Taco de nácar | 25 | La barra de potencia del billar sube más despacio |
+| Guante de billar | 20 | Las flechas afinan la puntería cuatro veces más |
+| Bola de la suerte | 30 | Una vez por serie de billar repites un tiro fallado |
 | Fusta nueva | 25 | +2 arreos y zona verde más ancha |
 | Gafas de culo de vaso | 25 | Ves qué caballo viene en forma |
 | Herradura oxidada | 20 | Si tu caballo llega 2.º a ganador, recuperas hasta 20 € |
@@ -60,7 +61,7 @@ Rondas para subir de nivel, 3 objetos rotativos (cada 90 min o 5 €, máx. 5 en
 
 ## Corazonadas (3 por noche): ayudan a ejecutar, no regalan resultados
 
-- Futbolín: 6 s de cámara lenta (tus barras a velocidad normal).
+- Billar: pulso firme, ves el recorrido completo de la blanca y de las bolas para el tiro actual (con un golpe al 80 %).
 - Caballos: el siguiente arreo sale perfecto.
 - Penalti: el portero se tira al lado contrario.
 - Cartas: ves la siguiente carta.
@@ -70,9 +71,11 @@ Rondas para subir de nivel, 3 objetos rotativos (cada 90 min o 5 €, máx. 5 en
 - **Leer el partido:** Búho Nv2 + Prismáticos. Apuesta en directo cuando un equipo aprieta y la cuota aún no se ha movido; cobra sin comisión cuando cambie el viento. En Nv3, penalti + Silbato.
 - **El tapado:** Gafas + Fusta + Cortado Nv3. Elige el caballo en forma que la casa paga largo y arréale bien.
 - **El contador:** Chencho Nv3 + Chuleta (+ Moneda). Cuenta las cartas contra un borracho que paga como si la baraja estuviera entera.
-- **Ajuste de cuentas:** Portero + Mango + Tiza (+ cámara lenta) para tumbar a Tino Nv3 y quitarte 100 € de deuda.
+- **Ajuste de cuentas:** Tiza + Taco + Guante (+ pulso firme y Bola de la suerte) para sacar los imposibles de Tino Nv3 y quitarte 100 € de deuda.
 
 ## Calibración comprobada
+
+- Billar: ventana de ángulo con solución (sumando todas las soluciones, 5 potencias, paso 0,25°): Nv1 2,0–2,75° · Nv2 1,0–2,0° · Nv3 1,0–2,0°. Las misiones de Nv3 suelen tener una sola línea limpia; las demás soluciones son rebotes de suerte.
 
 - Caballos: apostando a todos por igual se recupera ~91 % (margen de la casa); el favorito gana ~43 %. Las carreras duran ~8 minutos de reloj (~14 s reales a x1).
 - Dos noches con apuestas aleatorias: terminan con 181 € y 2 € (sin dinero fácil).
@@ -87,4 +90,4 @@ Mapa completo en [`docs/ARCHITECTURE.md`](../ARCHITECTURE.md). Pruebas: `tools/r
 - Carreras (horario, velocidad, `SPEED_K`, margen): `game/night/horse_races.gd`.
 - Cuotas de fútbol (margen, cierre, comisión de cobro): `game/night/football_market.gd`.
 - Niveles, precios de rondas, objetos, racha: `game/night/catalog.gd`.
-- Minijuegos: `game/ui/minigames/futbolin.gd`, `penalty_overlay.gd` (`SPEED`), `game/ui/screens/race_screen.gd` (aguja del arreo).
+- Minijuegos: `game/ui/minigames/billar.gd` (mesas en `game/data/billiard_layouts.gd`, física en `game/simulation/billiard_sim.gd`), `penalty_overlay.gd` (`SPEED`), `game/ui/screens/race_screen.gd` (aguja del arreo).

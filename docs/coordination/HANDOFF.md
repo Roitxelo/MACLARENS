@@ -2,7 +2,7 @@
 
 ## Qué hay
 
-Juego jugable de principio a fin en Godot 4.7: portada → bar → máquina (fútbol y caballos), TVs (partido con presión y penalti; carrera con arreo), futbolín contra Tino, Mayor o menor con el Chencho, barra de Lucía (tienda), periódico (cartelera), libreta → cierre con Tino a las 02:00.
+Juego jugable de principio a fin en Godot 4.7: portada → bar → máquina (fútbol y caballos), TVs (partido con presión y penalti; carrera con arreo), billar "Tiro imposible" contra Tino, Mayor o menor con el Chencho, barra de Lucía (tienda), periódico (cartelera), libreta → cierre con Tino a las 02:00.
 
 - Diseño: `docs/design/GDD.md`.
 - Código: `docs/ARCHITECTURE.md`.
@@ -11,7 +11,7 @@ Juego jugable de principio a fin en Godot 4.7: portada → bar → máquina (fú
 
 ## Pruebas
 
-`tools/run_tests.sh todas` en verde en Godot 4.7.1 (Linux, xvfb): `NIGHT_SIM_OK`, `NIGHT_SOAK_OK`, `NIGHT_CAPTURE_OK`, `FUTBOLIN_TEST_DONE`.
+`tools/run_tests.sh todas` en verde en Godot 4.7.1 (Linux, xvfb): `NIGHT_SIM_OK`, `NIGHT_SOAK_OK`, `NIGHT_CAPTURE_OK`, `BILLAR_TEST_OK`.
 
 ## Lo más urgente
 

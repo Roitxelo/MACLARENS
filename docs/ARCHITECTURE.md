@@ -15,6 +15,8 @@ night/night_state.gd  (autoload "Night")   Estado de la run y reglas
   ├── night/horse_races.gd       10 carreras simuladas en directo + arreos
   └── night/catalog.gd           Datos: personajes, niveles, objetos, racha
 simulation/match_simulator.gd    Partido por intervalos de 3 min (gol, tarjeta, lesión, córner, momento)
+simulation/billiard_sim.gd       Física de billar determinista + comprobación de misiones
+data/billiard_layouts.gd         Mesas del "Tiro imposible" (3 por nivel) con solución guardada
 data/teams/team_stats.gd         8 equipos ficticios
 data/match_facts/match_fact.gd   Hecho oculto de partido (hoy sin uso en la noche, lo usa el simulador)
 ui/ui_kit.gd (class UIKit)       Paleta, fuentes, botones, hotspots, paneles, retratos
@@ -34,8 +36,8 @@ ui/widgets/race_track.gd         Pista de caballos (compacta en el bar, grande e
 | `paper` | screens/paper_screen.gd | Cartelera (Diario Gol Local) |
 | `notebook` | screens/notebook_screen.gd | Libreta: niveles, objetos, racha |
 | `shop` | screens/shop_screen.gd | Barra de Lucía: rondas, objetos, chupito |
-| `futbolin_lobby` | screens/futbolin_lobby_screen.gd | Reto a Tino |
-| `futbolin` | minigames/futbolin.gd | Minijuego de futbolín |
+| `billar_lobby` | screens/billar_lobby_screen.gd | Reto de billar a Tino |
+| `billar` | minigames/billar.gd | Billar "Tiro imposible" |
 | `cards` | minigames/mayor_menor.gd | Mayor o menor con el Chencho |
 | `end` | screens/end_screen.gd | Cierre con Tino |
 
@@ -54,13 +56,13 @@ ui/widgets/race_track.gd         Pista de caballos (compacta en el bar, grande e
 ### Dinero
 
 - `spend` / `earn` para movimientos directos.
-- **Toda victoria de juego** debe pasar por `register_win(game, stake, gross)` (aplica la racha) y toda derrota por `register_loss(game)`. `game` ∈ `football`, `horse`, `futbolin`, `cards`.
+- **Toda victoria de juego** debe pasar por `register_win(game, stake, gross)` (aplica la racha) y toda derrota por `register_loss(game)`. `game` ∈ `football`, `horse`, `billar`, `cards`.
 - Tickets: `place_football`, `place_horse(race, horse, stake, kind)`, `cashout(bet)`. Se liquidan solos en `_settle_bets`.
 
 ### Personajes y objetos
 
 - Niveles en `Night.levels` (1–3). `Night.level("buho")`, `buy_round(who)`.
-- Objetos: `Night.trinkets` (ids), `has_trinket(id)`. Los efectos se consultan **donde ocurren** (p. ej. `futbolin.gd` mira `portero`, `mango`, `tiza`).
+- Objetos: `Night.trinkets` (ids), `has_trinket(id)`. Los efectos se consultan **donde ocurren** (p. ej. `billar.gd` mira `tiza`, `taco`, `guante`, `repeticion`).
 
 ## Cómo añadir cosas
 
@@ -69,6 +71,11 @@ ui/widgets/race_track.gd         Pista de caballos (compacta en el bar, grande e
 - **Una pantalla:** script en `ui/screens/`, entrada en `SCREENS` y hotspot/botón que haga `main.go`.
 - **Una prueba:** escena en `game/tests/` con un `Node` y script que imprima una marca `ALGO_OK` y haga `get_tree().quit()`; añádela a `tools/run_tests.*`.
 
+### Billar
+
+- Una mesa nueva: añádela a `BilliardLayouts.LEVELS` (bola 0 = blanca, 1 = objetivo) con su misión y reglas, y ejecuta el buscador: `godot --headless --path game -s res://../tools/dev/billar_solver.gd -- 0.25`. Guarda en `solution` un ángulo/potencia que funcione; `billar_test` lo verifica.
+- Si cambias la física (`billiard_sim.gd`: fricción, troneras, rebotes), vuelve a pasar el buscador: las soluciones guardadas pueden dejar de valer.
+
 ## Pruebas existentes
 
 | Escena | Comprueba |
@@ -76,13 +83,13 @@ ui/widgets/race_track.gd         Pista de caballos (compacta en el bar, grande e
 | `tests/night_sim_test.tscn` | Lógica headless: tres noches, compras, arreo, liquidación |
 | `tests/night_soak_test.tscn` | Dos noches completas alternando todas las pantallas con apuestas aleatorias |
 | `tests/night_capture.tscn` | Recorre todas las pantallas y guarda capturas en `tests/output/` |
-| `tests/futbolin_test.tscn` | Futbolín IA contra IA a dos niveles |
+| `tests/billar_test.tscn` | Las 9 mesas se resuelven con su solución guardada; una serie en autoplay gana con tiros exactos y pierde con tiros desviados |
 
 Las de render necesitan ventana (en Linux sin pantalla, `xvfb-run`).
 
 ## Convenciones de código
 
 - GDScript con tipos (`var x := ...`, `-> void`). Tabuladores.
-- Comentarios y textos en español. Nombres de código en inglés salvo términos del juego (`futbolin`, `chencho`...).
+- Comentarios y textos en español. Nombres de código en inglés salvo términos del juego (`billar`, `chencho`...).
 - Constantes de equilibrio arriba de cada script o en `catalog.gd`; nada de números mágicos repartidos.
 - Coordenadas de UI en píxeles de la ventana 1280×720 (el arte v1 es 1672×941 escalado ×0,7656).

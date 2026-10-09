@@ -12,11 +12,11 @@ Hola, Codex. Este documento es tu punto de partida. Léelo entero (10 minutos) a
 - Todo se hace desde el bar (arte pixel 2.5D, focos interactivos, sin menús abstractos):
   - **Máquina:** fútbol (2 partidos, 1X2 en directo con cobro anticipado) y 10 carreras de caballos.
   - **TV 1 / TV 2:** ver el partido (medidor de presión, penalti) y la carrera (arrear a tu caballo).
-  - **Futbolín** contra Tino, **Mayor o menor** contra el Chencho (el borracho).
+  - **Billar "Tiro imposible"** contra Tino y **Mayor o menor** contra el Chencho (el borracho).
   - **Barra de Lucía:** tienda de rondas (subir de nivel a la gente) y objetos.
   - **Periódico** (cartelera) y **libreta** (niveles, objetos, racha).
-- Cada juego tiene un **personaje con 3 niveles**: Búho (fútbol), Cortado (caballos), Chencho (cartas), Tino (futbolín).
-- **Filosofía de diseño (no negociable sin Roi):** las mejoras y objetos **no regalan dinero**. Dan herramientas que premian la habilidad: leer el partido, arrear a tiempo, contar cartas, dominar el futbolín. Apostar a ciegas pierde a la larga.
+- Cada juego tiene un **personaje con 3 niveles**: Búho (fútbol), Cortado (caballos), Chencho (cartas), Tino (billar).
+- **Filosofía de diseño (no negociable sin Roi):** las mejoras y objetos **no regalan dinero**. Dan herramientas que premian la habilidad: leer el partido, arrear a tiempo, contar cartas, clavar el tiro imposible. Apostar a ciegas pierde a la larga.
 
 Detalle completo en `docs/design/GDD.md`. Capturas en `docs/screenshots/`.
 
@@ -74,9 +74,9 @@ Todo con más detalle en `docs/ARCHITECTURE.md`.
 
 Prioridad de entrega (del tablero, P0):
 
-1. **T01 — Calibrar minijuegos jugando.** Aguja del arreo (`ui/screens/race_screen.gd`, la aguja cruza la barra en 1,1 s; zona verde en `Night.whip_green_half()`), mirilla del penalti (`ui/minigames/penalty_overlay.gd`, `SPEED`, `keeper_half`), IA del futbolín (`Catalog.TINO_SKILL`, velocidades en `ui/minigames/futbolin.gd`). Criterios en el tablero.
+1. **T01 — Calibrar minijuegos jugando.** Aguja del arreo (`ui/screens/race_screen.gd`, la aguja cruza la barra en 1,1 s; zona verde en `Night.whip_green_half()`), mirilla del penalti (`ui/minigames/penalty_overlay.gd`, `SPEED`, `keeper_half`), dificultad del billar (mesas en `game/data/billiard_layouts.gd`; si cambias una, pásale el buscador `tools/dev/billar_solver.gd`). Criterios en el tablero.
 2. **T06 — Avisos que tapan contenido** (caja de toasts a la izquierda en `ui/night_main.gd`).
-3. **T07 — Salir del futbolín y de una mano de cartas** sin romper el reloj ni el dinero.
+3. **T07 — Salir de una mano de cartas** sin romper el reloj ni el dinero (el billar ya tiene "Rendirse").
 4. **T02 — Audio** (no hay ningún sonido todavía). Usa `AudioStreamPlayer` en un autoload pequeño, por ejemplo `Sfx`, para no repartir reproductores por las pantallas. Sonidos libres (CC0) o generados.
 5. **T03 — Export a Windows.**
 6. **T04 — Primera noche guiada** (UI tuya; Claude puede escribir los textos).

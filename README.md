@@ -13,7 +13,7 @@ Una partida es **una noche de 18:00 a 02:00** (~13 minutos reales). El reloj cor
 |---|---|---|
 | Máquina | Fútbol (19:00 y 22:30, 1X2 en directo con cobro anticipado) y 10 carreras de caballos | El Búho (fútbol), El Cortado (caballos) |
 | TV 1 / TV 2 | Ver el partido (medidor de presión, penalti) y la carrera (arrear a tu caballo) | |
-| Futbolín del fondo | Minijuego de habilidad a 3 goles | Tino (rival) |
+| Billar del fondo | "Tiro imposible": 3 mesas con misión, mete 2 y ganas | Tino (rival) |
 | Mesa del rincón | ¿Mayor o menor? con baraja española | El Chencho (rival) |
 | Barra | Tienda: rondas para subir de nivel a la gente y objetos | Lucía |
 | Periódico / libreta | Cartelera de la noche / tu gente, objetos y racha | |
@@ -25,13 +25,13 @@ Cada personaje tiene **3 niveles**; las mejoras y objetos **no regalan dinero**,
 1. Instala [Godot 4.7](https://godotengine.org/download) (versión estándar, no .NET).
 2. Abre `game/project.godot` y pulsa **F5**. Escena principal: `res://scenes/night.tscn`.
 
-Controles: ratón; **P** pausa, **ESC** vuelve al bar, **ESPACIO** arrea/chuta en los minijuegos.
+Controles: ratón; **P** pausa, **ESC** vuelve al bar, **ESPACIO** arrea/chuta; en el billar, ← → afinan la puntería.
 
 ## Pruebas
 
 ```bash
 tools/run_tests.sh          # lógica (headless)
-tools/run_tests.sh todas    # + capturas de todas las pantallas, 2 noches completas, futbolín
+tools/run_tests.sh todas    # + capturas de todas las pantallas, 2 noches completas, billar
 ```
 En Windows: `.\tools\run_tests.ps1` o `.\tools\run_tests.ps1 -Todas` (define `$env:GODOT` si Godot no está en el PATH). Las capturas salen en `game/tests/output/`.
 
