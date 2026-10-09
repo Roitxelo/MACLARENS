@@ -11,21 +11,22 @@ Dueño propuesto según `WORKFLOW.md`; se puede cambiar avisando aquí.
 | T01 | Probar jugando y calibrar los minijuegos: velocidad de la aguja del arreo (`race_screen.gd`), mirilla del penalti (`penalty_overlay.gd: SPEED`), dificultad del billar (tras T19) | Codex | Pendiente | El billar Nv1 se gana en 2-3 intentos, Nv3 cuesta; el arreo perfecto sale ~1 de cada 3 intentando; el penalti pegado al palo se consigue con práctica |
 | T02 | Audio básico: ambiente de bar, gol, silbato, salida de caballos, cartas, monedas, golpes de billar, clic de botones. Bus de música/efectos | Codex | Pendiente | Cada acción importante suena; volumen ajustable en código |
 | T03 | Export a Windows (preset + `.exe` en `builds/`, fuera del repo) | Codex | Pendiente | El `.exe` arranca en un PC sin Godot |
-| T04 | Primera noche guiada: mensajes contextuales la primera vez que se entra en cada sitio (qué hacer, controles) | Codex (UI) + Claude (textos) | Pendiente | Un jugador nuevo entiende máquina, arreo, penalti, cartas y tienda sin leer el GDD |
+| T04 | Primera noche guiada: destacar hotspots y mostrar mensajes contextuales la primera vez que se entra en cada sitio (qué hacer, controles) | Codex (UI) + Claude (textos) | Pendiente | Un jugador nuevo descubre qué es interactivo y entiende máquina, arreo, penalti, cartas y tienda sin leer el GDD ni la portada completa |
 | T05 | Equilibrio de la deuda: bot "jugador hábil" que simula noches (arreos buenos, contar cartas, presión) y mide si 500 € es alcanzable; ajustar `START_DEBT`/precios | Claude | Pendiente | Informe en `docs/design/BALANCE.md`: jugador al azar < 15 % de éxito, hábil 50-70 % |
 | T06 | Avisos (toasts) que tapan contenido en carrera, lobby del billar y bar: moverlos o dar zona propia por pantalla | Codex | Pendiente | Ninguna captura de `night_capture` tiene texto tapado |
 | T07 | Poder salir de una mano de cartas (el billar ya trae botón de rendirse, T19) (ESC con confirmación) | Codex | Pendiente | Salir no deja el reloj en pausa ni el dinero inconsistente |
 | T19 | Sustituir el futbolín por billar "Tiro imposible": Tino prepara tiros retorcidos (a banda, carambola, sin tocar la negra, tronera marcada) en series de 3; ganar 2 = ganas la apuesta. Objetos y corazonada nuevos | Claude | Hecho | Minijuego jugable, cada mesa con solución comprobada por un buscador automático, docs al día |
 | T08 | Prueba de regresión de economía: test que verifica pagos, cobro, racha (tope x1,5), herradura, seguro del Chencho y perdón de Tino | Claude | Pendiente | `tests/economy_test.tscn` en `tools/run_tests` |
+| T20 | Corregir desbordamientos de texto en libreta y resumen de apuesta hípica | Codex | Pendiente | Ningún texto se solapa ni deja símbolos en líneas aisladas en las capturas a 1280 × 720 |
 
 ## P1 — Pulido
 
 | Id | Tarea | Dueño | Estado |
 |---|---|---|---|
-| T09 | "Juice": contador de dinero animado, destello en goles, sacudida al ganar/perder, hover con sonido | Codex | Pendiente |
+| T09 | "Juice": contador de dinero animado que indique origen y signo, destello en goles, sacudida al ganar/perder, hover con sonido | Codex | Pendiente |
 | T10 | Feedback de la racha: aviso grande al subir y al romperse | Codex | Pendiente |
 | T11 | Resumen de cierre más rico: gráfica de dinero por hora y mejor jugada | Claude (datos) + Codex (UI) | Pendiente |
-| T12 | Arte: el arte de Lucía tiene "CONFIANZA" impreso que ya no significa nada; ilustración para la mesa del Chencho y el futbolín | Roi | Pendiente |
+| T12 | Arte: el arte de Lucía tiene "CONFIANZA" impreso que ya no significa nada; ilustración para la mesa del Chencho y el billar | Roi | Pendiente |
 | T13 | Opciones: volumen, pantalla completa, velocidad por defecto | Codex | Pendiente |
 | T14 | `machine_screen.gd` reconstruye la lista entera cuando cambia el estado; optimizar si se nota | Codex | Pendiente |
 | T15 | Textos: repasar tono cómico y erratas en todas las pantallas | Claude | Pendiente |
