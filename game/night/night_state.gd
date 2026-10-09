@@ -36,7 +36,6 @@ var over := false
 var pauses := {}
 var bets: Array = []
 var history: Array = []
-var hunches := {}                # "race_3" -> caballo empujado, "goal_match_0" -> true
 var penalties_used := {}         # match_id -> true
 var whips_used := {}             # race_index -> arreos gastados
 var perfect_whip := false        # corazonada: el siguiente arreo es perfecto
@@ -50,7 +49,6 @@ var _shop_minute := 0
 var streak := 0
 var streak_games: Array = []
 var sock_used := false
-var copa_paid := false
 var best_streak := 0
 var rng := RandomNumberGenerator.new()
 
@@ -72,14 +70,12 @@ func new_night(new_seed: int = -1) -> void:
 	pauses.clear()
 	bets.clear()
 	history.clear()
-	hunches.clear()
 	penalties_used.clear()
 	levels = {"buho": 1, "cortado": 1, "chencho": 1, "tino": 1}
 	trinkets.clear()
 	streak = 0
 	streak_games.clear()
 	sock_used = false
-	copa_paid = false
 	best_streak = 0
 	whips_used.clear()
 	perfect_whip = false

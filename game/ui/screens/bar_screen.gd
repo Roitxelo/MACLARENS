@@ -28,10 +28,10 @@ func _ready() -> void:
 	UIKit.hotspot(self, Rect2(741, 48, 213, 122), "TV 2 · Canal hípico").pressed.connect(func(): main.go("race_tv"))
 	UIKit.hotspot(self, Rect2(965, 200, 270, 230), "Máquina de apuestas").pressed.connect(func(): main.go("machine"))
 	UIKit.hotspot(self, Rect2(525, 505, 410, 175), "Diario Gol Local · cartelera").pressed.connect(func(): main.go("paper"))
-	UIKit.hotspot(self, Rect2(150, 530, 250, 150), "Tu libreta · gente, objetos y racha").pressed.connect(func(): main.go("contacts"))
+	UIKit.hotspot(self, Rect2(150, 530, 250, 150), "Tu libreta · gente, objetos y racha").pressed.connect(func(): main.go("notebook"))
 	UIKit.hotspot(self, Rect2(40, 222, 190, 260), "El Chencho · Mayor o menor (Nv%d)" % Night.level("chencho")).pressed.connect(func(): main.go("cards"))
-	UIKit.hotspot(self, Rect2(250, 185, 700, 240), "Futbolín del fondo · Tino (Nv%d)" % Night.level("tino")).pressed.connect(func(): main.go("rivals"))
-	UIKit.hotspot(self, Rect2(510, 62, 225, 110), "Barra de Lucía · rondas y objetos").pressed.connect(func(): main.go("lucia"))
+	UIKit.hotspot(self, Rect2(250, 185, 700, 240), "Futbolín del fondo · Tino (Nv%d)" % Night.level("tino")).pressed.connect(func(): main.go("futbolin_lobby"))
+	UIKit.hotspot(self, Rect2(510, 62, 225, 110), "Barra de Lucía · rondas y objetos").pressed.connect(func(): main.go("shop"))
 
 	ticket_label = UIKit.label("", 16, UIKit.SCREEN_TEXT, true)
 	ticket_label.add_theme_stylebox_override("normal", UIKit.box(Color(0.03, 0.08, 0.08, 0.88), UIKit.SCREEN_LINE, 2, 3, 8))

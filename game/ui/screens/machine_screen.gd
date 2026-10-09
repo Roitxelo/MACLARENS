@@ -17,13 +17,11 @@ var sel_race := -1
 var sel_horse := -1
 var horse_kind := "win"
 var perk_label: Label
-var penalty_button: Button
 var content: Control
 var tab_buttons := {}
 var status_label: Label
 var stake_label: Label
 var bet_button: Button
-var hunch_button: Button
 var hunch_label: Label
 var _signature := ""
 var _odds_buttons: Array = []    # [{button, match_id, pick}]
@@ -73,11 +71,6 @@ func _ready() -> void:
 	UIKit.place(bet_button, Rect2(SCREEN.position.x + 494, by + 2, 140, 44))
 	bet_button.pressed.connect(_place_bet)
 	add_child(bet_button)
-	hunch_button = UIKit.button("CORAZONADA", "gold", 18, true)
-	UIKit.place(hunch_button, Rect2(SCREEN.position.x + 640, by + 2, 96, 44))
-	hunch_button.tooltip_text = "Gasta 1 de suerte: una intuición que no miente"
-	hunch_button.pressed.connect(_use_hunch)
-	add_child(hunch_button)
 	hunch_label = UIKit.shadow(UIKit.label("", 18, UIKit.GOLD))
 	UIKit.place(hunch_label, Rect2(250, 616, 750, 50))
 	hunch_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -89,13 +82,6 @@ func _ready() -> void:
 	perk_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	perk_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(perk_label)
-	penalty_button = UIKit.button("¡PENALTI!", "green", 22, true)
-	UIKit.place(penalty_button, Rect2(1040, 540, 200, 56))
-	penalty_button.tooltip_text = "El Búho Nv3 pita un penalti a favor de tu equipo (una vez por partido)"
-	penalty_button.pressed.connect(func():
-		main.go("match_tv")
-		refresh())
-	add_child(penalty_button)
 	var back := UIKit.button("VOLVER AL BAR", "wood", 20)
 	UIKit.place(back, Rect2(24, 650, 200, 48))
 	back.pressed.connect(func(): main.go("bar"))
@@ -133,7 +119,6 @@ func _structure_signature() -> String:
 		parts.append(b["status"])
 	for r in Night.races.open_races(Night.minute(), 3):
 		parts.append(r["index"])
-	parts.append(Night.hunches.size())
 	return str(parts)
 
 func refresh() -> void:
@@ -395,8 +380,6 @@ func _update_bottom() -> void:
 		txt = "Cobra antes del final si la cosa se tuerce"
 	status_label.text = txt
 	bet_button.disabled = not can or Night.money < stake
-	penalty_button.visible = false
-	hunch_button.visible = false
 	match tab:
 		"football":
 			var lv := Night.level("buho")
@@ -424,5 +407,3 @@ func _place_bet() -> void:
 		sel_horse = -1
 	refresh()
 
-func _use_hunch() -> void:
-	pass

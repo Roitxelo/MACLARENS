@@ -10,9 +10,9 @@ const SCREENS := {
 	"match_tv": preload("res://ui/screens/match_tv_screen.gd"),
 	"race_tv": preload("res://ui/screens/race_screen.gd"),
 	"paper": preload("res://ui/screens/paper_screen.gd"),
-	"contacts": preload("res://ui/screens/contacts_screen.gd"),
-	"lucia": preload("res://ui/screens/lucia_screen.gd"),
-	"rivals": preload("res://ui/screens/rivals_screen.gd"),
+	"notebook": preload("res://ui/screens/notebook_screen.gd"),
+	"shop": preload("res://ui/screens/shop_screen.gd"),
+	"futbolin_lobby": preload("res://ui/screens/futbolin_lobby_screen.gd"),
 	"futbolin": preload("res://ui/minigames/futbolin.gd"),
 	"cards": preload("res://ui/minigames/mayor_menor.gd"),
 	"end": preload("res://ui/screens/end_screen.gd"),
@@ -70,7 +70,7 @@ func go(screen_name: String, args: Dictionary = {}) -> void:
 	current = screen
 	hud.visible = screen_name not in ["title", "end"]
 	hud.call("set_compact", screen_name in ["futbolin", "cards"])
-	toast_box.visible = screen_name not in ["title", "end", "contacts", "paper"]
+	toast_box.visible = screen_name not in ["title", "end", "notebook", "paper"]
 	fade.color.a = 0.7
 	create_tween().tween_property(fade, "color:a", 0.0, 0.25)
 	_on_changed()

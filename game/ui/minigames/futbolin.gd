@@ -326,7 +326,7 @@ func _finish() -> void:
 	var again := UIKit.button("REVANCHA", "red", 20)
 	UIKit.place(again, Rect2(650, 400, 210, 50))
 	again.disabled = Night.minutes_left() < MINUTES_COST or Night.over
-	again.pressed.connect(func(): main.go("rivals"))
+	again.pressed.connect(func(): main.go("futbolin_lobby"))
 	end_box.add_child(again)
 	hunch_btn.disabled = true
 	Night.check_broke()
