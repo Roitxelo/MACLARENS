@@ -12,8 +12,8 @@ const SCREENS := {
 	"paper": preload("res://ui/screens/paper_screen.gd"),
 	"notebook": preload("res://ui/screens/notebook_screen.gd"),
 	"shop": preload("res://ui/screens/shop_screen.gd"),
-	"futbolin_lobby": preload("res://ui/screens/futbolin_lobby_screen.gd"),
-	"futbolin": preload("res://ui/minigames/futbolin.gd"),
+	"billar_lobby": preload("res://ui/screens/billar_lobby_screen.gd"),
+	"billar": preload("res://ui/minigames/billar.gd"),
 	"cards": preload("res://ui/minigames/mayor_menor.gd"),
 	"end": preload("res://ui/screens/end_screen.gd"),
 }
@@ -69,8 +69,8 @@ func go(screen_name: String, args: Dictionary = {}) -> void:
 	screen_layer.add_child(screen)
 	current = screen
 	hud.visible = screen_name not in ["title", "end"]
-	hud.call("set_compact", screen_name in ["futbolin", "cards"])
-	toast_box.visible = screen_name not in ["title", "end", "notebook", "paper"]
+	hud.call("set_compact", screen_name in ["billar", "cards"])
+	toast_box.visible = screen_name not in ["title", "end", "notebook", "paper", "billar"]
 	fade.color.a = 0.7
 	create_tween().tween_property(fade, "color:a", 0.0, 0.25)
 	_on_changed()
@@ -111,5 +111,5 @@ func _on_night_over(reason: String) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_ESCAPE and current_name not in ["title", "end", "bar", "futbolin", "cards"]:
+		if event.keycode == KEY_ESCAPE and current_name not in ["title", "end", "bar", "billar", "cards"]:
 			go("bar")

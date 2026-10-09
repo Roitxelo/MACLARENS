@@ -36,10 +36,10 @@ func _ready() -> void:
 		"EL BÚHO te enseña quién aprieta en el partido y, en Nv3, te deja tirar un penalti.",
 		"EL CORTADO te deja arrear a tu caballo en plena carrera (timing).",
 		"EL CHENCHO juega a Mayor o menor: cuanto más borracho, peor cuenta las cartas.",
-		"TINO te reta al futbolín. Gánale y sube la apuesta... y baja tu deuda.",
+		"TINO te reta al billar: tiros imposibles. Gánale y sube la apuesta... y baja tu deuda.",
 		"LUCÍA · Rondas para subir de nivel a tu gente y objetos que mejoran tu juego.",
 		"RACHA · Gana seguido y el beneficio crece un poco (hasta x1,5).",
-		"SUERTE · Tres corazonadas: cámara lenta, arreo perfecto, engañar al portero, ver la carta.",
+		"SUERTE · Tres corazonadas: pulso firme, arreo perfecto, engañar al portero, ver la carta.",
 	])
 	UIKit.place(list, Rect2(430, 214, 790, 330))
 	list.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

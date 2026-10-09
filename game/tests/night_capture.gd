@@ -59,19 +59,21 @@ func _ready() -> void:
 	main.go("notebook")
 	await _wait(0.3)
 	await _shot("n11_libreta")
-	main.go("futbolin_lobby")
+	main.go("billar_lobby")
 	await _wait(0.3)
-	await _shot("n13_rivals")
-	main.go("futbolin", {"rival": {"id": "tino", "name": "Tino", "stake": 20, "skill": 0.3, "level": 1}, "autoplay": true})
-	await _wait(3.0)
-	await _shot("n14_futbolin")
-	var f = main.current
+	await _shot("n13_billar_lobby")
+	Night.trinkets.append("tiza")
+	main.go("billar", {"rival": {"id": "tino", "name": "Tino", "stake": 20, "level": 2}})
+	await _wait(0.4)
+	await _shot("n14_billar")
+	var g = main.current
+	g.autoplay = true
 	var t := 0.0
-	while f.state != "over" and t < 110.0:
-		await _wait(0.5)
-		t += 0.5
-	print("FUTBOLIN score ", f.score, " after ", t, "s  tino lv ", Night.level("tino"))
-	await _shot("n15_futbolin_end")
+	while g.state != "over" and t < 60.0:
+		await _wait(0.25)
+		t += 0.25
+	print("BILLAR aciertos ", g.made, " fallos ", g.missed, " tino lv ", Night.level("tino"))
+	await _shot("n15_billar_end")
 	Night.buy_round("chencho")
 	Night.buy_round("chencho")
 	main.go("cards")

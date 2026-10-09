@@ -18,7 +18,7 @@ Run-Test "night_sim_test" "NIGHT_SIM_OK" @("--headless")
 if ($Todas) {
     Run-Test "night_soak_test" "NIGHT_SOAK_OK" @()
     Run-Test "night_capture" "NIGHT_CAPTURE_OK" @()
-    Run-Test "futbolin_test" "FUTBOLIN_TEST_DONE" @()
+    Run-Test "billar_test" "BILLAR_TEST_OK" @()
     Write-Host "Capturas en game\tests\output\"
 }
 Pop-Location

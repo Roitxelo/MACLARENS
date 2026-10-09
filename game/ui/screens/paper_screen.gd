@@ -55,7 +55,7 @@ func _ready() -> void:
 		"El Búho lee los partidos: quien aprieta suele marcar antes de que la casa lo note.",
 		"El Cortado te deja arrear a tu caballo. Hay que tener pulso.",
 		"El Chencho calcula peor cuanto más bebe. Quien cuenta cartas, gana.",
-		"Tino acepta revancha al futbolín. Cuanto más le ganas, más se juega.",
+		"Tino prepara tiros imposibles en el billar. Cuanto más le ganas, más se juega.",
 	]
 	var tl := UIKit.label("\n".join(tips), 19, Color("#3b2a1a"))
 	UIKit.place(tl, Rect2(90, y, 530, 140))

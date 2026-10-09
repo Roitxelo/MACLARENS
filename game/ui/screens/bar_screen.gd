@@ -30,7 +30,7 @@ func _ready() -> void:
 	UIKit.hotspot(self, Rect2(525, 505, 410, 175), "Diario Gol Local · cartelera").pressed.connect(func(): main.go("paper"))
 	UIKit.hotspot(self, Rect2(150, 530, 250, 150), "Tu libreta · gente, objetos y racha").pressed.connect(func(): main.go("notebook"))
 	UIKit.hotspot(self, Rect2(40, 222, 190, 260), "El Chencho · Mayor o menor (Nv%d)" % Night.level("chencho")).pressed.connect(func(): main.go("cards"))
-	UIKit.hotspot(self, Rect2(250, 185, 700, 240), "Futbolín del fondo · Tino (Nv%d)" % Night.level("tino")).pressed.connect(func(): main.go("futbolin_lobby"))
+	UIKit.hotspot(self, Rect2(250, 185, 700, 240), "Billar del fondo · Tino (Nv%d)" % Night.level("tino")).pressed.connect(func(): main.go("billar_lobby"))
 	UIKit.hotspot(self, Rect2(510, 62, 225, 110), "Barra de Lucía · rondas y objetos").pressed.connect(func(): main.go("shop"))
 
 	ticket_label = UIKit.label("", 16, UIKit.SCREEN_TEXT, true)

@@ -24,7 +24,7 @@ if [[ "$mode" == "todas" ]]; then
   if [[ -z "${DISPLAY:-}" ]] && command -v xvfb-run >/dev/null; then PREFIX=(xvfb-run -a -s "-screen 0 1280x720x24"); fi
   run night_soak_test NIGHT_SOAK_OK --rendering-driver opengl3
   run night_capture NIGHT_CAPTURE_OK --rendering-driver opengl3
-  run futbolin_test FUTBOLIN_TEST_DONE --rendering-driver opengl3
+  run billar_test BILLAR_TEST_OK --rendering-driver opengl3
   echo "Capturas en game/tests/output/"
 fi
 exit $fail

@@ -77,7 +77,7 @@ func _ready() -> void:
 	UIKit.place(el, Rect2(664, 446, 540, 100))
 	el.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(el)
-	var combos := UIKit.label("Combos: lee la PRESIÓN y entra antes que la casa (Búho) · Gafas + Fusta: elige el caballo en forma y arréale bien · Chencho Nv3 + Chuleta: cuenta cartas contra un borracho · Portero + Mango + Tiza para tumbar a Tino Nv3.", 15, Color("#6b5236"))
+	var combos := UIKit.label("Combos: lee la PRESIÓN y entra antes que la casa (Búho) · Gafas + Fusta: elige el caballo en forma y arréale bien · Chencho Nv3 + Chuleta: cuenta cartas contra un borracho · Tiza + Taco + Guante para los imposibles de Tino.", 15, Color("#6b5236"))
 	UIKit.place(combos, Rect2(664, 556, 540, 70))
 	combos.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(combos)

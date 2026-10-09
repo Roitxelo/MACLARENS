@@ -37,30 +37,29 @@ const CHARACTERS := {
 		],
 	},
 	"tino": {
-		"name": "Tino", "game": "futbolin", "role": "Rival en el futbolín",
+		"name": "Tino", "game": "billar", "role": "Rival en el billar (tiro imposible)",
 		"rounds": [],
 		"levels": [
-			"Calentando: se juega 20 €.",
-			"En serio: se juega 40 € y juega mejor.",
-			"A muerte: se juega 60 €. La primera vez que le ganas, te perdona 100 € de deuda.",
+			"Tiros de calentamiento: se juega 20 €.",
+			"Tiros con truco (banda, carambola, pasillo): se juega 40 €.",
+			"Los imposibles de Tino: se juega 60 €. La primera serie que le ganas te perdona 100 € de deuda.",
 		],
 	},
 }
 
 const TINO_STAKES := [20, 40, 60]
-const TINO_SKILL := [0.30, 0.55, 0.80]
 const CHENCHO_MAX := [20, 40, 60]
 const CORTADO_WHIPS := [0, 3, 5]
 
 const TRINKETS := {
-	"portero": {"name": "Portero de plomo", "price": 25, "game": "futbolin",
-		"text": "Tu portero del futbolín es más ancho."},
-	"mango": {"name": "Mango de goma", "price": 25, "game": "futbolin",
-		"text": "Chut cargado: el clic dura más y la bola sale más fuerte."},
-	"tiza": {"name": "Tiza azul", "price": 20, "game": "futbolin",
-		"text": "La bola del futbolín va más lenta: más control para ti."},
-	"muneco": {"name": "Muñeco cojo", "price": 30, "game": "futbolin",
-		"text": "En el futbolín, tu primer gol vale doble."},
+	"tiza": {"name": "Tiza azul", "price": 20, "game": "billar",
+		"text": "En el billar, la guía muestra hacia dónde sale la bola tocada y el rebote en banda."},
+	"taco": {"name": "Taco de nácar", "price": 25, "game": "billar",
+		"text": "La barra de potencia sube más despacio: más control del golpe."},
+	"guante": {"name": "Guante de billar", "price": 20, "game": "billar",
+		"text": "Las flechas afinan la puntería cuatro veces más fino."},
+	"repeticion": {"name": "Bola de la suerte", "price": 30, "game": "billar",
+		"text": "Una vez por serie de billar puedes repetir un tiro fallado."},
 	"fusta": {"name": "Fusta nueva", "price": 25, "game": "horse",
 		"text": "+2 arreos por carrera y la zona verde es más ancha."},
 	"gafas": {"name": "Gafas de culo de vaso", "price": 25, "game": "horse",
@@ -83,7 +82,7 @@ const TRINKETS := {
 		"text": "Las rondas en la barra cuestan un 40 % menos."},
 }
 
-const GAME_NAMES := {"football": "Fútbol", "horse": "Caballos", "futbolin": "Futbolín", "cards": "Cartas"}
+const GAME_NAMES := {"football": "Fútbol", "horse": "Caballos", "billar": "Billar", "cards": "Cartas"}
 
 ## Racha: +0,1 al multiplicador del BENEFICIO por victoria previa, máx. x1,5.
 const STREAK_STEP := 0.1

@@ -1,13 +1,14 @@
 extends Control
 
-## Futbolín del fondo: Tino te espera. Cada vez que le ganas sube de nivel
-## (más dinero en juego y juega mejor). Ganarle en Nv3 rebaja la deuda.
+## Billar del fondo: Tino prepara "tiros imposibles". Una serie son 3 mesas
+## con una misión; si aciertas 2, ganas la apuesta y Tino sube de nivel.
+## Ganarle en Nv3 rebaja la deuda (una vez por noche).
 
 const BAR := preload("res://assets/concept/mclarens_bar_master_v1.png")
 const QUOTES := [
-	"\"¿Un futbolín? Venga, que estoy calentando. 20 € y no lloras.\"",
-	"\"Me has pillado antes. Ahora va en serio: 50 €.\"",
-	"\"A muerte. 100 €. Si me ganas, te perdono 100 € de lo que me debes.\"",
+	"\"Te pongo tres tiros. Si metes dos, te doy 20 €. Si no, me los das tú.\"",
+	"\"Ahora con truco: bandas, carambolas y pasillos. 40 €.\"",
+	"\"Los imposibles. 60 €. Si me metes dos, te perdono 100 € de lo que me debes.\"",
 ]
 
 var main: Control
@@ -20,11 +21,11 @@ func _ready() -> void:
 	dim.size = size
 	dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(dim)
-	var title := UIKit.shadow(UIKit.label("FUTBOLÍN DEL FONDO · TINO TE ESPERA", 34, UIKit.GOLD))
+	var title := UIKit.shadow(UIKit.label("BILLAR DEL FONDO · TIRO IMPOSIBLE", 34, UIKit.GOLD))
 	UIKit.place(title, Rect2(0, 112, 1280, 44))
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(title)
-	var sub := UIKit.shadow(UIKit.label("A 3 goles o 100 segundos. Mueve el ratón arriba y abajo para mover tus barras; haz clic para chutar fuerte. Cada partida dura 20 min de reloj.", 18, UIKit.CREAM))
+	var sub := UIKit.shadow(UIKit.label("Tino te prepara 3 mesas con una misión cada una; mete 2 y ganas. Apunta con el ratón (← → para afinar), mantén el clic para cargar y suelta. Cada serie dura 20 min de reloj.", 18, UIKit.CREAM))
 	UIKit.place(sub, Rect2(140, 158, 1000, 50))
 	sub.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -52,12 +53,12 @@ func _ready() -> void:
 	q.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(q)
 	var stake: int = Catalog.TINO_STAKES[lv - 1]
-	var b := UIKit.button("JUGAR POR %d €" % stake, "red", 24)
+	var b := UIKit.button("ACEPTAR POR %d €" % stake, "red", 24)
 	UIKit.place(b, Rect2(500, 548, 280, 56))
 	b.disabled = Night.money < stake or Night.minutes_left() < 20
 	if Night.money < stake:
 		b.tooltip_text = "No tienes bastante para cubrir la apuesta"
-	b.pressed.connect(func(): main.go("futbolin", {"rival": {"id": "tino", "name": "Tino", "stake": stake, "skill": Catalog.TINO_SKILL[lv - 1], "level": lv}}))
+	b.pressed.connect(func(): main.go("billar", {"rival": {"id": "tino", "name": "Tino", "stake": stake, "level": lv}}))
 	add_child(b)
 	var back := UIKit.button("MEJOR NO", "wood", 20)
 	UIKit.place(back, Rect2(24, 656, 200, 46))
