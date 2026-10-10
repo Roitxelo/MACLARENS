@@ -31,6 +31,8 @@ var cash_btn: Button
 var hunch_btn: Button
 var deal_btn: Button
 var odds_label: Label
+var back_btn: Button
+var exit_confirm: Control
 
 func _ready() -> void:
 	rng.randomize()
@@ -110,11 +112,11 @@ func _ready() -> void:
 	hunch_btn.pressed.connect(_hunch)
 	play_row.add_child(hunch_btn)
 
-	var back := UIKit.button("LEVANTARSE", "wood", 20)
-	UIKit.place(back, Rect2(40, 656, 200, 46))
-	back.name = "Back"
-	back.pressed.connect(func(): main.go("bar"))
-	add_child(back)
+	back_btn = UIKit.button("LEVANTARSE", "wood", 20)
+	UIKit.place(back_btn, Rect2(40, 656, 200, 46))
+	back_btn.name = "Back"
+	back_btn.pressed.connect(_request_exit)
+	add_child(back_btn)
 	speech.text = ["¡Hombre! Siéntate. ¿Unas cartitas? Yo invito... bueno, invitas tú.", "Hip. Hoy estoy que me salgo. Que se me sale el dinero, digo.", "¿Tú eres uno o dos? Da igual, reparte."][_lv() - 1]
 	speech.text += "  (Nv%d · mesa de %d €%s)" % [_lv(), _max_stake(), " · con seguro" if _lv() >= 2 else ""]
 	_set_playing(false)
@@ -127,7 +129,7 @@ func _set_playing(on: bool) -> void:
 	playing = on
 	stake_row.visible = not on
 	play_row.visible = on
-	get_node("Back").disabled = on
+	back_btn.text = "SALIR DE LA MANO" if on else "LEVANTARSE"
 	stake = clampi(stake, 5, clampi(Night.money, 5, _max_stake()))
 	stake_label.text = "%d €" % stake
 	deal_btn.disabled = Night.money < 5 or Night.minutes_left() < MINUTES_COST or Night.over
@@ -314,6 +316,73 @@ func _hunch() -> void:
 	speech.text = "Mientras el Chencho bebe, ves de reojo la siguiente carta..."
 	_update_labels()
 	queue_redraw()
+
+func _request_exit() -> void:
+	if not playing:
+		main.go("bar")
+		return
+	if is_instance_valid(exit_confirm):
+		return
+	exit_confirm = Control.new()
+	exit_confirm.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	exit_confirm.mouse_filter = Control.MOUSE_FILTER_STOP
+	exit_confirm.z_index = 100
+	add_child(exit_confirm)
+
+	var shade := ColorRect.new()
+	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	shade.color = Color(0.02, 0.01, 0.01, 0.78)
+	shade.mouse_filter = Control.MOUSE_FILTER_STOP
+	exit_confirm.add_child(shade)
+
+	var panel := UIKit.panel(exit_confirm, Rect2(350, 224, 580, 272), Color("#24180f"), UIKit.GOLD, 3)
+	panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	var title := UIKit.shadow(UIKit.label("¿ABANDONAR LA MANO?", 30, UIKit.CREAM))
+	UIKit.place(title, Rect2(380, 254, 520, 42))
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	exit_confirm.add_child(title)
+	var warning := UIKit.label("Perderás el bote de %d € y volverás al bar.\nEl reloj continuará desde donde estaba." % pot, 21, Color("#e6d7bd"))
+	UIKit.place(warning, Rect2(395, 310, 490, 62))
+	warning.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	warning.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	warning.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	exit_confirm.add_child(warning)
+	var continue_btn := UIKit.button("SEGUIR JUGANDO", "green", 19)
+	UIKit.place(continue_btn, Rect2(390, 406, 230, 58))
+	continue_btn.pressed.connect(_close_exit_confirm)
+	exit_confirm.add_child(continue_btn)
+	var abandon_btn := UIKit.button("PERDER %d € Y SALIR" % pot, "red", 19)
+	UIKit.place(abandon_btn, Rect2(660, 406, 230, 58))
+	abandon_btn.pressed.connect(_abandon_hand)
+	exit_confirm.add_child(abandon_btn)
+
+func _close_exit_confirm() -> void:
+	if is_instance_valid(exit_confirm):
+		exit_confirm.queue_free()
+	exit_confirm = null
+
+func _abandon_hand() -> void:
+	if not playing:
+		_close_exit_confirm()
+		return
+	Night.register_loss("cards")
+	Night.log_moment("Mayor o menor: abandonas la mano", -stake)
+	pot = 0
+	peek = false
+	playing = false
+	Night.set_pause("minigame", false)
+	_close_exit_confirm()
+	Night.check_broke()
+	main.go("bar")
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if not event.pressed or event.echo or (event as InputEventKey).keycode != KEY_ESCAPE:
+		return
+	get_viewport().set_input_as_handled()
+	if is_instance_valid(exit_confirm):
+		_close_exit_confirm()
+	else:
+		_request_exit()
 
 func _exit_tree() -> void:
 	Night.set_pause("minigame", false)

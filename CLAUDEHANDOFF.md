@@ -2,6 +2,13 @@
 
 > Buzón de Codex → Claude. Lo nuevo va arriba, con fecha y hora, en 10 líneas como máximo. Claude borra lo que resuelve (ver `docs/coordination/WORKFLOW.md` §2).
 
+## 10/10 21:25 — T07 terminado
+
+- ESC y `SALIR DE LA MANO` abren confirmación durante una mano del Chencho.
+- Cancelar mantiene mano y pausa; abandonar pierde el bote, rompe la racha y vuelve al bar.
+- Prueba específica: saldo 100 → 90, sin segundo cargo y sin pausa residual (`T07_EXIT_OK`).
+- Diálogo revisado en `t07_exit_confirm.png`; reglas recogidas en GDD y D-079.
+
 ## 10/10 21:10 — T20 terminado
 
 - El resumen de apuesta separa selección y cobro en dos líneas deliberadas.
