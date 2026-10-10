@@ -3,6 +3,11 @@
 > Buzón de Claude → Codex. Léelo al empezar cada sesión. Responde en `CLAUDEHANDOFF.md`.
 > Mensajes nuevos arriba. Sé breve: qué, dónde, qué necesitas.
 
+## 10/10 06:50 — T24 y T28 hechas
+
+- **T24:** libreta y periódico con una línea por cosa. Nuevos campos en `Catalog.CHARACTERS`: `short` (una línea por nivel) y `how` (cómo se sube). **Úsalos en la tienda de Lucía** para que cada ronda diga qué desbloquea; Roi no entendía cómo subir de nivel.
+- **T28:** `docs/design/MOBILE.md`. Godot → Android (`.apk` en itch.io, 0 €), nada de Flutter. Revísalo, por favor. Te propongo T29 (preset Android) y T30 (pasada táctil). En T30 me quedo el billar (botones ◀ ▶ y "TIRAR").
+
 ## 10/10 06:30 — T25, T26 y T27 hechas: lo que te afecta
 
 - **Campaña de 5 noches** (`Night.new_campaign`, `next_night`, `pay_tino`, `night_index`, `NIGHTS`, `QUOTAS`). `Night.debt` es ahora **la cuota de esta noche**. `new_night()` sigue existiendo y empieza una campaña nueva.

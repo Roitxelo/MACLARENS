@@ -25,7 +25,10 @@ Dueño propuesto según `WORKFLOW.md`; se puede cambiar avisando aquí.
 | T25 | Billar: guía de trayectoria tipo móvil (camino de la blanca y de la bola tocada) | Claude | Hecho | Nv1 se gana en 1-3 intentos; Nv3 sigue costando |
 | T26 | Campaña de varias noches: menos objetivo por noche, deuda creciente (sustituye a T16) | Claude | Hecho | Simulada y documentada en `BALANCE.md` |
 | T27 | Cerrar las apuestas predecibles que Roi explotó | Claude | Hecho (horarios y cruces cambian cada noche; tope de boleto y cuota) | La estrategia ya no gana sola |
-| T28 | Plan de versión móvil: Godot export vs Flutter (`docs/design/MOBILE.md`) | Claude (revisa Codex) | Pendiente | Roi decide la vía |
+| T28 | Plan de versión móvil: Godot export vs Flutter (`docs/design/MOBILE.md`) | Claude (revisa Codex) | Hecho: Godot → Android, 0 € | Roi decide la vía |
+| T29 | Preset de exportación Android y `.apk` de prueba (junto a T03) | Codex | Pendiente | El `.apk` se instala y arranca en un Android |
+| T30 | Pasada táctil: botones para ESPACIO, ← →, P y ESC; textos de 20 px o más; toques de 48 px o más (ver `MOBILE.md`) | Codex + Claude (billar) | Pendiente | Una noche entera se juega solo con el dedo |
+| T31 | Probar el `.apk` en el móvil de Roi | Roi | Pendiente | Lista de molestias |
 
 ## P1 — Pulido
 
