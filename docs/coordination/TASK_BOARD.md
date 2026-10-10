@@ -15,7 +15,7 @@ Congelado: no entra nada nuevo, solo bloqueos, incoherencias de la economía y t
 | C03 | Prueba automática de la campaña: pagar, pasar de noche conservando dinero, niveles y objetos, y que la quinta noche cierre | Claude | Hecho | `campaign_test` en `tools/run_tests` (rápidas) |
 | C04 | Textos de la pantalla final como datos ("Empezaste con", "Al cierre", "Tino cobra", "Te quedan") | Claude | Hecho | En `game/data/texts.gd`; aviso a Codex |
 | X01 | Jugar una campaña completa (o hasta perder), revisar todas las capturas y apuntar problemas por noche y pantalla | Codex | Hecho | `docs/reviews/PLAYTEST_02_CODEX.md` |
-| X02 | Montar en la pantalla final los textos de C04 (la pantalla pasa a Codex) | Codex | Pendiente | El cierre se entiende sin leer el código |
+| X02 | Montar en la pantalla final los textos de C04 (la pantalla pasa a Codex) | Codex | Hecho | El cierre se entiende sin leer el código |
 | X05 | Limpiar los avisos al cambiar de noche | Codex | Pendiente | La noche empieza a las 18:00 sin mensajes caducados de la anterior |
 
 ## H1 — Que se entienda (tras jugar H0)

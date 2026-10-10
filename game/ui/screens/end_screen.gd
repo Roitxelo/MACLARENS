@@ -15,8 +15,8 @@ func _ready() -> void:
 	var bank := Night.money
 	var quota := Night.debt
 	var paid := Night.pay_tino()
+	var summary := GameTexts.end_summary(bank, quota, paid, reason)
 	var last := Night.is_last_night()
-	var night_no := Night.night_index + 1
 	# Reloj del arte: hora real del cierre
 	UIKit.panel(self, Rect2(1040, 82, 172, 54), Color("#0d120d"))
 	var clock := UIKit.label(Night.clock_text(), 46, Color("#7dff8a"), true)
@@ -26,21 +26,23 @@ func _ready() -> void:
 	# Hoja de la libreta
 	var page := UIKit.panel(self, Rect2(428, 138, 400, 398), Color("#e9dcbc"))
 	page.add_theme_stylebox_override("panel", UIKit.box(Color("#e9dcbc"), Color("#b8a27a"), 2, 2))
-	var head := UIKit.label("NOCHE %d DE %d" % [night_no, Night.NIGHTS], 30, UIKit.PAPER_RED)
+	var head := UIKit.label(summary["head"], 30, UIKit.PAPER_RED)
 	UIKit.place(head, Rect2(440, 146, 380, 40))
 	head.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(head)
-	var won := 0
-	var lost := 0
-	for b in Night.bets:
-		if b["status"] == "won" or b["status"] == "cashed":
-			won += 1
-		elif b["status"] == "lost":
-			lost += 1
-	var body := "LLEGASTE CON   %d €\nTINO COBRA     %d €\nTE QUEDAN      %d €\n\nGanado hoy     %+d €\nMejor racha      %d" % [Night.night_start_money, quota, Night.money if paid else bank, bank - Night.night_start_money, Night.best_streak]
-	var bl := UIKit.label(body, 26, UIKit.PAPER_INK, true)
-	UIKit.place(bl, Rect2(456, 192, 360, 180))
-	add_child(bl)
+	var row_y := 192.0
+	for row in summary["rows"]:
+		var row_label := UIKit.label(str(row[0]), 22, UIKit.PAPER_INK, true)
+		UIKit.place(row_label, Rect2(456, row_y, 220, 30))
+		add_child(row_label)
+		var row_value := UIKit.label(str(row[1]), 22, UIKit.PAPER_INK, true)
+		UIKit.place(row_value, Rect2(676, row_y, 124, 30))
+		row_value.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		add_child(row_value)
+		row_y += 32
+	var today := UIKit.label("%s     Mejor racha: %d" % [summary["today"], Night.best_streak], 18, UIKit.PAPER_INK, true)
+	UIKit.place(today, Rect2(456, 324, 344, 30))
+	add_child(today)
 	var moments: Array = Night.history.filter(func(h): return int(h["delta"]) > 0)
 	moments.sort_custom(func(a, b): return int(a["delta"]) > int(b["delta"]))
 	var mlines: Array = []
@@ -50,27 +52,13 @@ func _ready() -> void:
 	UIKit.place(ml, Rect2(452, 378, 366, 70))
 	ml.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(ml)
-	var verdict := ""
-	if paid and last:
-		verdict = "¡LIBRE! Tino cobra lo último."
-	elif paid:
-		verdict = "PAGADO. Mañana: %d €." % Night.QUOTAS[Night.night_index + 1]
-	elif reason == "broke":
-		verdict = "Sin blanca antes de las 02:00."
-	else:
-		verdict = "Faltan %d €." % (quota - bank)
-	var vl := UIKit.label(verdict, 26, Color("#2f6b2a") if paid else UIKit.PAPER_RED)
+	var vl := UIKit.label(summary["verdict"], 26, Color("#2f6b2a") if paid else UIKit.PAPER_RED)
 	UIKit.place(vl, Rect2(440, 470, 380, 40))
 	vl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(vl)
 	# Nota de Tino sobre la polaroid
 	UIKit.panel(self, Rect2(948, 312, 202, 116), Color("#ece4d2"))
-	var quote := "Tranquilo. Me quedo la bici, la tele y tu dignidad."
-	if paid and last:
-		quote = "Cuenta saldada. Ha sido un placer... casi siempre."
-	elif paid:
-		quote = "Hoy cumples. Mañana vuelvo, y traigo la libreta."
-	var ql := UIKit.label(quote + "\n— Tino", 18, Color("#2a2a2a"))
+	var ql := UIKit.label(summary["quote"] + "\n— Tino", 18, Color("#2a2a2a"))
 	ql.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	UIKit.place(ql, Rect2(956, 322, 186, 104))
 	ql.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -78,7 +66,7 @@ func _ready() -> void:
 	add_child(ql)
 	# Botones nuevos sobre los impresos
 	var go_on := paid and not last
-	var again := UIKit.button("SIGUIENTE NOCHE" if go_on else "EMPEZAR DE NUEVO", "wood", 30)
+	var again := UIKit.button(summary["button"], "wood", 30)
 	UIKit.place(again, Rect2(200, 600, 392, 90))
 	again.pressed.connect(func():
 		if go_on:
@@ -92,10 +80,7 @@ func _ready() -> void:
 	UIKit.place(quit, Rect2(628, 600, 412, 90))
 	quit.pressed.connect(func(): get_tree().quit())
 	add_child(quit)
-	var title := "TINO NO ESTÁ CONTENTO"
-	if paid:
-		title = "¡HAS SALDADO LA DEUDA!" if last else "TINO COBRA. SIGUES VIVO."
-	var banner := UIKit.shadow(UIKit.label(title, 40, UIKit.GOLD if paid else Color("#ff8a70")))
+	var banner := UIKit.shadow(UIKit.label(summary["banner"], 40, UIKit.GOLD if paid else Color("#ff8a70")))
 	UIKit.place(banner, Rect2(0, 20, 1280, 50))
 	banner.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(banner)

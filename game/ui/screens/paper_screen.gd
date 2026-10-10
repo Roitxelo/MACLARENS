@@ -51,11 +51,7 @@ func _ready() -> void:
 		add_child(st)
 		y += 76
 	y = _section("ESTA NOCHE", 90, y + 10)
-	var tips := [
-		"Noche %d de %d. Tino cobra %d € a las 02:00." % [Night.night_index + 1, Night.NIGHTS, Night.debt],
-		"Mañana cobrará %d €." % Night.QUOTAS[Night.night_index + 1] if not Night.is_last_night() else "Es la última: paga y eres libre.",
-		"Boletos de hasta 50 €. Tino juega 3 series de billar.",
-	]
+	var tips := GameTexts.tonight_lines()
 	var tl := UIKit.label("\n".join(tips), 20, Color("#3b2a1a"))
 	UIKit.place(tl, Rect2(90, y, 530, 140))
 	tl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
