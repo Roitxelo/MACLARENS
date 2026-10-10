@@ -127,7 +127,8 @@ func _ready() -> void:
 	mesa._abandon_hand()
 	await get_tree().process_frame
 	check(Night.money == money_in_hand and money_in_hand == 480, "abandonar la mano no devuelve ni cobra nada (%d)" % Night.money)
-	check(not Night.pauses.has("minigame") and main.current_name == "bar", "abandonar quita la pausa y vuelve al bar")
+	# Review 04 / X09: las cartas están en el salón y se vuelve allí.
+	check(not Night.pauses.has("minigame") and main.current_name in ["salon", "bar"], "abandonar quita la pausa y sale de la mesa (%s)" % main.current_name)
 
 	# --- Tienda con límites (C08)
 	fresh()
@@ -138,6 +139,17 @@ func _ready() -> void:
 	check(GameTexts.trinket_block_reason() != "" and GameTexts.round_block_reason("cortado") == "Ya ha bebido hoy", "la tienda sabe decir por qué no se puede comprar")
 	Night.next_night()
 	check(Night.round_available("cortado") and Night.trinkets_left_today() == Catalog.TRINKETS_PER_NIGHT, "los límites se reinician cada noche")
+
+	# --- Vender objetos a Lucía (C10)
+	fresh()
+	Night.trinkets.append("trebol")
+	Night.max_luck = Night.BASE_LUCK + 1
+	Night.luck = Night.max_luck
+	var before_sell := Night.money
+	var sold := Night.sell_trinket("trebol")
+	check(sold == Catalog.sell_price("trebol") and sold > 0 and Night.money == before_sell + sold, "vender devuelve la mitad del precio (%d €)" % sold)
+	check(not Night.has_trinket("trebol") and Night.max_luck == Night.BASE_LUCK and Night.luck <= Night.max_luck, "vender el trébol quita la corazonada extra")
+	check(Night.sell_trinket("tiza") == 0, "no se vende lo que no tienes")
 
 	print("ECONOMY_TEST_OK" if fails.is_empty() else "ECONOMY_TEST_FAIL %s" % str(fails))
 	get_tree().quit()

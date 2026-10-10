@@ -12,6 +12,11 @@ const MAX_TRINKETS := 5
 ## noche, y como mucho TRINKETS_PER_NIGHT objetos por noche.
 const TRINKETS_PER_NIGHT := 2
 const REROLL_PRICE := 10
+## Lucía recompra los objetos a la mitad de su precio (C10, review 04).
+const SELL_FACTOR := 0.5
+
+static func sell_price(id: String) -> int:
+	return int(floor(float(TRINKETS[id]["price"]) * SELL_FACTOR / 5.0)) * 5
 
 const CHARACTERS := {
 	"buho": {

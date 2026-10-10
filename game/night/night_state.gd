@@ -292,6 +292,22 @@ func _restock() -> void:
 		shop.append(k)
 	changed.emit()
 
+## Vende un objeto a Lucía (mitad de precio). Libera el hueco; no devuelve
+## las compras del día. Devuelve lo cobrado (0 si no se pudo).
+func sell_trinket(id: String) -> int:
+	if not trinkets.has(id):
+		return 0
+	var price := Catalog.sell_price(id)
+	trinkets.erase(id)
+	if id == "trebol":
+		max_luck = maxi(BASE_LUCK, max_luck - 1)
+		luck = mini(luck, max_luck)
+	earn(price)
+	log_moment("Vendes %s a Lucía" % Catalog.TRINKETS[id]["name"], price)
+	toast.emit("Lucía te da %d € por %s" % [price, Catalog.TRINKETS[id]["name"]], "info")
+	changed.emit()
+	return price
+
 func reroll_shop() -> bool:
 	if not spend(Catalog.REROLL_PRICE):
 		return false

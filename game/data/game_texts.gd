@@ -129,6 +129,10 @@ static func trinket_block_reason() -> String:
 		return "Lucía no saca más hasta mañana"
 	return ""
 
+## Botón de vender un objeto en la barra o la libreta.
+static func sell_label(id: String) -> String:
+	return "VENDER · %d €" % Catalog.sell_price(id)
+
 ## Línea de la barra: cuántos objetos quedan hoy.
 static func shop_limits_line() -> String:
 	return "Hoy: %d de %d objetos · una ronda por cabeza" % [Night.trinkets_left_today(), Catalog.TRINKETS_PER_NIGHT]
