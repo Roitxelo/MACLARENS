@@ -27,6 +27,9 @@ func _ready() -> void:
 	check(Night.cashout_value(bet) == 9, "cobro anticipado con comisión del 10 %% (cuota sin cambios): %d" % Night.cashout_value(bet))
 	Night.levels["buho"] = 2
 	check(Night.cashout_value(bet) == 10, "Búho Nv2: cobro sin comisión")
+	m["odds"]["1"] = odds * 0.8
+	var sale_value := Night.cashout_value(bet)
+	check(sale_value == int(round(10.0 / 0.8)) and sale_value > 10, "venta en directo: una cuota un 20 %% mejor aumenta el valor a %d €" % sale_value)
 	var sim: MatchSimulator = m["sim"]
 	sim.home_score = 2
 	sim.away_score = 0

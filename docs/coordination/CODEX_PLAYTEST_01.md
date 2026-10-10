@@ -41,7 +41,11 @@ No llegué a 500 €. La noche empezó con 100 €, probé una ronda del Cortado
 
 ## Notas de Roi
 
-No se recibieron notas adicionales de Roi en esta conversación antes de cerrar el informe. La sección queda identificada para incorporarlas sin mezclarlas con observaciones propias. Los hallazgos de este playtest ya se convierten en T04, T06, T07, T09 y T20 en el tablero.
+- La noche resulta algo caótica y debería ser más fácil saber qué seguir en cada momento.
+- El objetivo de 500 € parece demasiado difícil. Roi confirma la opción 2+3 del informe de equilibrio: 200 € iniciales y más ventaja para la habilidad.
+- Las apuestas de fútbol deben poder venderse durante el directo como una posición de mercado, cobrando el valor que hayan ganado o perdido según la cuota actual. La regla ya existía; se hará visible como venta en directo con valor y beneficio/pérdida.
+
+Estas notas se convierten en T04, T05 y T21, además de los hallazgos T06, T07, T09 y T20 del playtest.
 
 ## Propuesta de las 5 siguientes tareas para ti
 

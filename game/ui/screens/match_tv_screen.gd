@@ -99,6 +99,7 @@ func refresh() -> void:
 		for b in mine:
 			var row := UIKit.button("", "green" if b["status"] == "open" else "teal", 19, true)
 			row.custom_minimum_size = Vector2(350, 36)
+			row.tooltip_text = "Vende la apuesta al valor que marque la cuota en directo"
 			row.set_meta("bet", b)
 			row.pressed.connect(func():
 				if b["status"] == "open":
@@ -108,7 +109,8 @@ func refresh() -> void:
 		var b: Dictionary = row.get_meta("bet")
 		if b["status"] == "open":
 			var v := Night.cashout_value(b)
-			row.text = "%s %d € @ %.2f · COBRAR %d €" % [Night.football.pick_label(m, b["pick"]), b["stake"], b["odds"], v]
+			var profit := v - int(b["stake"])
+			row.text = "%s %d € @ %.2f · VENDER %d € (%+d)" % [Night.football.pick_label(m, b["pick"]), b["stake"], b["odds"], v, profit]
 			row.disabled = v <= 0
 		else:
 			row.text = "%s · %s" % [b["label"], {"won": "GANADO", "lost": "PERDIDO", "cashed": "COBRADO"}.get(b["status"], "")]

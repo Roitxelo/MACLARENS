@@ -233,7 +233,9 @@ func _update_live() -> void:
 		o["button"].text = "%s  %s\n%.2f%s" % [pick, name_s, m["odds"][pick], _odds_delta(m, pick)]
 	for c in _cash_buttons:
 		var v := Night.cashout_value(c["bet"])
-		c["button"].text = "COBRAR %d €" % v
+		var profit := v - int(c["bet"]["stake"])
+		c["button"].text = "VENDER %d €  (%+d)" % [v, profit]
+		c["button"].tooltip_text = "Valor en directo según la cuota actual; entre paréntesis, beneficio o pérdida"
 		c["button"].disabled = v <= 0
 
 # --- Caballos ----------------------------------------------------------------
@@ -334,8 +336,9 @@ func _build_tickets() -> void:
 		l.clip_text = true
 		content.add_child(l)
 		if b["status"] == "open" and b["type"] == "football":
-			var cb := UIKit.button("COBRAR", "green", 20, true)
+			var cb := UIKit.button("VENDER", "green", 20, true)
 			UIKit.place(cb, Rect2(SCREEN.end.x - 220, y - 2, 200, 34))
+			cb.tooltip_text = "Vende la apuesta al valor que marque la cuota en directo"
 			cb.pressed.connect(func():
 				Night.cashout(b)
 				refresh())

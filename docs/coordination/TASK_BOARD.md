@@ -11,13 +11,14 @@ Dueño propuesto según `WORKFLOW.md`; se puede cambiar avisando aquí.
 | T01 | Probar jugando y calibrar los minijuegos: velocidad de la aguja del arreo (`race_screen.gd`), mirilla del penalti (`penalty_overlay.gd: SPEED`), dificultad del billar (tras T19) | Codex | Pendiente | El billar Nv1 se gana en 2-3 intentos, Nv3 cuesta; el arreo perfecto sale ~1 de cada 3 intentando; el penalti pegado al palo se consigue con práctica |
 | T02 | Audio básico: ambiente de bar, gol, silbato, salida de caballos, cartas, monedas, golpes de billar, clic de botones. Bus de música/efectos | Codex | Pendiente | Cada acción importante suena; volumen ajustable en código |
 | T03 | Export a Windows (preset + `.exe` en `builds/`, fuera del repo) | Codex | Pendiente | El `.exe` arranca en un PC sin Godot |
-| T04 | Primera noche guiada: destacar hotspots y mostrar mensajes contextuales la primera vez que se entra en cada sitio (qué hacer, controles) | Codex (UI) + Claude (textos) | Pendiente | Un jugador nuevo descubre qué es interactivo y entiende máquina, arreo, penalti, cartas y tienda sin leer el GDD ni la portada completa |
-| T05 | Equilibrio de la deuda: bot "jugador hábil" que simula noches (arreos buenos, contar cartas, presión) y mide si 500 € es alcanzable; ajustar `START_DEBT`/precios | Claude | Bloqueado (decisión de Roi: ver opciones en `docs/design/BALANCE.md`) | Informe en `docs/design/BALANCE.md`: jugador al azar < 15 % de éxito, hábil 50-70 % |
-| T06 | Avisos (toasts) que tapan contenido en carrera, lobby del billar y bar: moverlos o dar zona propia por pantalla | Codex | En curso (Codex) | Ninguna captura de `night_capture` tiene texto tapado |
+| T04 | Primera noche guiada: reducir el caos, destacar la siguiente acción y los hotspots, y mostrar ayuda contextual al entrar en cada sitio | Codex (UI) + Claude (textos) | Pendiente | Un jugador nuevo sabe qué atender ahora y entiende máquina, arreo, penalti, cartas y tienda sin leer el GDD ni la portada completa |
+| T05 | Equilibrio de la deuda: aplicar la decisión 2+3 (200 € iniciales, arreo perfecto, baraja persistente Nv3 y segundo partido con más presión) y repetir la simulación | Claude + Codex | En curso (Codex) | Informe actualizado en `docs/design/BALANCE.md`: jugador al azar < 15 % de éxito, hábil 50-70 % |
+| T06 | Avisos (toasts) que tapan contenido en carrera, lobby del billar y bar: moverlos o dar zona propia por pantalla | Codex | Hecho | Ninguna captura de `night_capture` tiene texto tapado |
 | T07 | Poder salir de una mano de cartas (el billar ya trae botón de rendirse, T19) (ESC con confirmación) | Codex | Pendiente | Salir no deja el reloj en pausa ni el dinero inconsistente |
 | T19 | Sustituir el futbolín por billar "Tiro imposible": Tino prepara tiros retorcidos (a banda, carambola, sin tocar la negra, tronera marcada) en series de 3; ganar 2 = ganas la apuesta. Objetos y corazonada nuevos | Claude | Hecho | Minijuego jugable, cada mesa con solución comprobada por un buscador automático, docs al día |
 | T08 | Prueba de regresión de economía: test que verifica pagos, cobro, racha (tope x1,5), herradura, seguro del Chencho y perdón de Tino | Claude | Hecho | `tests/economy_test.tscn` en `tools/run_tests` |
 | T20 | Corregir desbordamientos de texto en libreta y resumen de apuesta hípica | Codex | Pendiente | Ningún texto se solapa ni deja símbolos en líneas aisladas en las capturas a 1280 × 720 |
+| T21 | Venta en directo de apuestas de fútbol: hacer visible el valor de mercado y el beneficio/pérdida en máquina y TV | Codex | Hecho | Un ticket abierto se puede vender desde máquina o TV y muestra importe total y resultado neto según la cuota actual |
 
 ## P1 — Pulido
 
@@ -41,7 +42,6 @@ Dueño propuesto según `WORKFLOW.md`; se puede cambiar avisando aquí.
 
 ## Errores conocidos
 
-- Los avisos de la izquierda tapan parte de algunas pantallas (T06).
 - Sin sonido (T02).
 - El equilibrio no se ha probado con jugadores reales (T01, T05).
 
