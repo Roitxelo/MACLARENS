@@ -7,7 +7,7 @@ extends RefCounted
 ## "en forma" sin que la casa lo sepa (las Gafas de culo de vaso lo revelan).
 ## La carrera se simula en directo: cada caballo avanza según su nota real y
 ## una forma que fluctúa. El jugador puede ARREAR a su caballo (minijuego de
-## timing en la TV 2): un arreo bueno lo acelera un momento; uno malo lo frena.
+## timing en la tele del salón): un arreo bueno lo acelera un momento; uno malo lo frena.
 
 const RACE_COUNT := 10
 const MAX_ODDS := 15.0

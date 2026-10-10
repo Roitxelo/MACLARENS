@@ -383,7 +383,7 @@ func place_football(match_id: String, pick: String, stake: int) -> bool:
 		"label": "%s · %s" % [football.pick_label(m, pick), _short_match(m)],
 		"placed_at": clock_text(),
 	})
-	toast.emit("Ticket: %s @ %.2f (%d €)" % [football.pick_label(m, pick), odds, stake], "ticket")
+	toast.emit("Boleto: %s @ %.2f (%d €)" % [football.pick_label(m, pick), odds, stake], "ticket")
 	return true
 
 func horse_place_odds(h: Dictionary) -> float:
@@ -407,7 +407,7 @@ func place_horse(race_index: int, horse: int, stake: int, kind: String = "win") 
 		"label": "C%d · %s%s" % [race_index + 1, h["name"], " (colocado)" if kind == "place" else ""],
 		"placed_at": clock_text(),
 	})
-	toast.emit("Ticket: %s @ %.1f (%d €)" % [h["name"], odds, stake], "ticket")
+	toast.emit("Boleto: %s @ %.1f (%d €)" % [h["name"], odds, stake], "ticket")
 	return true
 
 func _short_match(m: Dictionary) -> String:
@@ -430,8 +430,8 @@ func cashout(bet: Dictionary) -> int:
 	bet["status"] = "cashed"
 	bet["payout"] = value
 	earn(value)
-	log_moment("Cobro anticipado: %s" % bet["label"], value - int(bet["stake"]))
-	toast.emit("Cobrado: %d €" % value, "win")
+	log_moment("Venta en directo: %s" % bet["label"], value - int(bet["stake"]))
+	toast.emit("Boleto vendido: %d €" % value, "win")
 	return value
 
 # --- Habilidades de los personajes ------------------------------------------
@@ -538,7 +538,7 @@ func _win(b: Dictionary, game: String) -> void:
 func _lose(b: Dictionary, game: String) -> void:
 	b["status"] = "lost"
 	log_moment("Fallo: %s" % b["label"], -int(b["stake"]))
-	toast.emit("Ticket perdido: %s" % b["label"], "lose")
+	toast.emit("Boleto perdido: %s" % b["label"], "lose")
 	register_loss(game)
 
 # --- Agenda ------------------------------------------------------------------

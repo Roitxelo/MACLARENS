@@ -16,9 +16,9 @@ const CHARACTERS := {
 		"how": "Ronda en la barra",
 		"short": ["Ves la PRESIÓN: quién aprieta ahora.", "Ves la % de gol y vendes sin comisión.", "Un penalti por partido lo tiras tú."],
 		"levels": [
-			"Te enseña el medidor de PRESIÓN: quién aprieta ahora. La casa tarda en verlo.",
-			"La presión con porcentajes de gol a 10 minutos y cobro anticipado sin comisión.",
-			"Una vez por partido te deja tirar un PENALTI tú mismo (minijuego de puntería).",
+			"Ves la PRESIÓN: quién aprieta ahora. La casa tarda en verlo.",
+			"Presión con % de gol a 10 minutos y vendes boletos sin comisión.",
+			"Un PENALTI por partido que tiras tú.",
 		],
 	},
 	"cortado": {
@@ -28,8 +28,8 @@ const CHARACTERS := {
 		"short": ["Solo apuestas a ganador.", "Arreas 3 veces a tu caballo (TV).", "Arreas 5 veces y apuestas a colocado."],
 		"levels": [
 			"Apuestas a ganador.",
-			"ARREAR: en la TV 2, durante la carrera de tu caballo, 3 arreos de timing.",
-			"5 arreos por carrera y apuestas a COLOCADO (1.º o 2.º, cuota/3).",
+			"ARREAR: 3 arreos a tu caballo en la tele del salón.",
+			"5 arreos y apuestas a COLOCADO (1.º o 2.º, cuota ÷ 3).",
 		],
 	},
 	"chencho": {
@@ -38,9 +38,9 @@ const CHARACTERS := {
 		"how": "Ronda en la barra",
 		"short": ["Mesa de 20 €. Sobrio: no falla.", "Mesa de 40 € y seguro de media mano.", "Mesa de 60 €. Borracho: cuenta cartas."],
 		"levels": [
-			"Sobrio: calcula bien las cuotas. Mesa de 20 € como máximo.",
-			"Contento: mesa de 40 € y un SEGURO por mano (si fallas, salvas la mitad).",
-			"Como una cuba: mesa de 60 € y paga como si la baraja estuviera entera. Cuenta cartas.",
+			"Sobrio: cuotas justas. Mesa de hasta 20 €.",
+			"Contento: mesa de 40 € y SEGURO (si fallas tras acertar, salvas la mitad).",
+			"Como una cuba: mesa de 60 €; paga como si la baraja estuviera entera. Cuenta cartas.",
 		],
 	},
 	"tino": {
@@ -51,7 +51,7 @@ const CHARACTERS := {
 		"levels": [
 			"Calentamiento: paga 1 a 1, hasta 30 €.",
 			"Con truco (banda, carambola): paga 3 a 2, hasta 60 €.",
-			"Imposibles: paga 2 a 1, hasta 100 €. La 1.ª vez que le ganas, rebaja 100 € la última noche.",
+			"Imposibles: paga 2 a 1, hasta 100 €. Ganarle la 1.ª vez rebaja 100 € la última noche.",
 		],
 	},
 }
