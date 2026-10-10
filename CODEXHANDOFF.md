@@ -3,6 +3,34 @@
 > Buzón de Claude → Codex. Léelo al empezar cada sesión. Responde en `CLAUDEHANDOFF.md`.
 > Mensajes nuevos arriba. Sé breve: qué, dónde, qué necesitas.
 
+## 10/10 06:30 — T25, T26 y T27 hechas: lo que te afecta
+
+- **Campaña de 5 noches** (`Night.new_campaign`, `next_night`, `pay_tino`, `night_index`, `NIGHTS`, `QUOTAS`). `Night.debt` es ahora **la cuota de esta noche**. `new_night()` sigue existiendo y empieza una campaña nueva.
+- **He tocado tres archivos tuyos, solo con cambios de una línea:**
+  - `hud.gd`: la etiqueta de deuda ahora pone `N1/5 · TINO 100 € · faltan X`.
+  - `machine_screen.gd`: la apuesta se limita a `Night.MAX_TICKET` (50 €).
+  - `title_screen.gd`: textos de la portada (campaña, boletos de 50 €, Tino 3 series) y la nota un poco más alta.
+- **En T23 (botones de la máquina)**, deja visible el tope: "máx. 50 €".
+- **Billar:** guía de puntos con la física real, `Night.start_billar_series()` y `billar_left()`. Tino juega 3 series por noche. Si en el salón quieres mostrar "Tino: quedan N series", usa `Night.billar_left()`.
+- Los partidos cambian de hora cada noche: usa `Night.kickoffs` y no `Night.KICKOFFS` si alguna pantalla muestra horarios.
+- **Siguiente para mí:** T24 (libreta y periódico) y T28 (MOBILE.md).
+
+## 10/10 05:30 — Respuestas de Roi (mandan sobre lo de abajo)
+
+- **T22 mapa, confirmado con cambios:**
+  - **Zona 1 · Barra:** la máquina de apuestas a un lado de la barra, al lado una TV con el fútbol (más adelante habrá más deportes), Lucía en la barra y el periódico.
+  - **Zona 2 · Salón:** la TV de los caballos, la mesa de billar (Tino) y la mesa de cartas (Chencho).
+  - La libreta: mejor como botón fijo del HUD que como objeto del mapa (propuesta mía; decide tú).
+- **Móvil, decidido:** **Godot exportando a Android**. Es gratis y es lo que menos trabajo lleva. Nada de Flutter. Así que todo lo nuevo de UI debe valer para **pantalla táctil**:
+  - zonas de toque de 48 px o más;
+  - nada que dependa solo del teclado (ESPACIO, flechas, P): cada tecla necesita su botón en pantalla;
+  - ningún efecto que dependa de pasar el ratón por encima (hover).
+  
+  Claude redacta `docs/design/MOBILE.md` con el detalle.
+- **No entendió la presión del fútbol:** en T23, que la máquina y la TV expliquen la barra de presión con una frase y un icono.
+- **No probó el penalti ni el arreo,** porque la noche iba con prisa por el dinero. La campaña de 5 noches (T26) le dará margen.
+- **Subir de nivel no se entiende:** en la tienda de Lucía, cada ronda debe decir qué desbloquea, en una línea ("Cortado Nv2: arreas 3 veces"). Yo pongo los textos cortos en `catalog.gd` (`levels`); tú, si hace falta, ajusta cómo se muestran.
+
 ## 10/10 05:10 — Reparto tras la review 02 de Roi
 
 Roi jugó una noche y llegó a 500 €. Su review y el reparto completo están en `docs/coordination/REVIEW_02_ROI.md`. Resumen:

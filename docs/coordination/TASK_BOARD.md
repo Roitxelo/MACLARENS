@@ -12,7 +12,7 @@ Dueño propuesto según `WORKFLOW.md`; se puede cambiar avisando aquí.
 | T02 | Audio básico: ambiente de bar, gol, silbato, salida de caballos, cartas, monedas, golpes de billar, clic de botones. Bus de música/efectos | Codex | Pendiente | Cada acción importante suena; volumen ajustable en código |
 | T03 | Export a Windows (preset + `.exe` en `builds/`, fuera del repo) | Codex | Pendiente | El `.exe` arranca en un PC sin Godot |
 | T04 | Primera noche guiada: reducir el caos, destacar la siguiente acción y los hotspots, y mostrar ayuda contextual al entrar en cada sitio | Codex (UI) + Claude (textos) | Pendiente | Un jugador nuevo sabe qué atender ahora y entiende máquina, arreo, penalti, cartas y tienda sin leer el GDD ni la portada completa |
-| T05 | Equilibrio de la deuda: aplicar la decisión 2+3 (200 € iniciales, arreo perfecto, baraja persistente Nv3 y segundo partido con más presión) y repetir la simulación | Claude + Codex | En curso (Codex) | Informe actualizado en `docs/design/BALANCE.md`: jugador al azar < 15 % de éxito, hábil 50-70 % |
+| T05 | Equilibrio de la deuda: aplicar la decisión 2+3 (200 € iniciales, arreo perfecto, baraja persistente Nv3 y segundo partido con más presión) y repetir la simulación | Claude + Codex | Hecho (continúa en T26, campaña) | Informe actualizado en `docs/design/BALANCE.md`: jugador al azar < 15 % de éxito, hábil 50-70 % |
 | T06 | Avisos (toasts) que tapan contenido en carrera, lobby del billar y bar: moverlos o dar zona propia por pantalla | Codex | Hecho | Ninguna captura de `night_capture` tiene texto tapado |
 | T07 | Poder salir de una mano de cartas (el billar ya trae botón de rendirse, T19) (ESC con confirmación) | Codex | Pendiente | Salir no deja el reloj en pausa ni el dinero inconsistente |
 | T19 | Sustituir el futbolín por billar "Tiro imposible": Tino prepara tiros retorcidos (a banda, carambola, sin tocar la negra, tronera marcada) en series de 3; ganar 2 = ganas la apuesta. Objetos y corazonada nuevos | Claude | Hecho | Minijuego jugable, cada mesa con solución comprobada por un buscador automático, docs al día |
@@ -22,9 +22,9 @@ Dueño propuesto según `WORKFLOW.md`; se puede cambiar avisando aquí.
 | T22 | Mapa en dos zonas: Barra (Lucía, máquina, TV de fútbol, periódico, libreta) y Salón (TV hípica, billar, Chencho) | Codex | Hecho | Un jugador nuevo sabe dónde está cada juego sin preguntar |
 | T23 | Botones de la máquina: digitales de los 90 (LCD, plástico), chapuceros pero claros | Codex | Pendiente | Roi da el visto bueno a una captura |
 | T24 | Libreta y periódico simplificados: menos reglas, más claros | Claude | Pendiente | Cada página se lee en menos de 10 s |
-| T25 | Billar: guía de trayectoria tipo móvil (camino de la blanca y de la bola tocada) | Claude | Pendiente | Nv1 se gana en 1-3 intentos; Nv3 sigue costando |
-| T26 | Campaña de varias noches: menos objetivo por noche, deuda creciente (sustituye a T16) | Claude | Pendiente | Simulada y documentada en `BALANCE.md` |
-| T27 | Cerrar las apuestas predecibles que Roi explotó | Claude | Bloqueado (Roi: ¿cuáles?) | La estrategia ya no gana sola |
+| T25 | Billar: guía de trayectoria tipo móvil (camino de la blanca y de la bola tocada) | Claude | Hecho | Nv1 se gana en 1-3 intentos; Nv3 sigue costando |
+| T26 | Campaña de varias noches: menos objetivo por noche, deuda creciente (sustituye a T16) | Claude | Hecho | Simulada y documentada en `BALANCE.md` |
+| T27 | Cerrar las apuestas predecibles que Roi explotó | Claude | Hecho (horarios y cruces cambian cada noche; tope de boleto y cuota) | La estrategia ya no gana sola |
 | T28 | Plan de versión móvil: Godot export vs Flutter (`docs/design/MOBILE.md`) | Claude (revisa Codex) | Pendiente | Roi decide la vía |
 
 ## P1 — Pulido

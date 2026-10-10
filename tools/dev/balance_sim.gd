@@ -10,9 +10,10 @@ extends SceneTree
 const PROFILES := {
 	# whip: probabilidad de arreo [perfecto, bueno] (el resto, fallo) · billar: acierto por tiro según nivel de Tino
 	# cards: "count" cuenta cartas, "naive" solo mira la carta actual, "none" no juega
-	"azar": {"whip": [0.05, 0.15], "billar": [0.30, 0.15, 0.06], "cards": "naive", "smart_bets": false, "shop": false, "max_hands": 3},
-	"normal": {"whip": [0.15, 0.35], "billar": [0.55, 0.35, 0.18], "cards": "naive", "smart_bets": true, "shop": true, "max_hands": 4},
-	"habil": {"whip": [0.30, 0.40], "billar": [0.80, 0.60, 0.40], "cards": "count", "smart_bets": true, "shop": true, "max_hands": 6},
+	# Billar con la guía de trayectoria (T25): acierto estimado por tiro.
+	"azar": {"whip": [0.05, 0.15], "billar": [0.50, 0.30, 0.15], "cards": "naive", "smart_bets": false, "shop": false, "max_hands": 3},
+	"normal": {"whip": [0.15, 0.35], "billar": [0.75, 0.50, 0.30], "cards": "naive", "smart_bets": true, "shop": true, "max_hands": 4},
+	"habil": {"whip": [0.30, 0.40], "billar": [0.90, 0.70, 0.50], "cards": "count", "smart_bets": true, "shop": true, "max_hands": 6},
 }
 
 var rng := RandomNumberGenerator.new()
@@ -26,6 +27,10 @@ func _init() -> void:
 	var debt := int(args[1]) if args.size() > 1 else 500
 	if args.size() > 2 and args[2] == "ev":
 		_ev(nights)
+		quit()
+		return
+	if args.size() > 1 and args[1] == "camp":
+		_campaigns(nights)
 		quit()
 		return
 	print("Noches por perfil: %d · deuda: %d €" % [nights, debt])
@@ -47,6 +52,55 @@ func _init() -> void:
 
 var _night: Node
 
+## Campañas completas de 5 noches: en qué noche cae cada perfil.
+## Uso: ... balance_sim.gd -- [campañas] camp   (BAL_START cambia el dinero inicial,
+## BAL_QUOTAS="150,200,300,400,500" cambia las cuotas)
+func _campaigns(count: int) -> void:
+	var profs := ["azar", "normal", "habil"]
+	if OS.get_environment("BAL_PROF") != "":
+		profs = [OS.get_environment("BAL_PROF")]
+	var quotas: Array = []
+	if OS.get_environment("BAL_QUOTAS") != "":
+		for q in OS.get_environment("BAL_QUOTAS").split(","):
+			quotas.append(int(q))
+	print("Campañas por perfil: %d · cuotas %s" % [count, str(quotas if not quotas.is_empty() else "por defecto")])
+	for prof in profs:
+		p = PROFILES[prof]
+		var reached := [0, 0, 0, 0, 0, 0]   # noches superadas: 0..5
+		var banks := [[], [], [], [], []]    # dinero al cierre (antes de pagar) por noche
+		for c in count:
+			if _night != null:
+				_night.free()
+			_night = load("res://night/night_state.gd").new()
+			var n = _night
+			n.new_campaign(2000 + c)
+			if OS.get_environment("BAL_START") != "":
+				n.money = int(OS.get_environment("BAL_START"))
+			var cleared := 0
+			for k in n.NIGHTS:
+				if not quotas.is_empty():
+					n.debt = quotas[k]
+				_run_night(n, (2000 + c) * 7 + k)
+				banks[k].append(n.money)
+				if not n.pay_tino():
+					break
+				cleared += 1
+				if k < n.NIGHTS - 1:
+					n.next_night()
+			reached[cleared] += 1
+		var line := ""
+		var alive := count
+		for k in 5:
+			alive -= reached[k]
+			line += "  N%d %3d %%" % [k + 1, int(round(100.0 * alive / count))]
+		print("%-7s supera:%s   (gana la campaña %.0f %%)" % [prof, line, 100.0 * reached[5] / count])
+		var med := ""
+		for k in 5:
+			var b: Array = banks[k]
+			b.sort()
+			med += "  N%d %5s" % [k + 1, str(b[b.size() / 2]) if not b.is_empty() else "-"]
+		print("        mediana al cierre:%s" % med)
+
 func _play_night(seed_value: int, debt: int) -> int:
 	if _night != null:
 		_night.free()
@@ -56,11 +110,13 @@ func _play_night(seed_value: int, debt: int) -> int:
 	n.debt = debt
 	if OS.get_environment("BAL_START") != "":
 		n.money = int(OS.get_environment("BAL_START"))
+	return _run_night(n, seed_value)
+
+func _run_night(n, seed_value: int) -> int:
 	n.running = true
 	rng.seed = seed_value * 31
 	hands_played = 0
 	chencho_deck.clear()
-	var billar_tries := 0
 	while not n.over and n.minute() < n.NIGHT_LENGTH:
 		var m: int = n.minute()
 		if p["shop"]:
@@ -75,9 +131,8 @@ func _play_night(seed_value: int, debt: int) -> int:
 			# juega si cree que la serie compensa con lo que paga Tino en ese nivel
 			var q: float = p["billar"][bl - 1]
 			var pwin := q * q * (3.0 - 2.0 * q)
-			var billar_ok: bool = pwin * (1 + Catalog.TINO_PAYOUT[bl - 1]) > 1.0 or not p["smart_bets"]
-			if billar_tries < 6 and billar_ok and n.money >= 40:
-				billar_tries += 1
+			var billar_ok: bool = pwin * (1.0 + Catalog.TINO_PAYOUT[bl - 1]) > 1.0 or not p["smart_bets"]
+			if n.billar_left() > 0 and billar_ok and n.money >= 40:
 				_billar(n)
 				continue
 			var cards_ok: bool = not p["smart_bets"] or n.level("chencho") >= 2
@@ -103,7 +158,10 @@ func _has_live_bet(n) -> bool:
 # --- Tienda ------------------------------------------------------------------
 
 func _shop(n) -> void:
-	# Compra solo lo que su estilo de juego amortiza.
+	# Compra solo lo que su estilo de juego amortiza. Con la campaña, el que
+	# planifica no gasta la cuota de Tino en la última parte de la noche.
+	if p["smart_bets"] and n.minutes_left() < 200 and n.money < n.debt + 120:
+		return
 	if n.level("cortado") < 2 and n.money >= 130:
 		n.buy_round("cortado")
 	for i in 3:
@@ -131,7 +189,7 @@ func _horses(n, m: int) -> void:
 			if p["smart_bets"]:
 				# Solo apuesta cuando tiene ventaja: caballo en forma (gafas) o favorito con arreos buenos.
 				if n.has_trinket("gafas") and int(r["tip_horse"]) >= 0:
-					pick = int(r["tip_horse"]); stake = clampi(bank / 6, 10, 60)
+					pick = int(r["tip_horse"]); stake = clampi(bank / 6, 10, 50)
 				elif n.level("cortado") >= 3 or (n.level("cortado") >= 2 and n.has_trinket("fusta")):
 					pick = n.races.favourite(r); stake = clampi(bank / 8, 10, 40)
 			else:
@@ -159,7 +217,7 @@ func _football(n, m: int) -> void:
 		if p["smart_bets"] and n.level("buho") >= 2:
 			if mm["state"] == "live" and int(mm["minute"]) in range(6, 72) and mine.is_empty():
 				var pr: Dictionary = (mm["sim"] as MatchSimulator).pressure()
-				var st := clampi(n.money / 6, 10, 60)
+				var st := clampi(n.money / 6, 10, 50)
 				if pr["home_share"] > 0.68 and n.money >= st + 20:
 					n.place_football(mm["id"], "1", st)
 				elif pr["home_share"] < 0.32 and n.money >= st + 20:
@@ -178,6 +236,7 @@ func _football(n, m: int) -> void:
 func _billar(n) -> void:
 	var lv: int = n.level("tino")
 	var stake: int = clampi(int(n.money * (0.4 if p["smart_bets"] else 0.2)), 10, Catalog.TINO_MAX_STAKE[lv - 1])
+	n.start_billar_series()
 	var acc: float = p["billar"][lv - 1]
 	if n.has_trinket("tiza"): acc += 0.08
 	if n.has_trinket("taco"): acc += 0.05
@@ -188,7 +247,7 @@ func _billar(n) -> void:
 	n.spend(mini(stake, n.money))
 	n.log_moment("billar Nv%d: %d/3" % [lv, made], 0)
 	if made >= 2:
-		n.register_win("billar", stake, stake * (1 + int(Catalog.TINO_PAYOUT[lv - 1])))
+		n.register_win("billar", stake, Catalog.tino_gross(lv, stake))
 		if lv >= 3:
 			if not n.tino_forgave:
 				n.tino_forgave = true
