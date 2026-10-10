@@ -14,13 +14,13 @@
 
 | Id | Tarea | Dueño | Notas |
 |---|---|---|---|
-| T21 | Mapa en dos zonas: **Barra** (Lucía, máquina, TVs, periódico, libreta) y **Salón** (billar, Chencho) | Codex | Propuesta pendiente del visto bueno de Roi |
-| T22 | Botones de la máquina estilo LCD/plástico de los 90 | Codex | |
-| T23 | Libreta y periódico simplificados (textos y maqueta) | Claude | |
-| T24 | Billar: guía de trayectoria completa (bola blanca y bola tocada) calculada con la física real | Claude | La dificultad pasa de "precisión al píxel" a "elegir bien el tiro" |
-| T25 | Campaña de varias noches con objetivo creciente, sustituye a T16 | Claude | Números con simulación (T05) |
-| T26 | Cerrar las apuestas predecibles | Claude | Falta que Roi diga cuáles eran |
-| T27 | Plan de versión móvil (`docs/design/MOBILE.md`) | Claude, con revisión de Codex | Ver "Móvil" abajo |
+| T22 | Mapa en dos zonas: **Barra** (Lucía, máquina, TVs, periódico, libreta) y **Salón** (billar, Chencho) | Codex | Propuesta pendiente del visto bueno de Roi |
+| T23 | Botones de la máquina estilo LCD/plástico de los 90 | Codex | |
+| T24 | Libreta y periódico simplificados (textos y maqueta) | Claude | |
+| T25 | Billar: guía de trayectoria completa (bola blanca y bola tocada) calculada con la física real | Claude | La dificultad pasa de "precisión al píxel" a "elegir bien el tiro" |
+| T26 | Campaña de varias noches con objetivo creciente, sustituye a T16 | Claude | Números con simulación (T05) |
+| T27 | Cerrar las apuestas predecibles | Claude | Falta que Roi diga cuáles eran |
+| T28 | Plan de versión móvil (`docs/design/MOBILE.md`) | Claude, con revisión de Codex | Ver "Móvil" abajo |
 
 Codex sigue además con T20, T06, T07, T02 y T01.
 
