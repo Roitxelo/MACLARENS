@@ -107,7 +107,7 @@ func _set_tab(t: String) -> void:
 
 func _change_stake(dir: int) -> void:
 	var step := 5 if stake < 50 or (dir < 0 and stake <= 50) else 10
-	stake = clampi(stake + dir * step, 5, maxi(5, Night.money))
+	stake = clampi(stake + dir * step, 5, maxi(5, mini(Night.money, Night.MAX_TICKET)))
 	_update_bottom()
 
 func _structure_signature() -> String:
@@ -355,7 +355,7 @@ func _build_tickets() -> void:
 # --- Barra inferior ------------------------------------------------------------
 
 func _update_bottom() -> void:
-	stake = clampi(stake, 5, maxi(5, Night.money))
+	stake = clampi(stake, 5, maxi(5, mini(Night.money, Night.MAX_TICKET)))
 	stake_label.text = "%d €" % stake
 	var can := false
 	var txt := ""

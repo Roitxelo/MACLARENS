@@ -30,8 +30,12 @@ func setup(seed_value: int, kickoffs: Array) -> void:
 	matches.clear()
 	var pool := ["atletico_resaca", "sporting_carbon", "dinamo_rotonda", "real_cunado", "deportivo_siesta", "union_tapas", "racing_poligono"]
 	_shuffle(pool)
-	# El primero siempre es el derbi del bar: McLarens FC juega en casa.
-	var pairs := [["mclarens_fc", pool[0]], [pool[1], pool[2]]]
+	# McLarens FC (el equipo del bar) juega cada noche, pero cambia de hora
+	# y de campo para que ninguna noche se repita.
+	var ours := ["mclarens_fc", pool[0]] if rng.randf() < 0.6 else [pool[0], "mclarens_fc"]
+	var pairs := [ours, [pool[1], pool[2]]]
+	if rng.randf() < 0.5:
+		pairs.reverse()
 	for i in kickoffs.size():
 		var home_id: String = pairs[i][0]
 		var away_id: String = pairs[i][1]

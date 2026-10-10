@@ -81,7 +81,7 @@ func refresh() -> void:
 	var left := Night.minutes_left()
 	clock_label.add_theme_color_override("font_color", Color("#7dff8a") if left > 60 else Color("#ff6a5a"))
 	var missing := maxi(0, Night.debt - Night.money)
-	debt_label.text = "DEUDA %d € · %s" % [Night.debt, "¡CUBIERTA!" if missing == 0 else "faltan %d €" % missing]
+	debt_label.text = "N%d/%d · TINO %d € · %s" % [Night.night_index + 1, Night.NIGHTS, Night.debt, "¡CUBIERTO!" if missing == 0 else "faltan %d" % missing]
 	streak_label.text = Night.streak_text()
 	streak_label.add_theme_color_override("font_color", Color("#ffb347") if Night.streak > 0 else Color("#8a7a62"))
 	streak_label.reset_size()

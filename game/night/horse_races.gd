@@ -10,6 +10,7 @@ extends RefCounted
 ## timing en la TV 2): un arreo bueno lo acelera un momento; uno malo lo frena.
 
 const RACE_COUNT := 10
+const MAX_ODDS := 15.0
 const FIRST_RACE := 20      # 18:20
 const INTERVAL := 45        # una carrera cada 45 minutos
 const RACE_MINUTES := 12    # tope de duración en minutos de reloj (suelen tardar ~7)
@@ -80,7 +81,9 @@ func _price(horses: Array) -> void:
 		total += exp(float(h["rating"]) / 9.0)
 	for h in horses:
 		var p := exp(float(h["rating"]) / 9.0) / total
-		h["odds"] = snappedf(clampf(MARGIN / p, 1.2, 40.0), 0.1)
+		# La máquina del bar no paga más de 15 a 1: los tapados con soplo y
+		# arreos eran una mina (ver BALANCE.md, campaña).
+		h["odds"] = snappedf(clampf(MARGIN / p, 1.2, MAX_ODDS), 0.1)
 
 func start_race(race: Dictionary) -> void:
 	race["pos"] = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]

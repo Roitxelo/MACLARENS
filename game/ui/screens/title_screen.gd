@@ -25,19 +25,19 @@ func _ready() -> void:
 	var pic := UIKit.texture_rect(UIKit.portrait("tino"), Rect2(110, 210, 240, 240))
 	pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	add_child(pic)
-	var note := UIKit.label("Le debes 500 € a Tino.\nViene a cobrar a las 02:00.\nTienes 200 € y toda la noche.", 24, UIKit.PAPER_INK)
+	var note := UIKit.label("Le debes 1.800 € a Tino.\nCobra cada noche a las 02:00:\n100, 150, 300, 500 y 750 €.\nTienes 200 €. Cinco noches.", 24, UIKit.PAPER_INK)
 	note.add_theme_stylebox_override("normal", UIKit.box(Color("#efe2c4"), Color("#6b4f30"), 3, 4, 14))
-	UIKit.place(note, Rect2(80, 460, 300, 120))
+	UIKit.place(note, Rect2(80, 456, 300, 150))
 	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(note)
 	var list := UIKit.label("", 22, UIKit.CREAM)
 	list.text = "\n".join([
-		"MÁQUINA · Fútbol (19:00 y 22:30) y 10 carreras de caballos.",
+		"MÁQUINA · 2 partidos de fútbol y 10 carreras cada noche (boletos de hasta 50 €).",
 		"EL BÚHO te enseña quién aprieta en el partido y, en Nv3, te deja tirar un penalti.",
 		"EL CORTADO te deja arrear a tu caballo en plena carrera (timing).",
 		"EL CHENCHO juega a Mayor o menor: cuanto más borracho, peor cuenta las cartas.",
-		"TINO te reta al billar: tiros imposibles. Gánale y sube la apuesta... y baja tu deuda.",
-		"LUCÍA · Rondas para subir de nivel a tu gente y objetos que mejoran tu juego.",
+		"TINO te reta al billar: tiros imposibles, 3 series por noche. Gánale y sube de nivel.",
+		"LUCÍA · Rondas para subir de nivel a tu gente y objetos. Todo se queda para la noche siguiente.",
 		"RACHA · Gana seguido y el beneficio crece un poco (hasta x1,5).",
 		"SUERTE · Tres corazonadas: pulso firme, arreo perfecto, engañar al portero, ver la carta.",
 	])

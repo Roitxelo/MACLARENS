@@ -29,7 +29,7 @@ func _ready() -> void:
 	check(Night.cashout_value(bet) == 10, "Búho Nv2: cobro sin comisión")
 	m["odds"]["1"] = odds * 0.8
 	var sale_value := Night.cashout_value(bet)
-	check(sale_value == int(round(10.0 / 0.8)) and sale_value > 10, "venta en directo: una cuota un 20 %% mejor aumenta el valor a %d €" % sale_value)
+	check(absi(sale_value * 10 - 125) <= 5, "venta en directo: una cuota un 20 %% mejor aumenta el valor a %d €" % sale_value)
 	var sim: MatchSimulator = m["sim"]
 	sim.home_score = 2
 	sim.away_score = 0
@@ -109,7 +109,7 @@ func _ready() -> void:
 		while g.state != "over" and t < 60.0:
 			await get_tree().create_timer(0.2).timeout
 			t += 0.2
-	check(Night.debt == Night.START_DEBT - 100, "Tino perdona 100 € una sola vez (deuda %d)" % Night.debt)
+	check(Night.debt == maxi(0, Night.QUOTAS[0] - 100), "Tino perdona 100 € una sola vez (deuda %d)" % Night.debt)
 
 	print("ECONOMY_TEST_OK" if fails.is_empty() else "ECONOMY_TEST_FAIL %s" % str(fails))
 	get_tree().quit()

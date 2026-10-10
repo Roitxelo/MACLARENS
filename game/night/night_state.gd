@@ -17,13 +17,20 @@ signal night_over(reason: String)
 const OPEN_HOUR := 18
 const NIGHT_LENGTH := 480        # 18:00 -> 02:00
 const START_MONEY := 200
-const START_DEBT := 500
+const START_DEBT := 500          # cuota de la última noche (compatibilidad)
+const NIGHTS := 5                # la campaña: cinco noches seguidas
+const QUOTAS := [100, 150, 300, 500, 750]   # lo que cobra Tino al cierre de cada noche
 const BASE_LUCK := 3
 const MINUTES_PER_SECOND := 0.6  # la noche dura ~13 min reales a x1
-const KICKOFFS := [60, 270]      # 19:00 y 22:30
+const KICKOFFS := [60, 270]      # horas base (19:00 y 22:30); cada noche se mueven ±45 min
+const MAX_TICKET := 50           # la máquina no admite boletos de más de 50 €
 const SHOP_REFRESH := 90         # la barra cambia de objetos cada hora y media
 
 var seed_value := 0
+var campaign_seed := 0
+var night_index := 0             # 0..NIGHTS-1
+var night_start_money := START_MONEY
+var kickoffs: Array = KICKOFFS.duplicate()
 var money := START_MONEY
 var debt := START_DEBT
 var luck := BASE_LUCK
@@ -41,6 +48,7 @@ var whips_used := {}             # race_index -> arreos gastados
 var perfect_whip := false        # corazonada: el siguiente arreo es perfecto
 var tino_forgave := false
 var moneda_used := false
+var billar_played := 0           # series de billar jugadas esta noche
 
 var levels := {"buho": 1, "cortado": 1, "chencho": 1, "tino": 1}
 var trinkets: Array = []         # ids de Catalog.TRINKETS
@@ -55,13 +63,54 @@ var rng := RandomNumberGenerator.new()
 var football := FootballMarket.new()
 var races := HorseRaces.new()
 
+## Empieza una campaña nueva (noche 1 de 5). Se mantiene el nombre por
+## compatibilidad con las pruebas y herramientas.
 func new_night(new_seed: int = -1) -> void:
-	seed_value = new_seed if new_seed >= 0 else int(Time.get_unix_time_from_system()) % 100000
-	rng.seed = hash("night%d" % seed_value)
+	new_campaign(new_seed)
+
+func new_campaign(new_seed: int = -1) -> void:
+	campaign_seed = new_seed if new_seed >= 0 else int(Time.get_unix_time_from_system()) % 100000
+	night_index = 0
 	money = START_MONEY
-	debt = START_DEBT
-	luck = BASE_LUCK
 	max_luck = BASE_LUCK
+	levels = {"buho": 1, "cortado": 1, "chencho": 1, "tino": 1}
+	trinkets.clear()
+	best_streak = 0
+	tino_forgave = false
+	_start_night()
+
+## Tras pagar a Tino: la noche siguiente conserva dinero, niveles y objetos.
+func next_night() -> void:
+	night_index = mini(night_index + 1, NIGHTS - 1)
+	_start_night()
+
+func billar_left() -> int:
+	return maxi(0, Catalog.TINO_SERIES - billar_played)
+
+## Tino acepta otra serie si le quedan esta noche. Cuenta la serie al empezar.
+func start_billar_series() -> bool:
+	if billar_left() <= 0:
+		return false
+	billar_played += 1
+	return true
+
+func is_last_night() -> bool:
+	return night_index >= NIGHTS - 1
+
+## Al cierre: si llega, Tino cobra la cuota de la noche. Devuelve si pagaste.
+func pay_tino() -> bool:
+	if money < debt:
+		return false
+	money -= debt
+	changed.emit()
+	return true
+
+func _start_night() -> void:
+	seed_value = campaign_seed if night_index == 0 else absi(hash("c%d_n%d" % [campaign_seed, night_index])) % 1000000
+	rng.seed = hash("night%d" % seed_value)
+	debt = QUOTAS[night_index]
+	night_start_money = money
+	luck = max_luck
 	clock = 0.0
 	_last_minute = 0
 	speed = 1
@@ -71,18 +120,19 @@ func new_night(new_seed: int = -1) -> void:
 	bets.clear()
 	history.clear()
 	penalties_used.clear()
-	levels = {"buho": 1, "cortado": 1, "chencho": 1, "tino": 1}
-	trinkets.clear()
 	streak = 0
 	streak_games.clear()
 	sock_used = false
-	best_streak = 0
 	whips_used.clear()
 	perfect_whip = false
-	tino_forgave = false
 	moneda_used = false
+	billar_played = 0
+	# Cada noche los partidos caen a otra hora (en cuartos de hora).
+	kickoffs = []
+	for k in KICKOFFS:
+		kickoffs.append(int(k) + rng.randi_range(-3, 3) * 15)
 	football = FootballMarket.new()
-	football.setup(seed_value, KICKOFFS)
+	football.setup(seed_value, kickoffs)
 	races = HorseRaces.new()
 	races.setup(seed_value)
 	_restock()
@@ -310,7 +360,7 @@ func open_bets() -> Array:
 
 func place_football(match_id: String, pick: String, stake: int) -> bool:
 	var m := football.get_match(match_id)
-	if m.is_empty() or not football.can_bet(m):
+	if m.is_empty() or not football.can_bet(m) or stake > MAX_TICKET:
 		return false
 	if not spend(stake):
 		return false
@@ -332,6 +382,8 @@ func place_horse(race_index: int, horse: int, stake: int, kind: String = "win") 
 	if race["state"] != "open" or int(race["start"]) <= minute():
 		return false
 	if kind == "place" and level("cortado") < 3:
+		return false
+	if stake > MAX_TICKET:
 		return false
 	if not spend(stake):
 		return false
