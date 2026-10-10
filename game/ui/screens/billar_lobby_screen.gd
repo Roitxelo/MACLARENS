@@ -2,13 +2,14 @@ extends Control
 
 ## Billar del fondo: Tino prepara "tiros imposibles". Una serie son 3 mesas
 ## con una misión; si aciertas 2, ganas la apuesta y Tino sube de nivel.
-## Ganarle en Nv3 rebaja la deuda (una vez por noche).
+## Ganarle en Nv3 rebaja la deuda (una vez por campaña). Tino juega como
+## mucho Catalog.TINO_SERIES series por noche.
 
 const BAR := preload("res://assets/concept/mclarens_bar_master_v1.png")
 const QUOTES := [
-	"\"Te pongo tres tiros. Si metes dos, te pago lo que apuestes. Si no, me lo das tú.\"",
-	"\"Ahora con truco: bandas, carambolas y pasillos. Te pago el doble.\"",
-	"\"Los imposibles. Te pago el triple... y si me ganas, te perdono 100 € de lo que me debes.\"",
+	"\"Tres tiros. Si metes dos, te pago lo que apuestes. Si no, me lo das tú.\"",
+	"\"Ahora con truco: bandas y carambolas. Te pago y medio.\"",
+	"\"Los imposibles. Te pago el doble... y si me ganas, te perdono 100 €.\"",
 ]
 
 var main: Control
@@ -21,10 +22,11 @@ func _set_stake(v: int) -> void:
 	var lv := Night.level("tino")
 	stake = clampi(v, 10, maxi(10, mini(Catalog.TINO_MAX_STAKE[lv - 1], Night.money)))
 	stake_label.text = "%d €" % stake
-	var pay: int = Catalog.TINO_PAYOUT[lv - 1]
-	accept.text = "ACEPTAR · ganas %d €" % (stake * pay)
-	accept.disabled = Night.money < stake or Night.minutes_left() < 20
-	accept.tooltip_text = "Si metes 2 de 3, Tino te paga %d a 1" % pay
+	accept.text = "ACEPTAR · ganas %d €" % (Catalog.tino_gross(lv, stake) - stake)
+	accept.disabled = Night.money < stake or Night.minutes_left() < 20 or Night.billar_left() <= 0
+	if Night.billar_left() <= 0:
+		accept.text = "TINO SE RETIRA POR HOY"
+	accept.tooltip_text = "Si metes 2 de 3, Tino te paga %s" % Catalog.tino_pay_text(lv)
 
 func _ready() -> void:
 	add_child(UIKit.texture_rect(BAR))
@@ -37,7 +39,7 @@ func _ready() -> void:
 	UIKit.place(title, Rect2(0, 112, 1280, 44))
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(title)
-	var sub := UIKit.shadow(UIKit.label("Tino te prepara 3 mesas con una misión cada una; mete 2 y ganas. Apunta con el ratón (← → para afinar), mantén el clic para cargar y suelta. Cada serie dura 20 min de reloj.", 18, UIKit.CREAM))
+	var sub := UIKit.shadow(UIKit.label("3 mesas, mete 2 y ganas. La guía de puntos marca el camino. Cada serie: 20 min. Hoy le quedan %d series." % Night.billar_left(), 18, UIKit.CREAM))
 	UIKit.place(sub, Rect2(140, 158, 1000, 50))
 	sub.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

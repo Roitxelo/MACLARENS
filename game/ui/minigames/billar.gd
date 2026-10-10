@@ -29,6 +29,10 @@ var retry_available := false
 var steady := false                    # corazonada: trayectoria completa
 var _steady_path: Array = []
 var _steady_t := 0.0
+var _guide: Array = []                 # [camino de la blanca, camino de la bola tocada, índice]
+var _guide_t := 0.0
+var _guide_key := Vector2(INF, INF)    # (ángulo, potencia) de la última guía calculada
+var _last_power := 0.7
 var autoplay := false
 var settled := false
 var mission_label: Label
@@ -46,6 +50,7 @@ func _ready() -> void:
 	autoplay = bool(args.get("autoplay", false))
 	retry_available = Night.has_trinket("repeticion")
 	Night.set_pause("minigame", true)
+	Night.start_billar_series()
 	score_label = UIKit.shadow(UIKit.label("", 30, UIKit.GOLD))
 	UIKit.place(score_label, Rect2(360, 64, 640, 38))
 	score_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -108,14 +113,16 @@ func _load_shot() -> void:
 	power = 0.0
 	steady = false
 	_steady_path.clear()
+	_guide.clear()
+	_guide_key = Vector2(INF, INF)
 	var target: Vector2 = sim.pos[1]
 	aim = ((target - (sim.pos[0] as Vector2))).angle()
 	mission_label.text = "TIRO %d/3 · %s — %s" % [shot_index + 1, layout["name"], layout["mission"]]
-	info.text = "Apunta con el ratón (← → para afinar). Mantén el clic para cargar y suelta para tirar."
+	info.text = "Apunta con el ratón: los puntos marcan el camino. Mantén el clic para cargar y suelta."
 	_update_score()
 
 func _update_score() -> void:
-	score_label.text = "TINO Nv%d · %d € a %d:1 · ACIERTOS %d  FALLOS %d  (necesitas 2)" % [level, _stake(), Catalog.TINO_PAYOUT[level - 1], made, missed]
+	score_label.text = "TINO Nv%d · %d € a %s · ACIERTOS %d  FALLOS %d  (necesitas 2)" % [level, _stake(), Catalog.tino_pay_text(level), made, missed]
 	luck_btn.disabled = Night.luck <= 0 or steady or state != "aim"
 
 func _table_mouse() -> Vector2:
@@ -149,6 +156,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			aim += step
 
 func _shoot(p: float) -> void:
+	_last_power = maxf(0.08, p)
 	sim.shoot(aim, maxf(0.08, p))
 	state = "rolling"
 	acc = 0.0
@@ -169,16 +177,19 @@ func _process(delta: float) -> void:
 				var sol: Array = layout["solution"]
 				aim = deg_to_rad(float(sol[0]) + float(args.get("aim_noise", 0.0)))
 				_shoot(float(sol[1]))
-			elif steady:
-				_steady_t -= delta
-				if _steady_t <= 0.0:
-					_steady_t = 0.12
-					_steady_path = _predict(aim, 0.8)
+			else:
+				if steady:
+					_steady_t -= delta
+					if _steady_t <= 0.0:
+						_steady_t = 0.12
+						_steady_path = _predict(aim, _last_power)
+				_refresh_guide(delta, _last_power)
 		"charging":
 			charge_t += delta
 			var period := 2.6 if Night.has_trinket("taco") else 1.6
 			var ph := fmod(charge_t / (period * 0.5), 2.0)
 			power = ph if ph < 1.0 else 2.0 - ph
+			_refresh_guide(delta, maxf(0.08, power))
 		"rolling":
 			acc += minf(delta, 0.05) * (4.0 if autoplay else 1.0)
 			while acc >= BilliardSim.STEP and sim.moving():
@@ -229,7 +240,7 @@ func _finish() -> void:
 	var extra := ""
 	if won:
 		Night.spend(mini(stake, Night.money))
-		gained = Night.register_win("billar", stake, stake * (1 + int(Catalog.TINO_PAYOUT[level - 1]))) - stake
+		gained = Night.register_win("billar", stake, Catalog.tino_gross(level, stake)) - stake
 		Night.log_moment("Billar: le ganas la serie a Tino (Nv%d)" % level, gained)
 		if level >= 3:
 			if not Night.tino_forgave:
@@ -238,7 +249,7 @@ func _finish() -> void:
 				extra = "Y te perdona 100 € de deuda."
 		else:
 			Night.levels["tino"] = level + 1
-			extra = "Tino sube a Nv%d: ahora paga %d a 1." % [level + 1, Catalog.TINO_PAYOUT[level]]
+			extra = "Tino sube a Nv%d: ahora paga %s." % [level + 1, Catalog.tino_pay_text(level + 1)]
 	else:
 		Night.spend(mini(stake, Night.money))
 		Night.register_loss("billar")
@@ -268,7 +279,9 @@ func _finish() -> void:
 	end_box.add_child(back)
 	var again := UIKit.button("OTRA SERIE", "red", 20)
 	UIKit.place(again, Rect2(650, 400, 210, 50))
-	again.disabled = Night.minutes_left() < MINUTES_COST or Night.over
+	again.disabled = Night.minutes_left() < MINUTES_COST or Night.over or Night.billar_left() <= 0
+	if Night.billar_left() <= 0:
+		again.text = "TINO SE RETIRA"
 	again.pressed.connect(func(): main.go("billar_lobby"))
 	end_box.add_child(again)
 	Night.check_broke()
@@ -307,6 +320,75 @@ func _first_contact(from: Vector2, dir: Vector2) -> Dictionary:
 		return {"ball": -1, "point": from + dir * tw, "normal": Vector2(-signf(dir.x), 0) if tx < ty else Vector2(0, -signf(dir.y))}
 	return best
 
+## Rebotes o choques que enseña la guía: menos cuanto más nivel tiene Tino.
+func guide_events() -> int:
+	return [3, 2, 1][clampi(level, 1, 3) - 1] + (1 if Night.has_trinket("tiza") else 0)
+
+func guide_object_length() -> float:
+	return [420.0, 300.0, 180.0][clampi(level, 1, 3) - 1] + (120.0 if Night.has_trinket("tiza") else 0.0)
+
+func _refresh_guide(delta: float, p: float) -> void:
+	_guide_t -= delta
+	var key := Vector2(aim, p)
+	if _guide_t > 0.0 or key.distance_to(_guide_key) < 0.0005:
+		return
+	_guide_t = 0.05
+	_guide_key = key
+	_guide = guide_paths(aim, p)
+
+## Guía tipo móvil: el recorrido real (misma física que el tiro) de la blanca
+## hasta `guide_events()` rebotes o choques, y el de la primera bola que mueve,
+## recortado a `guide_object_length()` píxeles.
+func guide_paths(angle: float, p: float) -> Array:
+	var copy := BilliardSim.new()
+	var balls: Array = []
+	for i in sim.pos.size():
+		balls.append({"kind": sim.kinds[i], "pos": sim.pos[i]})
+	copy.setup(balls)
+	copy.shoot(angle, p)
+	var cue := PackedVector2Array([copy.pos[0]])
+	var obj := PackedVector2Array()
+	var obj_i := -1
+	var obj_len := 0.0
+	var obj_max := guide_object_length()
+	var max_ev := guide_events()
+	var events := 0
+	var prev_dir := Vector2.from_angle(angle)
+	var cue_done := false
+	var steps := 0
+	while copy.moving() and copy.time < 8.0:
+		copy.step()
+		steps += 1
+		if not cue_done:
+			var v: Vector2 = copy.vel[0]
+			if not copy.alive[0] or v.length() < 1.0:
+				cue.append(copy.pos[0])
+				cue_done = true
+			else:
+				var d := v.normalized()
+				if d.dot(prev_dir) < 0.985:
+					events += 1
+					cue.append(copy.pos[0])
+					cue_done = events >= max_ev
+				elif steps % 4 == 0:
+					cue.append(copy.pos[0])
+				prev_dir = d
+		if obj_i < 0:
+			for i in range(1, copy.pos.size()):
+				if copy.alive[i] and (copy.vel[i] as Vector2).length() > 1.0:
+					obj_i = i
+					obj.append(copy.pos[i])
+					break
+		elif obj_len < obj_max and steps % 4 == 0:
+			var cur: Vector2 = copy.pos[obj_i]
+			obj_len += obj[obj.size() - 1].distance_to(cur)
+			obj.append(cur)
+			if not copy.alive[obj_i]:
+				obj_len = obj_max
+		if cue_done and obj_len >= obj_max:
+			break
+	return [cue, obj, obj_i]
+
 func _predict(angle: float, p: float) -> Array:
 	var copy := BilliardSim.new()
 	var balls: Array = []
@@ -329,6 +411,22 @@ func _predict(angle: float, p: float) -> Array:
 
 # --- Dibujo ---------------------------------------------------------------------------
 
+## Línea de puntos (estilo guía de móvil) con un círculo al final.
+func _draw_path(path: PackedVector2Array, col: Color) -> void:
+	if path.size() < 2:
+		return
+	var carry := 0.0
+	for k in range(1, path.size()):
+		var a: Vector2 = ORIGIN + path[k - 1]
+		var b: Vector2 = ORIGIN + path[k]
+		var seg := a.distance_to(b)
+		var t := carry
+		while t < seg:
+			draw_circle(a.lerp(b, t / seg), 2.0, col)
+			t += 9.0
+		carry = t - seg
+	draw_arc(ORIGIN + path[path.size() - 1], 5.0, 0, TAU, 16, col, 2.0)
+
 func _draw() -> void:
 	draw_rect(Rect2(Vector2.ZERO, size), Color("#1c110a"))
 	var w := BilliardSim.W
@@ -349,22 +447,13 @@ func _draw() -> void:
 		var cue: Vector2 = sim.pos[0]
 		var dir := Vector2.from_angle(aim)
 		var c := _first_contact(cue, dir)
-		var pt: Vector2 = c["point"]
-		draw_line(ORIGIN + cue, ORIGIN + pt, Color(1, 1, 1, 0.55), 2.0)
 		if int(c["ball"]) >= 0:
-			draw_arc(ORIGIN + pt, BilliardSim.R, 0, TAU, 24, Color(1, 1, 1, 0.6), 1.5)
-			if Night.has_trinket("tiza"):
-				var tb: Vector2 = sim.pos[int(c["ball"])]
-				var ndir := (tb - pt).normalized()
-				draw_line(ORIGIN + tb, ORIGIN + tb + ndir * 140.0, Color("#7ab0ff"), 2.0)
-				var tang := dir - ndir * dir.dot(ndir)
-				if tang.length() > 0.05:
-					draw_line(ORIGIN + pt, ORIGIN + pt + tang.normalized() * 70.0, Color(1, 1, 1, 0.35), 2.0)
-		elif Night.has_trinket("tiza"):
-			var nrm: Vector2 = c.get("normal", Vector2.ZERO)
-			var refl := dir.bounce(nrm) if nrm != Vector2.ZERO else dir
-			var c2 := _first_contact(pt + refl * 0.5, refl)
-			draw_line(ORIGIN + pt, ORIGIN + (c2["point"] as Vector2), Color("#7ab0ff", 0.8), 2.0)
+			draw_arc(ORIGIN + (c["point"] as Vector2), BilliardSim.R, 0, TAU, 24, Color(1, 1, 1, 0.6), 1.5)
+		if _guide.size() == 3:
+			_draw_path(_guide[0], Color(1, 1, 1, 0.7))
+			var oi: int = _guide[2]
+			if oi >= 0:
+				_draw_path(_guide[1], (BALL_COLORS.get(sim.kinds[oi], Color.WHITE) as Color).lightened(0.35))
 		if steady:
 			for i in _steady_path.size():
 				var path: PackedVector2Array = _steady_path[i]

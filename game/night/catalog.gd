@@ -40,22 +40,32 @@ const CHARACTERS := {
 		"name": "Tino", "game": "billar", "role": "Rival en el billar (tiro imposible)",
 		"rounds": [],
 		"levels": [
-			"Tiros de calentamiento: paga 1 a 1 (hasta 50 €).",
-			"Tiros con truco (banda, carambola, pasillo): paga 2 a 1 (hasta 100 €).",
-			"Los imposibles de Tino: paga 3 a 1 (hasta 150 €). La primera serie que le ganas te perdona 100 € de deuda.",
+			"Calentamiento: paga 1 a 1, hasta 30 €.",
+			"Con truco (banda, carambola): paga 3 a 2, hasta 60 €.",
+			"Imposibles: paga 2 a 1, hasta 100 €. La 1.ª vez que le ganas, te perdona 100 €.",
 		],
 	},
 }
 
 ## Billar: apuesta máxima y cuánto paga Tino por € apostado (beneficio) en cada nivel.
-const TINO_MAX_STAKE := [50, 100, 150]
-const TINO_PAYOUT := [1, 2, 3]
+## Tino solo juega TINO_SERIES series por noche: el billar da para vivir, no para
+## hacerse rico (con la guía de trayectoria, el jugador hábil acierta mucho).
+const TINO_MAX_STAKE := [30, 60, 100]
+const TINO_PAYOUT := [1.0, 1.5, 2.0]
+const TINO_SERIES := 3
+
+## Lo que cobras al ganar la serie (apuesta incluida).
+static func tino_gross(level: int, stake: int) -> int:
+	return stake + int(round(stake * float(TINO_PAYOUT[clampi(level, 1, 3) - 1])))
+
+static func tino_pay_text(level: int) -> String:
+	return ["1 a 1", "3 a 2", "2 a 1"][clampi(level, 1, 3) - 1]
 const CHENCHO_MAX := [20, 40, 60]
 const CORTADO_WHIPS := [0, 3, 5]
 
 const TRINKETS := {
 	"tiza": {"name": "Tiza azul", "price": 20, "game": "billar",
-		"text": "En el billar, la guía muestra hacia dónde sale la bola tocada y el rebote en banda."},
+		"text": "La guía del billar se ve un rebote más lejos y sigue más a la bola tocada."},
 	"taco": {"name": "Taco de nácar", "price": 25, "game": "billar",
 		"text": "La barra de potencia sube más despacio: más control del golpe."},
 	"guante": {"name": "Guante de billar", "price": 20, "game": "billar",
