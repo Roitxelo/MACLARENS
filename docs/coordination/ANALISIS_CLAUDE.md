@@ -4,7 +4,7 @@
 
 ## 1. Qué ha pasado (hechos)
 
-1. **Hay dos copias del repo en el PC de Roi:**
+1. **Hay dos copias del repo en el PC de Roi** (es correcto: una para Codex y otra para jugar; ver §2):
    - `C:\Users\roice\Desktop\MacLarens`: al día (`b3b6c17`). Es donde trabaja Codex.
    - `F:\JUEGOS\MacLarens`: **7 commits por detrás** (se quedó en `d462d42`, 03:31) porque tiene `CLAUDE.md` modificado y Git no puede actualizar.
 
@@ -60,9 +60,17 @@ Se archivan en `docs/archive/` estos tres: `HANDOFF.md` (el antiguo), `REVIEW_02
 3. **Roi juega ese commit en la carpeta única** → la siguiente review. **No se añaden novedades hasta esa review**; solo arreglos.
 4. Cuando Roi escribe a los dos a la vez, cada uno responde solo por su área. El reparto ya está hecho por roles.
 
-### Una sola carpeta en el PC
+### Carpetas: una por agente, GitHub en medio
 
-**Decidido por Roi (06:12): la buena es `F:\JUEGOS\MacLarens`.** Ya está limpia y al día. Roi juega desde ahí. La del escritorio solo debe usarse si Codex trabaja en ella: en ese caso, `git pull` antes de empezar y `git push` al acabar.
+Aclarado por Roi (06:14): **cada uno trabaja en su carpeta** y todo se sincroniza por GitHub (`main`).
+
+| Carpeta | Quién | Regla |
+|---|---|---|
+| Clon en la nube (`/home/claude/maclarens`) | Claude | Empuja a GitHub y después hace `git pull` en `F:` |
+| `C:\Users\roice\Desktop\MacLarens` | Codex | `git pull` antes de empezar, `git push` al acabar |
+| `F:\JUEGOS\MacLarens` | Roi (jugar) | Claude la pone al día tras cada push. Nadie edita a mano |
+
+Nunca se trabaja en la carpeta del otro. Los avisos de "carpeta atrasada" se resuelven con `git pull`, sin copiar archivos.
 
 ## 3. Hito 1 (H1) propuesto: "la campaña jugable"
 
