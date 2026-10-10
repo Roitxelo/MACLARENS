@@ -394,7 +394,7 @@ func _update_bottom() -> void:
 			txt = "Ese partido ya no admite apuestas"
 		else:
 			var o: float = m["odds"][sel_pick]
-			txt = "%s @ %.2f → %d €" % [Night.football.pick_label(m, sel_pick), o, int(round(stake * o))]
+			txt = "%s @ %.2f\nCOBRAS %d €" % [Night.football.pick_label(m, sel_pick), o, int(round(stake * o))]
 			can = true
 
 	elif tab == "horses":
@@ -403,7 +403,7 @@ func _update_bottom() -> void:
 		else:
 			var h: Dictionary = Night.races.races[sel_race]["horses"][sel_horse]
 			var ho: float = float(h["odds"]) if horse_kind == "win" else Night.horse_place_odds(h)
-			txt = "%s%s @ %.1f → %d €" % [h["name"], " (col.)" if horse_kind == "place" else "", ho, int(round(stake * ho))]
+			txt = "%s%s @ %.1f\nCOBRAS %d €" % [h["name"], " (col.)" if horse_kind == "place" else "", ho, int(round(stake * ho))]
 			can = Night.races.races[sel_race]["state"] == "open"
 
 	else:

@@ -28,7 +28,7 @@ Congelado: no entra nada nuevo, solo bloqueos, incoherencias de la economía y t
 | T23 | Botones de la máquina: digitales de los 90 (LCD, plástico), chapuceros pero claros; que se vea el tope de 50 € | Codex | Hecho | Roi da el visto bueno a una captura |
 | X03 | La presión del fútbol, explicada con una frase y un icono en la máquina y la TV | Codex | Hecho | Roi la entiende sin preguntar |
 | X04 | Tienda de Lucía: cada ronda dice qué desbloquea (`Catalog.CHARACTERS[*].short`) | Codex | Hecho | |
-| T20 | Desbordamientos de texto (símbolo `€` suelto en el resumen de apuesta hípica) | Codex | Pendiente | Ninguna captura tiene texto partido |
+| T20 | Desbordamientos de texto (símbolo `€` suelto en el resumen de apuesta hípica) | Codex | Hecho | Ninguna captura tiene texto partido |
 | T07 | Poder salir de una mano de cartas (ESC con confirmación) | Codex | Pendiente | El reloj no se queda en pausa y el dinero cuadra |
 | C06 | Billar: guía corta de base (hasta el primer contacto y la salida de la bola tocada); la Tiza la alarga y la corazonada enseña el tiro entero | Claude | Hecho | Roi: "ni fácil ni imposible" sin objetos; la corazonada vuelve a tener sentido |
 | C07 | Textos mínimos como datos para portada, libreta y periódico (`GameTexts`): una línea por cosa, pensados para ir con iconos | Claude | Hecho | Ninguna pantalla con más de ~6 líneas de texto seguido |
