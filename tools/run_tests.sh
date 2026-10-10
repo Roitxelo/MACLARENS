@@ -20,6 +20,7 @@ run() { # escena  marca_ok  [extra_args]
 }
 "$GODOT" --headless --import . >/dev/null 2>&1 || true
 run night_sim_test NIGHT_SIM_OK --headless
+run economy_test ECONOMY_TEST_OK --headless
 if [[ "$mode" == "todas" ]]; then
   if [[ -z "${DISPLAY:-}" ]] && command -v xvfb-run >/dev/null; then PREFIX=(xvfb-run -a -s "-screen 0 1280x720x24"); fi
   run night_soak_test NIGHT_SOAK_OK --rendering-driver opengl3

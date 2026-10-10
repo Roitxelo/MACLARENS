@@ -81,6 +81,7 @@ ui/widgets/race_track.gd         Pista de caballos (compacta en el bar, grande e
 | Escena | Comprueba |
 |---|---|
 | `tests/night_sim_test.tscn` | Lógica headless: tres noches, compras, arreo, liquidación |
+| `tests/economy_test.tscn` | Pagos, cobro con/sin comisión, racha (tope x1,5), calcetín, herradura, colocado, seguro del Chencho, perdón de Tino una sola vez |
 | `tests/night_soak_test.tscn` | Dos noches completas alternando todas las pantallas con apuestas aleatorias |
 | `tests/night_capture.tscn` | Recorre todas las pantallas y guarda capturas en `tests/output/` |
 | `tests/billar_test.tscn` | Las 9 mesas se resuelven con su solución guardada; una serie en autoplay gana con tiros exactos y pierde con tiros desviados |
