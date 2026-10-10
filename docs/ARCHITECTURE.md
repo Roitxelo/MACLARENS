@@ -21,7 +21,7 @@ data/teams/team_stats.gd         8 equipos ficticios
 data/match_facts/match_fact.gd   Hecho oculto de partido (hoy sin uso en la noche, lo usa el simulador)
 ui/ui_kit.gd (class UIKit)       Paleta, fuentes, botones, hotspots, paneles, retratos
 ui/widgets/pitch_tv.gd           Retransmisión de fútbol (compacta en el bar, grande en TV 1)
-ui/widgets/race_track.gd         Pista de caballos (compacta en el bar, grande en TV 2)
+ui/widgets/race_track.gd         Pista de caballos (compacta en el salón, grande en TV hípica)
 ```
 
 ### Pantallas (`ui/night_main.gd → SCREENS`)
@@ -29,7 +29,8 @@ ui/widgets/race_track.gd         Pista de caballos (compacta en el bar, grande e
 | Clave | Script | Qué es |
 |---|---|---|
 | `title` | screens/title_screen.gd | Portada |
-| `bar` | screens/bar_screen.gd | Hub con hotspots sobre el arte del bar; TVs en miniatura |
+| `bar` | screens/bar_screen.gd | Zona de barra: fútbol, máquina, Lucía, periódico y libreta |
+| `salon` | screens/salon_screen.gd | Salón del fondo: TV hípica, billar y cartas |
 | `machine` | screens/machine_screen.gd | Máquina: pestañas Fútbol / Caballos / Mis tickets |
 | `match_tv` | screens/match_tv_screen.gd | TV 1: partido, crónica, presión, cobro, penalti |
 | `race_tv` | screens/race_screen.gd | TV 2: carrera y minijuego de arreo |

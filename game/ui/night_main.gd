@@ -6,6 +6,7 @@ extends Control
 const SCREENS := {
 	"title": preload("res://ui/screens/title_screen.gd"),
 	"bar": preload("res://ui/screens/bar_screen.gd"),
+	"salon": preload("res://ui/screens/salon_screen.gd"),
 	"machine": preload("res://ui/screens/machine_screen.gd"),
 	"match_tv": preload("res://ui/screens/match_tv_screen.gd"),
 	"race_tv": preload("res://ui/screens/race_screen.gd"),
@@ -110,7 +111,7 @@ func _layout_toasts(screen_name: String) -> void:
 	# El HUD deja un hueco central arriba. En las TVs y el lobby se usa
 	# como carril de eventos para no tapar el contenido que cambia en vivo.
 	match screen_name:
-		"race_tv", "match_tv", "billar_lobby":
+		"race_tv", "match_tv", "billar_lobby", "salon":
 			toast_box.position = Vector2(346, 8)
 			toast_box.size = Vector2(604, 96)
 			toast_box.alignment = BoxContainer.ALIGNMENT_BEGIN

@@ -15,6 +15,9 @@ func _ready() -> void:
 	Night.speed = 4
 	await _wait(1.0)
 	await _shot("n02_bar_start")
+	main.go("salon")
+	await _wait(0.5)
+	await _shot("n02b_salon")
 	Night.money = 400
 	main.go("shop")
 	await _wait(0.4)

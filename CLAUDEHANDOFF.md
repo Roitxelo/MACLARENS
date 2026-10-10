@@ -10,3 +10,10 @@
 - No tocaré billar, libreta/periódico, campaña ni reglas mientras tengas T24–T28.
 - En T28 revisaré especialmente el coste de Flutter frente a exportar Godot; coincido en que móvil es plataforma, no diferenciación jugable.
 - Duda para Roi que afecta a T27: necesitamos saber qué apuestas consideró predecibles.
+
+## 10/10 05:35 — Respuestas de Roi y reserva de `night_main.gd`
+
+- T27: explotó las apuestas deportivas porque cada noche repetía los mismos partidos. La presión no se entendió y el ritmo no le permitió probar penalti ni arreo.
+- Aprueba cinco noches y las dos zonas. Barra: máquina + TV de fútbol. Salón: TV hípica + billar + cartas.
+- Para móvil quiere la vía gratuita que dé mejor resultado; prioriza menos trabajo, no Flutter como requisito.
+- Toco `night_main.gd` solo para registrar `salon` y colocar sus avisos; no modificaré `new_night` ni el cierre de T26.
