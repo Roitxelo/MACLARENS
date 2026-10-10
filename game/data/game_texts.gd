@@ -46,3 +46,85 @@ static func tonight_lines() -> Array:
 		lines.append("Mañana cobrará %d €." % Night.quota(Night.night_index + 1))
 	lines.append("Boletos de hasta %d €. Tino juega %d series de billar." % [Night.MAX_TICKET, Catalog.TINO_SERIES])
 	return lines
+
+# --- C05 · Portada -----------------------------------------------------------------
+
+## Tres líneas y a jugar. Las reglas se explican al usarlas (HELP).
+const TITLE_LINES := [
+	"Le debes 1.800 € a Tino.",
+	"Te los cobra en cinco noches, a las 02:00.",
+	"Apuesta, juega y no te quedes corto.",
+]
+
+## Lo que hay en el bar, para dibujar con un icono o retrato cada uno.
+## icon: clave sugerida para el dibujo (Codex decide el arte).
+const TITLE_PLACES := [
+	{"icon": "machine", "label": "Fútbol y caballos"},
+	{"icon": "billar", "label": "Billar con Tino"},
+	{"icon": "cards", "label": "Cartas con el Chencho"},
+	{"icon": "lucia", "label": "Rondas y objetos"},
+]
+
+# --- C07 · Libreta (una línea por cosa) -----------------------------------------
+
+## Ficha de un personaje para la libreta o la tienda.
+static func character_card(who: String) -> Dictionary:
+	var c: Dictionary = Catalog.CHARACTERS[who]
+	var lv := Night.level(who)
+	var d := {
+		"name": c["name"],
+		"game": GAME_WORD[c["game"]],
+		"level": lv,
+		"now": c["short"][lv - 1],
+		"next": "",
+		"how": "",
+	}
+	if lv < Catalog.MAX_LEVEL:
+		d["next"] = c["short"][lv]
+		d["how"] = "Gánale una serie" if who == "tino" else "Ronda · %d €" % Night.round_price(who)
+	return d
+
+const GAME_WORD := {"football": "Fútbol", "horse": "Caballos", "cards": "Cartas", "billar": "Billar"}
+
+## Efecto de cada objeto en cinco palabras o menos.
+const TRINKET_SHORT := {
+	"tiza": "Guía del billar más larga",
+	"taco": "Potencia más lenta",
+	"guante": "Puntería más fina",
+	"repeticion": "Repite un tiro fallado",
+	"fusta": "+2 arreos, verde más ancho",
+	"gafas": "Ves el caballo en forma",
+	"herradura": "2.º puesto: recuperas la apuesta",
+	"silbato": "Portero más pequeño",
+	"prismaticos": "Presión también en la tele",
+	"chuleta": "Cuenta de mayores y menores",
+	"moneda": "Un fallo es empate (1/noche)",
+	"calcetin": "Salva tu racha una vez",
+	"trebol": "+1 corazonada",
+	"chapa": "Rondas un 40 % más baratas",
+}
+
+## Racha en una línea.
+static func streak_line() -> String:
+	if Night.streak == 0:
+		return "Sin racha. Gana con 10 € o más para empezarla."
+	return "Racha de %d: el próximo premio, +%d %%." % [Night.streak, int(round((Catalog.streak_mult(Night.streak) - 1.0) * 100.0))]
+
+const HOW_TO_LEVEL := "Invita a una ronda en la barra. A Tino, gánale al billar."
+
+# --- T04 · Ayuda la primera vez ----------------------------------------------------
+
+## Una ayuda por sitio o mecánica: título + dos líneas como mucho. La pantalla
+## la enseña la primera vez que se entra (o que aparece la mecánica).
+const HELP := {
+	"bar": ["LA BARRA", "Máquina, tele del fútbol, Lucía y el periódico.\nEl salón (billar, cartas, caballos) está al fondo."],
+	"salon": ["EL SALÓN", "Tele de los caballos, billar con Tino y cartas con el Chencho."],
+	"machine": ["LA MÁQUINA", "Elige partido o carrera, pon cuánto (máx. 50 €) y apuesta.\nEn el fútbol puedes vender el boleto en pleno partido."],
+	"pressure": ["LA PRESIÓN", "La barra dice quién aprieta ahora. Quien aprieta suele marcar pronto,\ny la casa tarda en cambiar la cuota: ahí está tu ventaja."],
+	"penalty": ["¡PENALTI!", "La mirilla se mueve: dispara pegado al palo.\nEl portero tapa un trozo al azar."],
+	"whip": ["ARREAR", "Pulsa cuando la aguja pase por lo verde: tu caballo acelera.\nFuera de lo verde, se asusta."],
+	"cards": ["MAYOR O MENOR", "¿La siguiente carta es mayor o menor? Cada acierto sube el bote.\nPlántate cuando quieras. Las cartas que han salido no vuelven."],
+	"billar": ["TIRO IMPOSIBLE", "Tres mesas con misión: mete dos y ganas.\nApunta con la guía, mantén para cargar y suelta."],
+	"shop": ["LA BARRA DE LUCÍA", "Las rondas suben de nivel a tu gente; los objetos te dan ventajas.\nTodo se queda para las noches siguientes."],
+	"end": ["A LAS 02:00", "Tino cobra la cuota de la noche. Si no llegas, se acaba."],
+}

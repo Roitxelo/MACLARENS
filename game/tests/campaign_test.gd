@@ -72,5 +72,13 @@ func _ready() -> void:
 	check(GameTexts.end_summary(80, 100, false, "closing")["verdict"] == "Faltan 20 €.", "cierre: faltan 20 €")
 	check(GameTexts.tonight_lines().size() == 3, "periódico: tres líneas de la noche")
 
+	# Textos cortos (C05, C07, T04)
+	check(GameTexts.TITLE_LINES.size() == 3, "portada: tres líneas")
+	for id in Catalog.TRINKETS:
+		check(GameTexts.TRINKET_SHORT.has(id) and str(GameTexts.TRINKET_SHORT[id]).split(" ").size() <= 6, "objeto %s con efecto corto" % id)
+	for who in ["buho", "cortado", "chencho", "tino"]:
+		check(str(GameTexts.character_card(who)["now"]) != "", "ficha de %s" % who)
+	check(GameTexts.HELP.has("pressure") and GameTexts.HELP.has("billar"), "ayudas de presión y billar")
+
 	print("CAMPAIGN_TEST_OK" if fails.is_empty() else "CAMPAIGN_TEST_FAIL %s" % str(fails))
 	get_tree().quit()
