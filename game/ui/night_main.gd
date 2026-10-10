@@ -156,9 +156,9 @@ func show_help(key: String) -> void:
 	UIKit.place(close, Rect2(526, 82, 118, 42))
 	close.pressed.connect(_close_help)
 	help_overlay.add_child(close)
-	var this_overlay := help_overlay
+	var overlay_id := help_overlay.get_instance_id()
 	get_tree().create_timer(8.0).timeout.connect(func():
-		if is_instance_valid(this_overlay) and help_overlay == this_overlay:
+		if is_instance_valid(help_overlay) and help_overlay.get_instance_id() == overlay_id:
 			_close_help())
 
 func _close_help() -> void:

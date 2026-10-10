@@ -25,7 +25,7 @@ Congelado: no entra nada nuevo, solo bloqueos, incoherencias de la economía y t
 | T04 | Ayuda contextual la primera vez que se entra en cada sitio y se ve cada mecánica (presión, arreo, penalti, cartas, billar) | Claude (textos) + Codex (UI) | Hecho | Un jugador nuevo descubre las mecánicas a tiempo sin leer la portada |
 | C05 | Portada breve: 3 líneas y a jugar; las reglas pasan a la ayuda contextual | Claude (textos) + Codex (UI) | Hecho | Portada legible en 10 s |
 | T15 | Repaso de tono y erratas en todos los textos | Claude | Pendiente | |
-| T23 | Botones de la máquina: digitales de los 90 (LCD, plástico), chapuceros pero claros; que se vea el tope de 50 € | Codex | Pendiente | Roi da el visto bueno a una captura |
+| T23 | Botones de la máquina: digitales de los 90 (LCD, plástico), chapuceros pero claros; que se vea el tope de 50 € | Codex | Hecho | Roi da el visto bueno a una captura |
 | X03 | La presión del fútbol, explicada con una frase y un icono en la máquina y la TV | Codex | Pendiente | Roi la entiende sin preguntar |
 | X04 | Tienda de Lucía: cada ronda dice qué desbloquea (`Catalog.CHARACTERS[*].short`) | Codex | Pendiente | |
 | T20 | Desbordamientos de texto (símbolo `€` suelto en el resumen de apuesta hípica) | Codex | Pendiente | Ninguna captura tiene texto partido |

@@ -35,6 +35,7 @@ func _ready() -> void:
 	for t in [["football", "FÚTBOL"], ["horses", "CABALLOS"], ["tickets", "MIS TICKETS"]]:
 		var b := UIKit.button(t[1], "teal", 24, true)
 		UIKit.place(b, Rect2(x, SCREEN.position.y + 10, 170, 38))
+		_plastic_button(b, UIKit.SCREEN_PANEL)
 		b.pressed.connect(_set_tab.bind(t[0]))
 		add_child(b)
 		tab_buttons[t[0]] = b
@@ -53,22 +54,29 @@ func _ready() -> void:
 	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	status_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	add_child(status_label)
-	var minus := UIKit.button("-", "teal", 30, true)
-	UIKit.place(minus, Rect2(SCREEN.position.x + 296, by + 2, 44, 44))
+	var stake_caption := UIKit.label("IMPORTE · MÁX. %d €" % Night.MAX_TICKET, 16, UIKit.GOLD, true)
+	UIKit.place(stake_caption, Rect2(SCREEN.position.x + 296, by - 24, 210, 22))
+	stake_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	add_child(stake_caption)
+	var minus := UIKit.button("−5", "teal", 24, true)
+	UIKit.place(minus, Rect2(SCREEN.position.x + 296, by, 50, 48))
+	_plastic_button(minus, Color("#33463e"))
 	minus.pressed.connect(func(): _change_stake(-1))
 	add_child(minus)
 	stake_label = UIKit.label("", 30, UIKit.GOLD, true)
 	stake_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	stake_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	stake_label.add_theme_stylebox_override("normal", UIKit.box(Color("#081c1c"), Color("#d39b3d"), 2, 2, 4))
-	UIKit.place(stake_label, Rect2(SCREEN.position.x + 344, by + 2, 92, 44))
+	UIKit.place(stake_label, Rect2(SCREEN.position.x + 352, by, 96, 48))
 	add_child(stake_label)
-	var plus := UIKit.button("+", "teal", 30, true)
-	UIKit.place(plus, Rect2(SCREEN.position.x + 440, by + 2, 44, 44))
+	var plus := UIKit.button("+5", "teal", 24, true)
+	UIKit.place(plus, Rect2(SCREEN.position.x + 454, by, 50, 48))
+	_plastic_button(plus, Color("#33463e"))
 	plus.pressed.connect(func(): _change_stake(1))
 	add_child(plus)
 	bet_button = UIKit.button("APOSTAR", "red", 26, true)
-	UIKit.place(bet_button, Rect2(SCREEN.position.x + 494, by + 2, 140, 44))
+	UIKit.place(bet_button, Rect2(SCREEN.position.x + 516, by, 154, 48))
+	_plastic_button(bet_button, Color("#9f3429"))
 	bet_button.pressed.connect(_place_bet)
 	add_child(bet_button)
 	hunch_label = UIKit.shadow(UIKit.label("", 18, UIKit.GOLD))
@@ -104,6 +112,12 @@ func _set_tab(t: String) -> void:
 	hunch_label.text = ""
 	_signature = ""
 	refresh()
+
+func _plastic_button(button: Button, color: Color) -> void:
+	button.add_theme_stylebox_override("normal", UIKit.box(color, Color("#aa8b52"), 3, 3, 3))
+	button.add_theme_stylebox_override("hover", UIKit.box(color.lightened(0.12), UIKit.GOLD, 3, 3, 3))
+	button.add_theme_stylebox_override("pressed", UIKit.box(color.darkened(0.2), Color("#4b351f"), 4, 3, 3))
+	button.add_theme_stylebox_override("disabled", UIKit.box(color.darkened(0.45), Color("#4b4638"), 2, 3, 3))
 
 func _change_stake(dir: int) -> void:
 	var step := 5 if stake < 50 or (dir < 0 and stake <= 50) else 10
