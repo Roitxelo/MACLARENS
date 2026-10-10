@@ -100,10 +100,20 @@ func _draw() -> void:
 		draw_rect(Rect2(bx, by, bw, bh), Color("#2b5cad") if int(match_data["index"]) == 0 else Color("#e8b628"))
 		draw_rect(Rect2(bx, by, bw * float(pr["home_share"]), bh), Color("#b8322a") if int(match_data["index"]) == 0 else Color("#e0e0e0"))
 		if not compact:
-			var lbl := "PRESIÓN"
+			var home_pressing := float(pr["home_share"]) >= 0.5
+			var pressing := str(match_data["home"] if home_pressing else match_data["away"])
+			var icon_color := Color("#c94b3b") if home_pressing else Color("#4c79de")
+			_draw_pressure_icon(Vector2(bx - 20, by - 13), 1.0 if home_pressing else -1.0, icon_color)
+			var lbl := "APRIETA: %s" % pressing
 			if Night.level("buho") >= 2:
-				lbl = "GOL EN 10'  %d%% · %d%%" % [int(pr["home_10"] * 100), int(pr["away_10"] * 100)]
+				lbl += " · GOL EN 10': %d%%-%d%%" % [int(pr["home_10"] * 100), int(pr["away_10"] * 100)]
 			draw_string(font, Vector2(bx, by - 6), lbl, HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color.WHITE)
 	if compact and match_data["state"] == "pre":
 		draw_rect(Rect2(0, h - 20, w, 20), Color(0, 0, 0, 0.6))
 		draw_string(font, Vector2(6, h - 5), "PRÓXIMO PARTIDO", HORIZONTAL_ALIGNMENT_LEFT, w - 12, 15, Color.WHITE)
+
+func _draw_pressure_icon(center: Vector2, direction: float, color: Color) -> void:
+	var points := PackedVector2Array()
+	for point in [Vector2(-12, -6), Vector2(1, -6), Vector2(1, -11), Vector2(13, 0), Vector2(1, 11), Vector2(1, 6), Vector2(-12, 6)]:
+		points.append(center + Vector2(point.x * direction, point.y))
+	draw_colored_polygon(points, color)

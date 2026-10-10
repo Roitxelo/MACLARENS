@@ -173,20 +173,26 @@ func _build_football() -> void:
 		var sub := UIKit.label("", 21, UIKit.SCREEN_TEXT, true)
 		UIKit.place(sub, Rect2(SCREEN.position.x + 24, y + 36, SCREEN.size.x - 50, 26))
 		content.add_child(sub)
+		var pressure_icon := Polygon2D.new()
+		pressure_icon.polygon = PackedVector2Array([Vector2(-12, -7), Vector2(1, -7), Vector2(1, -13), Vector2(14, 0), Vector2(1, 13), Vector2(1, 7), Vector2(-12, 7)])
+		pressure_icon.position = Vector2(SCREEN.end.x - 278, y + 61)
+		pressure_icon.color = UIKit.GOLD
+		pressure_icon.visible = false
+		content.add_child(pressure_icon)
 		var bar_bg := ColorRect.new()
 		bar_bg.color = Color("#2b5cad")
 		bar_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		UIKit.place(bar_bg, Rect2(SCREEN.end.x - 230, y + 42, 200, 12))
+		UIKit.place(bar_bg, Rect2(SCREEN.end.x - 252, y + 58, 222, 10))
 		content.add_child(bar_bg)
 		var bar_fg := ColorRect.new()
 		bar_fg.color = Color("#c94b3b")
 		bar_fg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		UIKit.place(bar_fg, Rect2(SCREEN.end.x - 230, y + 42, 100, 12))
+		UIKit.place(bar_fg, Rect2(SCREEN.end.x - 252, y + 58, 111, 10))
 		content.add_child(bar_fg)
 		var bar_l := UIKit.label("PRESIÓN", 16, UIKit.SCREEN_TEXT, true)
-		UIKit.place(bar_l, Rect2(SCREEN.end.x - 300, y + 36, 70, 22))
+		UIKit.place(bar_l, Rect2(SCREEN.end.x - 300, y + 34, 270, 22))
 		content.add_child(bar_l)
-		_match_labels.append({"head": head, "sub": sub, "match_id": m["id"], "bar": bar_fg, "bar_bg": bar_bg, "bar_l": bar_l})
+		_match_labels.append({"head": head, "sub": sub, "match_id": m["id"], "bar": bar_fg, "bar_bg": bar_bg, "bar_l": bar_l, "pressure_icon": pressure_icon})
 		var bx := SCREEN.position.x + 24
 		for pick in ["1", "X", "2"]:
 			var b := UIKit.button("", "teal", 22, true)
@@ -232,14 +238,21 @@ func _update_live() -> void:
 			sub = "Apuestas cerradas · " + sub
 		e["sub"].text = sub
 		var live: bool = m["state"] == "live"
-		for k in ["bar", "bar_bg", "bar_l"]:
+		for k in ["bar", "bar_bg", "bar_l", "pressure_icon"]:
 			e[k].visible = live
 		if live:
 			var pr := sim.pressure()
-			e["bar"].size.x = 200.0 * float(pr["home_share"])
+			var home_share := float(pr["home_share"])
+			e["bar"].size.x = 222.0 * home_share
+			var home_pressing := home_share >= 0.5
+			var pressing := str(m["home"] if home_pressing else m["away"])
+			e["pressure_icon"].scale.x = 1.0 if home_pressing else -1.0
+			e["pressure_icon"].color = Color("#c94b3b") if home_pressing else Color("#4c79de")
+			var chance := ""
 			if Night.level("buho") >= 2:
-				e["bar_l"].text = "%d%%-%d%%" % [int(pr["home_10"] * 100), int(pr["away_10"] * 100)]
-				e["bar_l"].tooltip_text = "Probabilidad de gol de cada equipo en 10 min"
+				chance = " · gol 10': %d%%-%d%%" % [int(pr["home_10"] * 100), int(pr["away_10"] * 100)]
+			e["bar_l"].text = "APRIETA: %s%s" % [pressing, chance]
+			e["bar_l"].tooltip_text = "El equipo que aprieta tiene más opciones de marcar pronto"
 	for o in _odds_buttons:
 		var m := Night.football.get_match(o["match_id"])
 		var pick: String = o["pick"]
