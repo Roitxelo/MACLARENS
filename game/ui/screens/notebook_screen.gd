@@ -1,9 +1,6 @@
 extends Control
 
-## La libreta: tu gente (qué hace cada uno ahora y cómo subirlo), tus objetos
-## y la racha. Una línea por cosa: nada de reglas largas (T24).
-
-const GAME_WORD := {"football": "fútbol", "horse": "caballos", "cards": "cartas", "billar": "billar"}
+## La libreta: fichas visuales de tu gente, objetos y racha.
 
 var main: Control
 var args: Dictionary
@@ -26,59 +23,29 @@ func _ready() -> void:
 	add_child(t1)
 	var y := 166.0
 	for who in ["buho", "cortado", "chencho", "tino"]:
-		var c: Dictionary = Catalog.CHARACTERS[who]
-		var lv := Night.level(who)
-		var pic := UIKit.texture_rect(UIKit.portrait(who), Rect2(72, y, 92, 92))
-		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		add_child(pic)
-		var name_l := UIKit.label("%s · %s" % [c["name"], GAME_WORD[c["game"]]], 22, UIKit.PAPER_INK)
-		name_l.position = Vector2(176, y - 2)
-		add_child(name_l)
-		var lvl := UIKit.label("Nv %d/3" % lv, 20, UIKit.PAPER_RED)
-		lvl.position = Vector2(490, y - 2)
-		add_child(lvl)
-		_level_pips(Vector2(552, y + 8), lv)
-		var now := UIKit.label("AHORA  " + str(c["short"][lv - 1]), 19, Color("#3b2a1a"))
-		UIKit.place(now, Rect2(176, y + 30, 446, 26))
-		add_child(now)
-		var nxt := "Nivel máximo."
-		if lv < 3:
-			var cost := "" if who == "tino" else " (%d €)" % Night.round_price(who)
-			nxt = "SUBIR  %s%s → %s" % [c["how"], cost, c["short"][lv]]
-		var nl := UIKit.label(nxt, 16, Color("#6b5236"))
-		UIKit.place(nl, Rect2(176, y + 58, 446, 44))
-		nl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		add_child(nl)
+		_character_card(who, y)
 		y += 116
 
 	var t2 := UIKit.label("OBJETOS  (%d/%d)" % [Night.trinkets.size(), Catalog.MAX_TRINKETS], 30, UIKit.PAPER_RED)
 	t2.position = Vector2(664, 126)
 	add_child(t2)
-	y = 168.0
+	y = 174.0
 	for i in Catalog.MAX_TRINKETS:
-		var txt := "— hueco libre —"
-		var col := Color("#8a7350")
-		if i < Night.trinkets.size():
-			var tr: Dictionary = Catalog.TRINKETS[Night.trinkets[i]]
-			txt = "%s: %s" % [tr["name"], tr["text"]]
-			col = UIKit.PAPER_INK
-		var l := UIKit.label(txt, 17, col)
-		UIKit.place(l, Rect2(664, y, 540, 44))
-		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		add_child(l)
-		y += 46
+		var col := i % 2
+		var row := i / 2
+		_trinket_card(i, Rect2(664 + col * 270, y + row * 88, 258, 76))
 	var t3 := UIKit.label("LA RACHA", 26, UIKit.PAPER_RED)
-	t3.position = Vector2(664, 404)
+	t3.position = Vector2(664, 446)
 	add_child(t3)
-	var el := UIKit.label("%s\nCada acierto seguido suma +10 %% al siguiente premio (hasta +50 %%). Un fallo la rompe." % Night.streak_text(), 17, Color("#3b2a1a"))
-	UIKit.place(el, Rect2(664, 438, 540, 70))
+	var el := UIKit.label(GameTexts.streak_line(), 18, Color("#3b2a1a"), true)
+	UIKit.place(el, Rect2(664, 480, 540, 48))
 	el.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(el)
 	var t4 := UIKit.label("CÓMO SUBIR DE NIVEL", 22, UIKit.PAPER_RED)
-	t4.position = Vector2(664, 520)
+	t4.position = Vector2(664, 540)
 	add_child(t4)
-	var how := UIKit.label("Búho, Cortado y Chencho: invítales a una ronda en la barra de Lucía.\nTino: gánale una serie de billar.\nLo que subes se queda para las noches siguientes.", 16, Color("#3b2a1a"))
-	UIKit.place(how, Rect2(664, 550, 540, 80))
+	var how := UIKit.label(GameTexts.HOW_TO_LEVEL, 17, Color("#3b2a1a"))
+	UIKit.place(how, Rect2(664, 570, 540, 42))
 	how.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(how)
 
@@ -86,6 +53,57 @@ func _ready() -> void:
 	UIKit.place(back, Rect2(24, 656, 260, 46))
 	back.pressed.connect(func(): main.go("bar"))
 	add_child(back)
+
+func _character_card(who: String, y: float) -> void:
+	var data := GameTexts.character_card(who)
+	var card := UIKit.panel(self, Rect2(68, y - 4, 552, 106), Color("#f0e3c3"), Color("#c6a875"), 1)
+	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var pic := UIKit.texture_rect(UIKit.portrait(who), Rect2(76, y, 88, 92))
+	pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	add_child(pic)
+	var name_l := UIKit.label("%s · %s" % [data["name"], data["game"]], 21, UIKit.PAPER_INK, true)
+	UIKit.place(name_l, Rect2(176, y, 310, 28))
+	add_child(name_l)
+	var lv: int = data["level"]
+	var lvl := UIKit.label("NV %d" % lv, 18, UIKit.PAPER_RED, true)
+	UIKit.place(lvl, Rect2(500, y, 60, 26))
+	add_child(lvl)
+	_level_pips(Vector2(554, y + 8), lv)
+	var now := UIKit.label(str(data["now"]), 18, Color("#3b2a1a"))
+	UIKit.place(now, Rect2(176, y + 30, 426, 28))
+	add_child(now)
+	var next := "NIVEL MÁXIMO"
+	if str(data["next"]) != "":
+		next = "%s  →  %s" % [data["how"], data["next"]]
+	var next_l := UIKit.label(next, 15, Color("#765a38"))
+	UIKit.place(next_l, Rect2(176, y + 60, 426, 34))
+	next_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	add_child(next_l)
+
+func _trinket_card(index: int, rect: Rect2) -> void:
+	var filled := index < Night.trinkets.size()
+	var card := UIKit.panel(self, rect, Color("#f0e3c3") if filled else Color("#dfcfaa"), Color("#c6a875"), 1)
+	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var badge := UIKit.label("%d" % (index + 1), 20, UIKit.CREAM, true)
+	badge.add_theme_stylebox_override("normal", UIKit.box(UIKit.PAPER_RED if filled else Color("#9c8761"), Color.TRANSPARENT, 0, 1, 8))
+	UIKit.place(badge, Rect2(rect.position.x + 8, rect.position.y + 12, 38, 38))
+	badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	badge.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	add_child(badge)
+	if not filled:
+		var empty := UIKit.label("HUECO LIBRE", 16, Color("#8a7350"), true)
+		UIKit.place(empty, Rect2(rect.position.x + 56, rect.position.y + 24, 188, 26))
+		add_child(empty)
+		return
+	var id: String = Night.trinkets[index]
+	var tr: Dictionary = Catalog.TRINKETS[id]
+	var name_l := UIKit.label(str(tr["name"]), 17, UIKit.PAPER_INK, true)
+	UIKit.place(name_l, Rect2(rect.position.x + 56, rect.position.y + 8, 190, 24))
+	add_child(name_l)
+	var effect := UIKit.label(str(GameTexts.TRINKET_SHORT[id]), 14, Color("#6b5236"))
+	UIKit.place(effect, Rect2(rect.position.x + 56, rect.position.y + 36, 190, 28))
+	effect.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	add_child(effect)
 
 func _level_pips(at: Vector2, lv: int) -> void:
 	for i in 3:
