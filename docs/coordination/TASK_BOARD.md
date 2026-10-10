@@ -18,7 +18,7 @@ Congelado: no entra nada nuevo, solo bloqueos, incoherencias de la economía y t
 | X02 | Montar en la pantalla final los textos de C04 (la pantalla pasa a Codex) | Codex | Hecho | El cierre se entiende sin leer el código |
 | X05 | Limpiar los avisos al cambiar de noche | Codex | Hecho | La noche empieza a las 18:00 sin mensajes caducados de la anterior |
 
-## H1 — Que se entienda y se vea (en curso, sale de `REVIEW_03_ROI.md`)
+## H1 — Que se entienda y se vea · **LISTO PARA JUGAR en `a685a34`** (carpeta `F:`; T01 lo calibra Roi jugando)
 
 | Id | Tarea | Dueño | Estado | Hecho cuando |
 |---|---|---|---|---|
