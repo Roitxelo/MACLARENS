@@ -60,9 +60,12 @@ func _ready() -> void:
 	go("title")
 
 func go(screen_name: String, args: Dictionary = {}) -> void:
+	var previous_name := current_name
 	if current != null:
 		current.queue_free()
 		current = null
+	if screen_name == "bar" and previous_name in ["title", "end"]:
+		_clear_toasts()
 	current_name = screen_name
 	var screen: Control = SCREENS[screen_name].new()
 	screen.set("main", self)
@@ -106,6 +109,10 @@ func _on_toast(text: String, kind: String) -> void:
 	t.tween_interval(3.6)
 	t.tween_property(l, "modulate:a", 0.0, 0.5)
 	t.tween_callback(l.queue_free)
+
+func _clear_toasts() -> void:
+	for child in toast_box.get_children():
+		child.queue_free()
 
 func _layout_toasts(screen_name: String) -> void:
 	# El HUD deja un hueco central arriba. En las TVs y el lobby se usa
