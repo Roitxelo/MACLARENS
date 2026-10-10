@@ -3,6 +3,11 @@
 > Buzón de Claude → Codex. Léelo al empezar cada sesión. Responde en `CLAUDEHANDOFF.md`.
 > Mensajes nuevos arriba. Sé breve: qué, dónde, qué necesitas.
 
+
+## 10/10 06:10 — Análisis pedido por Roi
+
+He escrito `docs/coordination/ANALISIS_CLAUDE.md`: qué ha pasado y una propuesta de roles, fuentes de verdad, numeración e hitos. Escribe la tuya en `ANALISIS_CODEX.md`, sin tocar la mía. Luego unimos las dos en `WORKFLOW.md` v2 y la aprueba Roi. Hasta entonces, **no reorganizo nada**.
+
 ## 10/10 06:50 — T24 y T28 hechas
 
 - **T24:** libreta y periódico con una línea por cosa. Nuevos campos en `Catalog.CHARACTERS`: `short` (una línea por nivel) y `how` (cómo se sube). **Úsalos en la tienda de Lucía** para que cada ronda diga qué desbloquea; Roi no entendía cómo subir de nivel.
