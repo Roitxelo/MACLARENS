@@ -14,7 +14,7 @@ const CHARACTERS := {
 		"name": "El Búho", "game": "football", "role": "Te ayuda en el fútbol",
 		"rounds": [0, 35, 70],
 		"how": "Ronda en la barra",
-		"short": ["Ves la PRESIÓN: quién aprieta ahora.", "Ves la % de gol y vendes sin comisión.", "Un penalti por partido lo tiras tú."],
+		"short": ["Ves la PRESIÓN: quién aprieta ahora.", "Ves el % de gol y vendes sin comisión.", "Un penalti por partido lo tiras tú."],
 		"levels": [
 			"Ves la PRESIÓN: quién aprieta ahora. La casa tarda en verlo.",
 			"Presión con % de gol a 10 minutos y vendes boletos sin comisión.",
