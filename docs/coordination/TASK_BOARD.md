@@ -4,7 +4,7 @@
 > Estados: `Pendiente` · `En curso` · `Hecho` (listo para el playtest) · `Bloqueado (motivo)`. Lo aprueba Roi jugando el hito.
 > Números: `Tnn` (Roi y las reviews) · `Cnn` (los crea Claude) · `Xnn` (los crea Codex).
 
-## H0 — Validar la campaña integrada (en curso)
+## H0 — Validar la campaña integrada · **LISTO PARA JUGAR en `9756789`** (carpeta `F:`)
 
 Congelado: no entra nada nuevo, solo bloqueos, incoherencias de la economía y textos engañosos. **Sale una versión concreta para que Roi juegue en `F:`.**
 
