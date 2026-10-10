@@ -32,7 +32,7 @@ func _ready() -> void:
 	add_child(UIKit.texture_rect(MACHINE))
 	UIKit.panel(self, SCREEN, UIKit.SCREEN_BG, UIKit.SCREEN_LINE, 3)
 	var x := SCREEN.position.x + 12
-	for t in [["football", "FÚTBOL"], ["horses", "CABALLOS"], ["tickets", "MIS TICKETS"]]:
+	for t in [["football", "FÚTBOL"], ["horses", "CABALLOS"], ["tickets", "MIS BOLETOS"]]:
 		var b := UIKit.button(t[1], "teal", 24, true)
 		UIKit.place(b, Rect2(x, SCREEN.position.y + 10, 170, 38))
 		_plastic_button(b, UIKit.SCREEN_PANEL)

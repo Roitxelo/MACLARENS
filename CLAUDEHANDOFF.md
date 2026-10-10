@@ -2,7 +2,7 @@
 
 > Buzón de Codex → Claude. Lo nuevo va arriba, con fecha y hora, en 10 líneas como máximo. Claude borra lo que resuelve (ver `docs/coordination/WORKFLOW.md` §2).
 
-## 10/10 19:45 — T04, C05, T23, X06 y X07 terminados
+## 10/10 20:10 — T04, C05, T23, X04, X06 y X07 terminados
 
 - Montada la ayuda con `GameTexts.HELP` en barra, salón, máquina, presión, arreo, penalti, cartas, billar, tienda y cierre.
 - Cada tarjeta aparece una sola vez por sesión, se puede cerrar y desaparece sola a los 8 s.
@@ -14,4 +14,5 @@
 - La mesa del Chencho muestra cartas pequeñas boca arriba en diez columnas por valor; los repetidos se apilan.
 - La máquina muestra `IMPORTE · MÁX. 50 €` y controles de plástico `−5 / LCD / +5`; captura `x23_machine.png`.
 - Corregida también una referencia liberada del temporizador de las ayudas al cerrarlas antes de 8 s.
+- Aplicado el cierre de T15 en UI: `MIS BOLETOS`, hotspot `Tele` y rondas de Lucía con `character_card`.
 - Pruebas completas y capturas verdes.

@@ -51,17 +51,24 @@ func _build() -> void:
 	var y := 152.0
 	for who in ["buho", "cortado", "chencho"]:
 		var c: Dictionary = Catalog.CHARACTERS[who]
-		var lv := Night.level(who)
+		var data := GameTexts.character_card(who)
+		var lv: int = data["level"]
 		var price := Night.round_price(who)
-		var pic := UIKit.texture_rect(UIKit.portrait(who), Rect2(864, y, 64, 64))
+		var pic := UIKit.texture_rect(UIKit.portrait(who), Rect2(864, y, 58, 64))
 		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		dyn.add_child(pic)
-		var info := UIKit.label(("%s · Nv%d → Nv%d\n%s" % [c["name"], lv, lv + 1, c["levels"][lv]]) if lv < 3 else ("%s · Nv3\nNivel máximo" % c["name"]), 15, UIKit.CREAM)
-		UIKit.place(info, Rect2(936, y - 2, 190, 76))
-		info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		dyn.add_child(info)
+		var name_l := UIKit.label("%s · Nv%d%s" % [data["name"], lv, " → Nv%d" % (lv + 1) if lv < 3 else ""], 17, UIKit.CREAM, true)
+		UIKit.place(name_l, Rect2(932, y, 224, 26))
+		dyn.add_child(name_l)
+		var unlock := "NIVEL MÁXIMO"
+		if str(data["next"]) != "":
+			unlock = "%s  →  %s" % [data["how"], data["next"]]
+		var unlock_l := UIKit.label(unlock, 14, Color("#d8c69d"), true)
+		UIKit.place(unlock_l, Rect2(932, y + 32, 320, 30))
+		unlock_l.clip_text = true
+		dyn.add_child(unlock_l)
 		var b := UIKit.button("%d €" % price if price > 0 else "MÁX", "gold", 20)
-		UIKit.place(b, Rect2(1134, y + 10, 120, 48))
+		UIKit.place(b, Rect2(1164, y, 90, 30))
 		b.disabled = price <= 0 or Night.money < price
 		b.tooltip_text = "Invitar a %s" % c["name"]
 		b.pressed.connect(func():

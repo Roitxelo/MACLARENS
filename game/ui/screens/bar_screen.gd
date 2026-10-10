@@ -17,7 +17,7 @@ func _ready() -> void:
 	UIKit.place(tv1, Rect2(296, 55, 202, 108))
 	tv1.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(tv1)
-	UIKit.hotspot(self, Rect2(290, 48, 214, 122), "TV 1 · Ver el fútbol").pressed.connect(func(): main.go("match_tv"))
+	UIKit.hotspot(self, Rect2(290, 48, 214, 122), "Tele · Ver el fútbol").pressed.connect(func(): main.go("match_tv"))
 	UIKit.hotspot(self, Rect2(965, 200, 270, 230), "Máquina de apuestas").pressed.connect(func(): main.go("machine"))
 	UIKit.hotspot(self, Rect2(525, 505, 410, 175), "Diario Gol Local · cartelera").pressed.connect(func(): main.go("paper"))
 	UIKit.hotspot(self, Rect2(150, 530, 250, 150), "Tu libreta · gente, objetos y racha").pressed.connect(func(): main.go("notebook"))
