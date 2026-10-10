@@ -16,6 +16,7 @@ function Run-Test($scene, $ok, $extra) {
 & $godot --headless --import . *> $null
 Run-Test "night_sim_test" "NIGHT_SIM_OK" @("--headless")
 Run-Test "economy_test" "ECONOMY_TEST_OK" @("--headless")
+Run-Test "campaign_test" "CAMPAIGN_TEST_OK" @("--headless")
 if ($Todas) {
     Run-Test "night_soak_test" "NIGHT_SOAK_OK" @()
     Run-Test "night_capture" "NIGHT_CAPTURE_OK" @()
