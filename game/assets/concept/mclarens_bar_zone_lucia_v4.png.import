@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://x35nvtrmsiny"
-path="res://.godot/imported/mclarens_bar_zone_lucia_v3.png-8d7eaa8549661d571c47d2c90886c396.ctex"
+uid="uid://dkhrtror2myjr"
+path="res://.godot/imported/mclarens_bar_zone_lucia_v4.png-4638aec58f287733ca54f09625f93fa5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/concept/mclarens_bar_zone_lucia_v3.png"
-dest_files=["res://.godot/imported/mclarens_bar_zone_lucia_v3.png-8d7eaa8549661d571c47d2c90886c396.ctex"]
+source_file="res://assets/concept/mclarens_bar_zone_lucia_v4.png"
+dest_files=["res://.godot/imported/mclarens_bar_zone_lucia_v4.png-4638aec58f287733ca54f09625f93fa5.ctex"]
 
 [params]
 
