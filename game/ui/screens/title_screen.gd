@@ -10,49 +10,47 @@ var args: Dictionary
 func _ready() -> void:
 	add_child(UIKit.texture_rect(BAR))
 	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.72)
+	dim.color = Color(0, 0, 0, 0.64)
 	dim.size = size
 	dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(dim)
-	var title := UIKit.shadow(UIKit.label("McLARENS", 92, UIKit.GOLD))
-	UIKit.place(title, Rect2(0, 36, 1280, 110))
+	var title := UIKit.shadow(UIKit.label("McLARENS", 82, UIKit.GOLD))
+	UIKit.place(title, Rect2(0, 22, 1280, 100))
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(title)
 	var sub := UIKit.shadow(UIKit.label("La última combinada", 30, UIKit.CREAM))
-	UIKit.place(sub, Rect2(0, 140, 1280, 40))
+	UIKit.place(sub, Rect2(0, 116, 1280, 40))
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(sub)
-	var pic := UIKit.texture_rect(UIKit.portrait("tino"), Rect2(110, 210, 240, 240))
+	var debt_card := UIKit.panel(self, Rect2(170, 174, 940, 166), Color(0.06, 0.035, 0.02, 0.94), Color("#8a6a3c"), 3)
+	debt_card.name = "debt_card"
+	var pic := UIKit.texture_rect(UIKit.portrait("tino"), Rect2(184, 184, 146, 146))
 	pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	add_child(pic)
-	var note := UIKit.label("Le debes 1.800 € a Tino.\nCobra cada noche a las 02:00:\n100, 150, 300, 500 y 750 €.\nTienes 200 €. Cinco noches.", 24, UIKit.PAPER_INK)
-	note.add_theme_stylebox_override("normal", UIKit.box(Color("#efe2c4"), Color("#6b4f30"), 3, 4, 14))
-	UIKit.place(note, Rect2(80, 456, 300, 150))
-	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	add_child(note)
-	var list := UIKit.label("", 22, UIKit.CREAM)
-	list.text = "\n".join([
-		"MÁQUINA · 2 partidos de fútbol y 10 carreras cada noche (boletos de hasta 50 €).",
-		"EL BÚHO te enseña quién aprieta en el partido y, en Nv3, te deja tirar un penalti.",
-		"EL CORTADO te deja arrear a tu caballo en plena carrera (timing).",
-		"EL CHENCHO juega a Mayor o menor: cuanto más borracho, peor cuenta las cartas.",
-		"TINO te reta al billar: tiros imposibles, 3 series por noche. Gánale y sube de nivel.",
-		"LUCÍA · Rondas para subir de nivel a tu gente y objetos. Todo se queda para la noche siguiente.",
-		"RACHA · Gana seguido y el beneficio crece un poco (hasta x1,5).",
-		"SUERTE · Tres corazonadas: pulso firme, arreo perfecto, engañar al portero, ver la carta.",
-	])
-	UIKit.place(list, Rect2(430, 214, 790, 330))
-	list.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	list.add_theme_constant_override("line_spacing", 8)
-	add_child(list)
-	var hint := UIKit.label("El reloj corre solo: la noche dura unos 13 minutos reales. Arriba a la derecha puedes pausar (P) o acelerar (x2, x4). ESC vuelve al bar.", 17, Color("#cbb98f"))
-	UIKit.place(hint, Rect2(430, 552, 790, 40))
-	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	add_child(hint)
+	var lines := UIKit.label("\n".join(GameTexts.TITLE_LINES), 28, UIKit.CREAM, true)
+	UIKit.place(lines, Rect2(356, 194, 720, 126))
+	lines.add_theme_constant_override("line_spacing", 8)
+	add_child(lines)
+	var portraits := {"machine": "buho", "billar": "tino", "cards": "chencho", "lucia": "lucia"}
+	for i in GameTexts.TITLE_PLACES.size():
+		var place: Dictionary = GameTexts.TITLE_PLACES[i]
+		_place_card(place, str(portraits[place["icon"]]), Rect2(80 + i * 285, 370, 265, 176))
 	var start := UIKit.button("ABRIR EL BAR · 18:00", "red", 30)
-	UIKit.place(start, Rect2(640, 610, 380, 70))
+	UIKit.place(start, Rect2(450, 590, 380, 76))
 	start.pressed.connect(func(): main.go("bar"))
 	add_child(start)
 	var small := UIKit.label("Juego de ficción. Ningún caballo fue sobornado.", 14, Color("#8a7a5a"))
-	UIKit.place(small, Rect2(80, 690, 600, 24))
+	UIKit.place(small, Rect2(0, 688, 1280, 24))
+	small.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(small)
+
+func _place_card(place: Dictionary, portrait_id: String, rect: Rect2) -> void:
+	var card := UIKit.panel(self, rect, Color(0.055, 0.035, 0.025, 0.94), Color("#8a6a3c"), 2)
+	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var pic := UIKit.texture_rect(UIKit.portrait(portrait_id), Rect2(rect.position.x + 72, rect.position.y + 10, 120, 112))
+	pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	add_child(pic)
+	var label := UIKit.label(str(place["label"]), 20, UIKit.CREAM, true)
+	UIKit.place(label, Rect2(rect.position.x + 12, rect.position.y + 130, rect.size.x - 24, 34))
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	add_child(label)
