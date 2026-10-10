@@ -44,7 +44,7 @@ Congelado: no entra nada nuevo, solo bloqueos, incoherencias de la economía y t
 | C09 | Guía del billar fluida: se recalcula en cada fotograma y corta la simulación en cuanto tiene lo que enseña (0,7 ms de media, < 5 ms el peor caso); rueda del ratón para afinar | Claude | Hecho | Sin saltos; la prueba del billar mide el tiempo |
 | X08 | Lucía en la barra: sustituir al cliente de sudadera roja por Lucía y que sea ella el acceso a la tienda | Codex | Hecho | Roi encuentra la tienda sin buscar |
 | X09 | Volver desde cartas y TV de caballos (y ESC) lleva al **salón**, no a la barra. El billar ya lo hace (Claude) | Codex | Bloqueado (la prueba de economía aún exige volver al bar; pedido a Claude) | ESC y "volver" regresan a la zona de donde vienes |
-| X10 | La tienda muestra los límites nuevos: `GameTexts.shop_limits_line()`, el motivo del bloqueo (`round_block_reason`, `trinket_block_reason`) y `Catalog.REROLL_PRICE` | Codex | Pendiente | Ningún botón falla sin decir por qué |
+| X10 | La tienda muestra los límites nuevos: `GameTexts.shop_limits_line()`, el motivo del bloqueo (`round_block_reason`, `trinket_block_reason`) y `Catalog.REROLL_PRICE` | Codex | Hecho | Ningún botón falla sin decir por qué |
 
 ## H2 — Móvil (Godot → Android, 0 €; ver `docs/design/MOBILE.md`)
 

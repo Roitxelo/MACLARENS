@@ -2,7 +2,7 @@ extends Control
 
 ## La barra de Lucía: la tienda de la noche.
 ## - Rondas para subir de nivel al Búho, al Cortado y al Chencho.
-## - Tres objetos a la venta que cambian cada hora y media (o pagando 5 €).
+## - Tres objetos a la venta que cambian cada hora y media (o pagando el cambio).
 ## - Chupito de orujo: +1 suerte.
 
 const LUCIA_ART := preload("res://assets/concept/lucia_conversation_v1.png")
@@ -35,12 +35,12 @@ func _ready() -> void:
 var _sig := ""
 
 func refresh() -> void:
-	var sig := str([Night.money, Night.shop, Night.luck, Night.trinkets.size()])
+	var sig := str([Night.money, Night.shop, Night.luck, Night.trinkets.size(), Night.rounds_today, Night.trinkets_left_today()])
 	if sig != _sig and dyn != null:
 		_build()
 
 func _build() -> void:
-	_sig = str([Night.money, Night.shop, Night.luck, Night.trinkets.size()])
+	_sig = str([Night.money, Night.shop, Night.luck, Night.trinkets.size(), Night.rounds_today, Night.trinkets_left_today()])
 	for c in dyn.get_children():
 		c.queue_free()
 	# --- Rondas (columna derecha)
@@ -48,7 +48,10 @@ func _build() -> void:
 	var t := UIKit.label("RONDAS · SUBEN DE NIVEL", 22, UIKit.GOLD)
 	t.position = Vector2(866, 118)
 	dyn.add_child(t)
-	var y := 152.0
+	var round_limit := UIKit.label("UNA RONDA POR PERSONA Y NOCHE", 14, Color("#d8c69d"), true)
+	UIKit.place(round_limit, Rect2(866, 144, 380, 20))
+	dyn.add_child(round_limit)
+	var y := 170.0
 	for who in ["buho", "cortado", "chencho"]:
 		var c: Dictionary = Catalog.CHARACTERS[who]
 		var data := GameTexts.character_card(who)
@@ -63,25 +66,30 @@ func _build() -> void:
 		var unlock := "NIVEL MÁXIMO"
 		if str(data["next"]) != "":
 			unlock = "%s  →  %s" % [data["how"], data["next"]]
-		var unlock_l := UIKit.label(unlock, 14, Color("#d8c69d"), true)
+		var block_reason := GameTexts.round_block_reason(who)
+		var unlock_l := UIKit.label(block_reason.to_upper() if block_reason != "" else unlock, 14, Color("#ffad8f") if block_reason != "" else Color("#d8c69d"), true)
 		UIKit.place(unlock_l, Rect2(932, y + 32, 320, 30))
 		unlock_l.clip_text = true
 		dyn.add_child(unlock_l)
 		var b := UIKit.button("%d €" % price if price > 0 else "MÁX", "gold", 20)
 		UIKit.place(b, Rect2(1164, y, 90, 30))
-		b.disabled = price <= 0 or Night.money < price
-		b.tooltip_text = "Invitar a %s" % c["name"]
+		b.disabled = not Night.round_available(who) or block_reason != ""
+		b.tooltip_text = block_reason if block_reason != "" else "Invitar a %s" % c["name"]
 		b.pressed.connect(func():
 			if Night.buy_round(who):
 				speech.text = ["Marchando una para %s." % c["name"], "%s ya canta. Buena señal." % c["name"]][lv % 2]
 			_build())
 		dyn.add_child(b)
-		y += 92
+		y += 86
 	# --- Objetos (posavasos)
 	UIKit.panel(dyn, Rect2(330, 470, 940, 240), Color(0.1, 0.06, 0.03, 0.94), Color("#8a6a3c"), 3)
-	var t2 := UIKit.label("OBJETOS EN LA BARRA  ·  llevas %d/%d" % [Night.trinkets.size(), Catalog.MAX_TRINKETS], 22, UIKit.GOLD)
+	var t2 := UIKit.label("OBJETOS · LLEVAS %d/%d" % [Night.trinkets.size(), Catalog.MAX_TRINKETS], 22, UIKit.GOLD)
 	t2.position = Vector2(346, 476)
 	dyn.add_child(t2)
+	var limits := UIKit.label(GameTexts.shop_limits_line(), 16, Color("#d8c69d"), true)
+	UIKit.place(limits, Rect2(686, 480, 350, 22))
+	limits.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	dyn.add_child(limits)
 	var x := 346.0
 	for i in 3:
 		var id: String = Night.shop[i]
@@ -106,15 +114,22 @@ func _build() -> void:
 			tg.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			dyn.add_child(tg)
 			var tx := UIKit.label(tr["text"], 16, UIKit.PAPER_INK)
-			UIKit.place(tx, Rect2(x + 12, 564, 196, 80))
+			UIKit.place(tx, Rect2(x + 12, 564, 196, 62))
 			tx.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			tx.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			dyn.add_child(tx)
+			var block_reason := GameTexts.trinket_block_reason()
+			if block_reason == "" and Night.money < int(tr["price"]):
+				block_reason = "No te llega"
+			var reason_l := UIKit.label(block_reason.to_upper(), 13, UIKit.PAPER_RED)
+			UIKit.place(reason_l, Rect2(x + 10, 628, 200, 18))
+			reason_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			reason_l.clip_text = true
+			dyn.add_child(reason_l)
 			var b := UIKit.button("COMPRAR %d €" % tr["price"], "red", 18)
 			UIKit.place(b, Rect2(x + 30, 650, 160, 40))
-			b.disabled = Night.money < int(tr["price"]) or Night.trinkets.size() >= Catalog.MAX_TRINKETS
-			if Night.trinkets.size() >= Catalog.MAX_TRINKETS:
-				b.tooltip_text = "No te caben más objetos"
+			b.disabled = block_reason != ""
+			b.tooltip_text = block_reason if block_reason != "" else "Comprar %s" % tr["name"]
 			b.pressed.connect(func():
 				if Night.buy_trinket(i):
 					speech.text = "Te lo envuelvo. %s, buena elección." % tr["name"]
@@ -125,15 +140,17 @@ func _build() -> void:
 	var shot := UIKit.button("CHUPITO DE ORUJO\n%d € · +1 suerte" % SHOT_PRICE, "paper", 17)
 	UIKit.place(shot, Rect2(1044, 516, 210, 80))
 	shot.disabled = Night.money < SHOT_PRICE or Night.luck >= Night.max_luck
+	shot.tooltip_text = "Suerte al máximo" if Night.luck >= Night.max_luck else ("No te llega" if Night.money < SHOT_PRICE else "+1 suerte")
 	shot.pressed.connect(func():
 		if Night.spend(SHOT_PRICE):
 			Night.add_luck()
 			speech.text = "Del pueblo. Si no te da suerte, te quita el frío."
 		_build())
 	dyn.add_child(shot)
-	var reroll := UIKit.button("OTROS OBJETOS\n5 €", "paper", 17)
+	var reroll := UIKit.button("OTROS OBJETOS\n%d €" % Catalog.REROLL_PRICE, "paper", 17)
 	UIKit.place(reroll, Rect2(1044, 606, 210, 80))
-	reroll.disabled = Night.money < 5
+	reroll.disabled = Night.money < Catalog.REROLL_PRICE
+	reroll.tooltip_text = "No te llega" if reroll.disabled else "Cambiar los tres objetos"
 	reroll.pressed.connect(func():
 		if Night.reroll_shop():
 			speech.text = "Espera, que tengo más cosas en el almacén..."
