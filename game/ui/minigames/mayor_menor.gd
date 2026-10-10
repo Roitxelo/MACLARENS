@@ -57,11 +57,11 @@ func _ready() -> void:
 	rules.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(rules)
 	pot_label = UIKit.shadow(UIKit.label("", 30, UIKit.GOLD))
-	UIKit.place(pot_label, Rect2(360, 470, 880, 40))
+	UIKit.place(pot_label, Rect2(360, 496, 880, 36))
 	pot_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(pot_label)
 	odds_label = UIKit.shadow(UIKit.label("", 19, Color("#d8e8d0")))
-	UIKit.place(odds_label, Rect2(360, 508, 880, 28))
+	UIKit.place(odds_label, Rect2(360, 530, 880, 26))
 	odds_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(odds_label)
 
@@ -345,27 +345,42 @@ func _draw() -> void:
 		draw_rect(Rect2(22 + (i * 97) % 1236, 22 + (i * 53) % 676, 3, 3), Color("#24572f"))
 	# mazo
 	for i in 4:
-		_draw_back(Vector2(420 + i * 2, 200 - i * 2))
+		_draw_back(Vector2(420 + i * 2, 188 - i * 2), 0.72)
 	if not current.is_empty():
-		_draw_card(Vector2(700, 196), current, 1.0)
+		_draw_card(Vector2(680, 174), current, 0.82)
 	if not previous.is_empty():
-		_draw_card(Vector2(940, 214), previous, 0.82, 0.55)
-	if not played.is_empty():
-		var hist: Array = []
-		for c in played.slice(maxi(0, played.size() - 12)):
-			hist.append(_short(c))
-		draw_string(UIKit.FONT_SCREEN, Vector2(900, 452), "HAN SALIDO: " + " ".join(hist), HORIZONTAL_ALIGNMENT_LEFT, 350, 20, Color("#d8e8d0"))
+		_draw_card(Vector2(880, 188), previous, 0.68, 0.58)
+	_draw_played_cards()
 	if peek and not deck.is_empty():
-		_draw_card(Vector2(560, 300), deck[deck.size() - 1], 0.6, 0.85)
-		draw_string(UIKit.FONT_UI, Vector2(560, 296), "LA SIGUIENTE", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, UIKit.GOLD)
+		_draw_card(Vector2(1060, 210), deck[deck.size() - 1], 0.55, 0.85)
+		draw_string(UIKit.FONT_UI, Vector2(1060, 204), "LA SIGUIENTE", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, UIKit.GOLD)
 
-func _draw_back(p: Vector2) -> void:
-	var r := Rect2(p, Vector2(150, 230))
+func _draw_played_cards() -> void:
+	draw_string(UIKit.FONT_SCREEN, Vector2(380, 398), "HAN SALIDO · AGRUPADAS POR VALOR", HORIZONTAL_ALIGNMENT_LEFT, 820, 17, Color("#d8e8d0"))
+	var groups := {}
+	for value in VALUES:
+		groups[value] = []
+	for card in played:
+		groups[int(card["value"])].append(card)
+	for i in VALUES.size():
+		var value: int = VALUES[i]
+		var x := 380.0 + i * 80.0
+		var cards: Array = groups[value]
+		if cards.is_empty():
+			draw_rect(Rect2(x, 412, 51, 75), Color(0.75, 0.82, 0.72, 0.18), false, 1.0)
+			draw_string(UIKit.FONT_UI, Vector2(x + 15, 455), _short({"value": value}), HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Color(0.75, 0.82, 0.72, 0.42))
+			continue
+		for j in cards.size():
+			_draw_card(Vector2(x + j * 5, 412 + j * 4), cards[j], 0.3)
+
+func _draw_back(p: Vector2, scale: float = 1.0) -> void:
+	var card_size := Vector2(150, 230) * scale
+	var r := Rect2(p, card_size)
 	draw_rect(r, Color("#7a1f1a"))
-	draw_rect(r.grow(-8), Color("#a8322a"))
+	draw_rect(r.grow(-8 * scale), Color("#a8322a"))
 	for k in 6:
-		draw_rect(Rect2(p + Vector2(20 + k * 19, 30), Vector2(8, 170)), Color("#7a1f1a"))
-	draw_rect(r, Color("#efe2c4"), false, 3.0)
+		draw_rect(Rect2(p + Vector2(20 + k * 19, 30) * scale, Vector2(8, 170) * scale), Color("#7a1f1a"))
+	draw_rect(r, Color("#efe2c4"), false, 3.0 * scale)
 
 func _draw_card(p: Vector2, c: Dictionary, s: float, alpha: float = 1.0) -> void:
 	var size_v := Vector2(170, 250) * s
@@ -380,7 +395,7 @@ func _draw_card(p: Vector2, c: Dictionary, s: float, alpha: float = 1.0) -> void
 		"bastos": col = Color("#2f7a33")
 	col.a = alpha
 	var v: int = c["value"]
-	var label := str(v)
+	var label := _short(c)
 	draw_string(UIKit.FONT_UI, p + Vector2(10, 34) * s, label, HORIZONTAL_ALIGNMENT_LEFT, -1, int(34 * s), col)
 	draw_string(UIKit.FONT_UI, p + Vector2(size_v.x - 44 * s, size_v.y - 12 * s), label, HORIZONTAL_ALIGNMENT_LEFT, -1, int(34 * s), col)
 	var cx := p + size_v * 0.5
