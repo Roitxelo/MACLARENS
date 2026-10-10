@@ -25,7 +25,7 @@ func _ready() -> void:
 	var pic := UIKit.texture_rect(UIKit.portrait("tino"), Rect2(110, 210, 240, 240))
 	pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	add_child(pic)
-	var note := UIKit.label("Le debes 500 € a Tino.\nViene a cobrar a las 02:00.\nTienes 100 € y toda la noche.", 24, UIKit.PAPER_INK)
+	var note := UIKit.label("Le debes 500 € a Tino.\nViene a cobrar a las 02:00.\nTienes 200 € y toda la noche.", 24, UIKit.PAPER_INK)
 	note.add_theme_stylebox_override("normal", UIKit.box(Color("#efe2c4"), Color("#6b4f30"), 3, 4, 14))
 	UIKit.place(note, Rect2(80, 460, 300, 120))
 	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

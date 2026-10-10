@@ -42,6 +42,10 @@ func setup(seed_value: int, kickoffs: Array) -> void:
 			"away_id": away_id,
 			"seed": hash("match%d_%d" % [seed_value, i]),
 			"match_fact": fact,
+			# El segundo partido concentra rachas de presión más claras para
+			# ofrecer otra oportunidad de leer el momento durante la noche.
+			"momentum_noise": 0.5 if i == 1 else 0.4,
+			"momentum_attack": 0.8 if i == 1 else 0.65,
 		})
 		var m := {
 			"id": "match_%d" % i,

@@ -56,7 +56,7 @@ Mediana del hábil con 500 €: 78 € al cierre; p90: 595 €. La noche es **mu
 - **Momento del fútbol** más persistente (0,88) y con más efecto (±65 % de ataque): leer la presión pasa de no servir a dar una ventaja pequeña.
 - **Billar**: Tino paga **1:1, 2:1 y 3:1** según el nivel, y eliges la apuesta (10 € hasta 50 / 100 / 150 €). Antes era 1:1 fijo de 20/40/60 € y no daba para remontar.
 
-## Pendiente: decisión de Roi
+## Decisión de Roi (10/10/2026): opciones 2 + 3
 
 El objetivo de T05 era "azar < 15 %, hábil 50-70 %". Lo primero se cumple de sobra; lo segundo no (15 %). Opciones, de menos a más cambio:
 
@@ -65,4 +65,16 @@ El objetivo de T05 era "azar < 15 %, hábil 50-70 %". Lo primero se cumple de so
 3. **Más ventaja para la habilidad**: arreo perfecto un poco más fuerte, Chencho Nv3 que no baraja entre manos (contar cartas daría ventaja real; ahora no la da) y un segundo partido con más presión.
 4. Asumir que el modelo es pesimista (un jugador que repite aprende las mesas del billar) y **probarlo con jugadores** antes de tocar la deuda.
 
-Recomendación de Claude: **2 + 3** (empezar con 200 € y reforzar el Chencho Nv3), y validar con el playtest de T01.
+Roi confirma **2 + 3**: empezar con 200 €, reforzar el arreo perfecto, hacer persistente la baraja de Chencho Nv3 y dar al segundo partido una presión más marcada. Falta repetir la simulación y validar la sensación en el playtest de T01.
+
+### Validación tras aplicar 2 + 3
+
+300 noches por perfil, deuda de 500 € y 200 € iniciales:
+
+| Perfil | Paga a Tino | Mediana | p10 | p90 |
+|---|---:|---:|---:|---:|
+| azar | 0,3 % | 43 € | 14 € | 150 € |
+| normal | 2,0 % | 90 € | 43 € | 189 € |
+| hábil | **33,7 %** | 186 € | 18 € | 1.327 € |
+
+La tasa hábil mejora del 15 % al 33,7 %, pero todavía no alcanza el objetivo del 50–70 %. T05 continúa en curso hasta contrastar el modelo con T01; no se sube más la ventaja sin jugarlo, porque el p90 ya muestra noches de premio muy alto.

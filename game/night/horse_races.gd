@@ -129,7 +129,7 @@ func whip(race: Dictionary, horse: int, quality: float, green_half: float) -> St
 		return ""
 	var t: float = race["t"]
 	if quality >= 1.0 - green_half * 0.35:
-		race["kicks"].append({"horse": horse, "mult": 1.14, "until": t + 0.8})
+		race["kicks"].append({"horse": horse, "mult": 1.20, "until": t + 0.9})
 		return "¡ARREO PERFECTO!"
 	if quality >= 1.0 - green_half:
 		race["kicks"].append({"horse": horse, "mult": 1.07, "until": t + 0.7})

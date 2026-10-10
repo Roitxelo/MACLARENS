@@ -17,6 +17,7 @@ const PROFILES := {
 
 var rng := RandomNumberGenerator.new()
 var hands_played := 0
+var chencho_deck: Array = []
 var p: Dictionary
 
 func _init() -> void:
@@ -58,6 +59,7 @@ func _play_night(seed_value: int, debt: int) -> int:
 	n.running = true
 	rng.seed = seed_value * 31
 	hands_played = 0
+	chencho_deck.clear()
 	var billar_tries := 0
 	while not n.over and n.minute() < n.NIGHT_LENGTH:
 		var m: int = n.minute()
@@ -201,19 +203,29 @@ func _billar(n) -> void:
 
 const VALUES := [1, 2, 3, 4, 5, 6, 7, 10, 11, 12]
 
+func _new_card_deck() -> Array:
+	var fresh: Array = []
+	for s in 4:
+		for v in VALUES:
+			fresh.append(VALUES.find(v))
+	for i in range(fresh.size() - 1, 0, -1):
+		var j := rng.randi_range(0, i)
+		var t = fresh[i]; fresh[i] = fresh[j]; fresh[j] = t
+	return fresh
+
 func _cards(n) -> void:
 	var lv: int = n.level("chencho")
 	var stake := mini(Catalog.CHENCHO_MAX[lv - 1], 20 if p["cards"] == "naive" else Catalog.CHENCHO_MAX[lv - 1])
 	if not n.spend(stake):
 		return
 	n.advance(5)
-	var deck: Array = []
-	for s in 4:
-		for v in VALUES:
-			deck.append(VALUES.find(v))
-	for i in range(deck.size() - 1, 0, -1):
-		var j := rng.randi_range(0, i)
-		var t = deck[i]; deck[i] = deck[j]; deck[j] = t
+	var deck: Array
+	if lv >= 3:
+		if chencho_deck.size() < 7:
+			chencho_deck = _new_card_deck()
+		deck = chencho_deck
+	else:
+		deck = _new_card_deck()
 	var cur: int = deck.pop_back()
 	var pot := stake
 	var steps := 0

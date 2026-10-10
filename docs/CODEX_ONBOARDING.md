@@ -6,9 +6,9 @@ Hola, Codex. Este documento es tu punto de partida. Léelo entero (10 minutos) a
 
 ## 1. Qué es el juego (30 segundos)
 
-**McLarens: La última combinada.** Debes 500 € a Tino, un prestamista de barrio cómico. Viene a cobrar a las 02:00. Tienes 100 € y una noche en el bar McLarens para conseguirlos.
+**McLarens: La última combinada.** Debes 500 € a Tino, un prestamista de barrio cómico. Viene a cobrar a las 02:00. Tienes 200 € y una noche en el bar McLarens para conseguirlos.
 
-- Una partida = **una noche de 18:00 a 02:00**, unos 13 minutos reales. El reloj corre solo (P pausa, x1/x2/x4).
+- Una partida = **una noche de 18:00 a 02:00**, unos 13 minutos reales. Empiezas con 200 €. El reloj corre solo (P pausa, x1/x2/x4).
 - Todo se hace desde el bar (arte pixel 2.5D, focos interactivos, sin menús abstractos):
   - **Máquina:** fútbol (2 partidos, 1X2 en directo con cobro anticipado) y 10 carreras de caballos.
   - **TV 1 / TV 2:** ver el partido (medidor de presión, penalti) y la carrera (arrear a tu caballo).

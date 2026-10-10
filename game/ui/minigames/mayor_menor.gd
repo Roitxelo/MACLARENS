@@ -161,6 +161,7 @@ func _hint_text() -> String:
 
 func _new_deck() -> void:
 	deck.clear()
+	played.clear()
 	for s in SUITS:
 		for v in VALUES:
 			deck.append({"suit": s, "value": v})
@@ -175,7 +176,11 @@ func _deal() -> void:
 		return
 	Night.set_pause("minigame", true)
 	Night.advance(MINUTES_COST)
-	_new_deck()
+	# En Nv3 el Chencho no vuelve a barajar entre manos: recordar las cartas
+	# que han salido da una ventaja real. Se baraja solo si no quedan cartas
+	# suficientes para completar otra mano de seis aciertos.
+	if _lv() < 3 or deck.size() < MAX_STEPS + 1:
+		_new_deck()
 	previous = {}
 	current = deck.pop_back()
 	pot = stake
@@ -183,7 +188,10 @@ func _deal() -> void:
 	peek = false
 	_coin_used = false
 	_insured = false
-	played = [current]
+	if _lv() >= 3:
+		played.append(current)
+	else:
+		played = [current]
 	speech.text = ["Venga, ese %s... ¿qué te dice el corazón?", "Un %s. Yo diría... no sé lo que diría. Hip.", "Mira, un %s. Como mi número de la suerte. O no."][rng.randi_range(0, 2)] % _card_name(current)
 	_set_playing(true)
 
@@ -238,7 +246,8 @@ func _update_labels() -> void:
 	cash_btn.text = "PLANTARSE · %d €" % pot
 	cash_btn.disabled = steps == 0
 	hunch_btn.disabled = peek or Night.luck <= 0
-	odds_label.text = "Acierto %d de %d%s" % [steps, MAX_STEPS, _hint_text()]
+	var shoe := " · Baraja: %d cartas" % deck.size() if _lv() >= 3 else ""
+	odds_label.text = "Acierto %d de %d%s%s" % [steps, MAX_STEPS, shoe, _hint_text()]
 
 func _guess(dir: int) -> void:
 	if not playing or deck.is_empty():

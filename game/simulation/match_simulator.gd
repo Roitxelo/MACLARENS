@@ -46,6 +46,9 @@ var _fatigue_home := 0.0
 ## cada intervalo y sesga los ataques; la casa no lo incluye en la cuota.
 var momentum := 0.0
 var _fatigue_away := 0.0
+var _momentum_persistence := 0.88
+var _momentum_noise := 0.4
+var _momentum_attack := 0.65
 var _rng := RandomNumberGenerator.new()
 
 func _init(config: Dictionary) -> void:
@@ -55,6 +58,9 @@ func _init(config: Dictionary) -> void:
 	_home_stats = TeamStats.get_team(home_id)
 	_away_stats = TeamStats.get_team(away_id)
 	_match_fact = config.get("match_fact", null) as MatchFact
+	_momentum_persistence = float(config.get("momentum_persistence", 0.88))
+	_momentum_noise = float(config.get("momentum_noise", 0.4))
+	_momentum_attack = float(config.get("momentum_attack", 0.65))
 	_rng.seed = int(config.get("seed", 0))
 
 func home_team_id() -> String:
@@ -81,7 +87,7 @@ func advance_interval() -> Dictionary:
 	minute = mini(minute + MINUTES_PER_TICK, MATCH_LENGTH_MINUTES)
 	_fatigue_home = minf(_fatigue_home + 0.01, 0.35)
 	_fatigue_away = minf(_fatigue_away + 0.01, 0.35)
-	momentum = clampf(momentum * 0.88 + _rng.randf_range(-0.4, 0.4), -1.0, 1.0)
+	momentum = clampf(momentum * _momentum_persistence + _rng.randf_range(-_momentum_noise, _momentum_noise), -1.0, 1.0)
 
 	var weights := _build_event_weights()
 	var event_type := _roll_event(weights)
@@ -136,8 +142,8 @@ func _build_event_weights() -> Dictionary:
 
 	var home_attack: float = float(_home_stats.get("attack", 5.0)) * (1.0 - home_attack_penalty) * (1.0 - _fatigue_home)
 	var away_attack: float = float(_away_stats.get("attack", 5.0)) * (1.0 - away_attack_penalty) * (1.0 - _fatigue_away)
-	home_attack *= 1.0 + 0.65 * momentum
-	away_attack *= 1.0 - 0.65 * momentum
+	home_attack *= 1.0 + _momentum_attack * momentum
+	away_attack *= 1.0 - _momentum_attack * momentum
 	var home_defense: float = float(_home_stats.get("defense", 5.0))
 	var away_defense: float = float(_away_stats.get("defense", 5.0))
 	var home_discipline: float = float(_home_stats.get("discipline", 5.0))

@@ -103,4 +103,5 @@
 
 - **D-068 — Billar con cuotas:** Tino paga 1:1, 2:1 y 3:1 según su nivel y el jugador elige la apuesta (10 € hasta 50/100/150 €). Sustituye a las apuestas fijas de 20/40/60 €.
 - **D-069 — Ventajas calibradas con simulación:** caballo en forma +3–5 de nota (antes +14–22, rompía la economía con las Gafas); momento del fútbol más persistente. Datos en `docs/design/BALANCE.md`.
-- **Pendiente (Roi):** deuda y dinero inicial. Con 500 €/100 € el jugador hábil simulado paga a Tino un 15 % de las noches.
+- **D-070 — Más margen para la habilidad (Roi, 10/10):** se mantiene la deuda de 500 €, la banca inicial sube de 100 € a 200 €, el arreo perfecto gana fuerza, Chencho Nv3 deja de barajar entre manos y el segundo partido tiene rachas de presión más marcadas. Se validará de nuevo con simulación y playtest.
+- **D-071 — Venta de posiciones de fútbol (Roi, 10/10):** todo ticket abierto puede venderse durante el directo por su valor de mercado (`apuesta × cuota capturada ÷ cuota actual`), mostrando importe total y beneficio o pérdida. Búho Nv2 elimina la comisión del 10 %.

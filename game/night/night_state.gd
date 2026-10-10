@@ -16,7 +16,7 @@ signal night_over(reason: String)
 
 const OPEN_HOUR := 18
 const NIGHT_LENGTH := 480        # 18:00 -> 02:00
-const START_MONEY := 100
+const START_MONEY := 200
 const START_DEBT := 500
 const BASE_LUCK := 3
 const MINUTES_PER_SECOND := 0.6  # la noche dura ~13 min reales a x1

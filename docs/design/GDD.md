@@ -7,7 +7,7 @@
 ## La run
 
 - **Una run = una noche en el McLarens, de 18:00 a 02:00.**
-- Empiezas con **100 €**. Tino viene a las 02:00 a cobrar **500 €**.
+- Empiezas con **200 €**. Tino viene a las 02:00 a cobrar **500 €**.
 - El reloj corre solo (0,6 min de juego por segundo real → ~13 min por noche a x1). Botones de pausa (P) y velocidad x1/x2/x4 en el HUD. ESC vuelve al bar.
 - La noche termina a las 02:00 o antes si te quedas sin dinero y sin tickets abiertos.
 - HUD: dinero, hora, suerte (3 estrellas) y una pizarra con lo próximo de la agenda.
@@ -22,13 +22,14 @@ Las mejoras no regalan dinero: dan **herramientas que premian jugar bien**. Apos
 |---|---|---|---|---|---|
 | El Búho (ayuda) | Fútbol | Ronda (35 / 70 €) | Medidor de PRESIÓN (momento del partido; la casa no lo mete en la cuota) | Presión con % de gol a 10' y cobro anticipado sin comisión | Un penalti por partido que tiras tú (minijuego de puntería) |
 | El Cortado (ayuda) | Caballos | Ronda (35 / 70 €) | Ganador | 3 ARREOS de timing por carrera (TV 2) | 5 arreos y apuesta a COLOCADO (cuota/3) |
-| El Chencho (rival) | Mayor o menor | Ronda (25 / 60 €) | Calcula bien, mesa 20 € | Mesa 40 € y SEGURO por mano (si fallas tras acertar, salvas la mitad) | Mesa 60 € y paga con probabilidades de baraja entera: contar cartas da ventaja |
+| El Chencho (rival) | Mayor o menor | Ronda (25 / 60 €) | Calcula bien, mesa 20 € | Mesa 40 € y SEGURO por mano (si fallas tras acertar, salvas la mitad) | Mesa 60 €, no baraja entre manos y paga con probabilidades de baraja entera: contar cartas da ventaja |
 | Tino (rival) | Billar "Tiro imposible" | Ganándole una serie | Paga 1:1 (apuesta 10–50 €), tiros de calentamiento | Paga 2:1 (10–100 €), tiros con truco (banda, carambola, pasillo) | Paga 3:1 (10–150 €), los imposibles. La primera serie ganada rebaja 100 € de deuda |
 
 ### Minijuegos de habilidad
-- **Arreo (caballos):** una aguja va y viene; ESPACIO en lo verde = acelerón (perfecto en lo verde claro); fuera = el caballo se asusta. La carrera se simula en directo.
+- **Arreo (caballos):** una aguja va y viene; ESPACIO en lo verde = acelerón (perfecto en lo verde claro, más fuerte y duradero); fuera = el caballo se asusta. La carrera se simula en directo.
 - **Penalti (fútbol):** la mirilla recorre la portería; el portero tapa un tercio al azar. Pegado al palo entra siempre; fuera de los palos es fuera.
 - **Presión (fútbol):** el partido tiene momento; quien aprieta tiene más opciones de gol durante unos minutos. Entrar o cobrar en el momento justo es la habilidad.
+- **Venta en directo (fútbol):** un ticket abierto se puede vender antes del final. Su valor sigue la cuota actual (`apuesta × cuota capturada ÷ cuota actual`); al mejorar el resultado se vende con beneficio y al empeorar, con pérdida. El Búho Nv2 elimina la comisión del 10 %.
 - **Billar "Tiro imposible" (Tino):** una serie son 3 mesas preparadas de su nivel, cada una con una misión: tronera marcada, a banda (la blanca toca banda antes que ninguna bola), carambola (tocar primero otra bola), sin tocar la negra. Un tiro por mesa; con 2 aciertos ganas la apuesta. Se apunta con el ratón y se afina con ← →; se mantiene el clic para cargar la potencia (sube y baja) y se suelta. La guía básica marca la línea hasta el primer contacto y la bola fantasma. Física propia y determinista: cada mesa tiene solución comprobada (`tools/dev/billar_solver.gd`).
 - **Cartas:** siempre se ve el historial de la mano. Con el Chencho borracho las cuotas ignoran las cartas ya salidas.
 
