@@ -273,9 +273,9 @@ func _finish() -> void:
 	q.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	q.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	end_box.add_child(q)
-	var back := UIKit.button("VOLVER AL BAR", "wood", 20)
+	var back := UIKit.button("VOLVER AL SALÓN", "wood", 20)
 	UIKit.place(back, Rect2(420, 400, 210, 50))
-	back.pressed.connect(func(): main.go("bar"))
+	back.pressed.connect(func(): main.go("salon"))
 	end_box.add_child(back)
 	var again := UIKit.button("OTRA SERIE", "red", 20)
 	UIKit.place(again, Rect2(650, 400, 210, 50))

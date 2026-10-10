@@ -89,5 +89,5 @@ func _ready() -> void:
 	_set_stake(stake)
 	var back := UIKit.button("MEJOR NO", "wood", 20)
 	UIKit.place(back, Rect2(24, 656, 200, 46))
-	back.pressed.connect(func(): main.go("bar"))
+	back.pressed.connect(func(): main.go("salon"))
 	add_child(back)
