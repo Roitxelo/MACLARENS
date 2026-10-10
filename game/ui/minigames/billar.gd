@@ -320,12 +320,19 @@ func _first_contact(from: Vector2, dir: Vector2) -> Dictionary:
 		return {"ball": -1, "point": from + dir * tw, "normal": Vector2(-signf(dir.x), 0) if tx < ty else Vector2(0, -signf(dir.y))}
 	return best
 
-## Rebotes o choques que enseña la guía: menos cuanto más nivel tiene Tino.
+## Guía corta de base (C06, review 03: "demasiado fácil"): la blanca hasta su
+## primer choque (bola o banda) y solo la salida de la bola tocada. La Tiza
+## suma un rebote y sigue más a la bola tocada; la corazonada enseña todo.
+const GUIDE_BASE_EVENTS := 1
+const GUIDE_BASE_OBJECT := 60.0
+const GUIDE_TIZA_EVENTS := 1
+const GUIDE_TIZA_OBJECT := 200.0
+
 func guide_events() -> int:
-	return [3, 2, 1][clampi(level, 1, 3) - 1] + (1 if Night.has_trinket("tiza") else 0)
+	return GUIDE_BASE_EVENTS + (GUIDE_TIZA_EVENTS if Night.has_trinket("tiza") else 0)
 
 func guide_object_length() -> float:
-	return [420.0, 300.0, 180.0][clampi(level, 1, 3) - 1] + (120.0 if Night.has_trinket("tiza") else 0.0)
+	return GUIDE_BASE_OBJECT + (GUIDE_TIZA_OBJECT if Night.has_trinket("tiza") else 0.0)
 
 func _refresh_guide(delta: float, p: float) -> void:
 	_guide_t -= delta

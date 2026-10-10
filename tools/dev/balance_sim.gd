@@ -10,10 +10,10 @@ extends SceneTree
 const PROFILES := {
 	# whip: probabilidad de arreo [perfecto, bueno] (el resto, fallo) · billar: acierto por tiro según nivel de Tino
 	# cards: "count" cuenta cartas, "naive" solo mira la carta actual, "none" no juega
-	# Billar con la guía de trayectoria (T25): acierto estimado por tiro.
-	"azar": {"whip": [0.05, 0.15], "billar": [0.50, 0.30, 0.15], "cards": "naive", "smart_bets": false, "shop": false, "max_hands": 3},
-	"normal": {"whip": [0.15, 0.35], "billar": [0.75, 0.50, 0.30], "cards": "naive", "smart_bets": true, "shop": true, "max_hands": 4},
-	"habil": {"whip": [0.30, 0.40], "billar": [0.90, 0.70, 0.50], "cards": "count", "smart_bets": true, "shop": true, "max_hands": 6},
+	# Billar con la guía corta (C06): acierto estimado por tiro (la Tiza suma +8 puntos).
+	"azar": {"whip": [0.05, 0.15], "billar": [0.40, 0.20, 0.10], "cards": "naive", "smart_bets": false, "shop": false, "max_hands": 3},
+	"normal": {"whip": [0.15, 0.35], "billar": [0.65, 0.42, 0.24], "cards": "naive", "smart_bets": true, "shop": true, "max_hands": 4},
+	"habil": {"whip": [0.30, 0.40], "billar": [0.85, 0.65, 0.45], "cards": "count", "smart_bets": true, "shop": true, "max_hands": 6},
 }
 
 var rng := RandomNumberGenerator.new()

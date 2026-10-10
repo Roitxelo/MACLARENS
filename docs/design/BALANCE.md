@@ -33,6 +33,10 @@ Otras escaleras probadas (hábil gana la campaña): 150/200/300/400/500 con 100 
 - **Fútbol sin trampa fija.** A cuota de salida ninguna apuesta gana (de −16 % a 0 %). En directo, leer la presión sí da ventaja (por ejemplo, minuto 45-60, empate y presión del visitante: apostar al visitante da +0,2 a +0,3 por €). Es la habilidad buscada. Lo que Roi explotaba era que **todas las noches eran iguales**; ahora cambian horas y cruces.
 - **El modelo es pesimista con el jugador medio:** pierde dinero en casi todo salvo el billar Nv1. Si en el playtest los jugadores normales no pasan de la noche 2, la palanca es la cuota de la noche 2 (150 → 120) o el billar Nv1.
 
+### Guía corta del billar (C06, review 03)
+
+Roi encontró el billar "excesivamente fácil" con la guía larga. Con la guía corta, el acierto estimado por tiro pasa a: azar 40/20/10 %, normal 65/42/24 %, hábil 85/65/45 % (la Tiza suma 8 puntos). Campaña (300 por perfil): **hábil gana el 20 %** (antes 37 %), normal y azar 0 %. Roi dice que el nivel general "está bien en principio", así que no se tocan las cuotas hasta su próxima partida.
+
 ### Estrategias deportivas fijas (C01, H0)
 
 `tools/dev/fixed_strategies.gd -- 300`: el bot repite lo mismo todas las noches (25 % de la banca, máx. 50 €), sin minijuegos ni compras.

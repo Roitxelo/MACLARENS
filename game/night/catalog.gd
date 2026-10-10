@@ -74,7 +74,7 @@ const CORTADO_WHIPS := [0, 3, 5]
 
 const TRINKETS := {
 	"tiza": {"name": "Tiza azul", "price": 20, "game": "billar",
-		"text": "La guía del billar se ve un rebote más lejos y sigue más a la bola tocada."},
+		"text": "La guía del billar sigue a la blanca un rebote más y enseña adónde va la bola tocada."},
 	"taco": {"name": "Taco de nácar", "price": 25, "game": "billar",
 		"text": "La barra de potencia sube más despacio: más control del golpe."},
 	"guante": {"name": "Guante de billar", "price": 20, "game": "billar",
