@@ -51,7 +51,7 @@ func setup(seed_value: int) -> void:
 		if rng.randf() < 0.55:
 			var ordered := _sorted_by_rating(horses)
 			tip_horse = ordered[rng.randi_range(2, 5)]
-			horses[tip_horse]["true_rating"] += rng.randf_range(14.0, 22.0)
+			horses[tip_horse]["true_rating"] += rng.randf_range(3.0, 5.0)
 		_price(horses)
 		races.append({
 			"index": r,

@@ -40,14 +40,16 @@ const CHARACTERS := {
 		"name": "Tino", "game": "billar", "role": "Rival en el billar (tiro imposible)",
 		"rounds": [],
 		"levels": [
-			"Tiros de calentamiento: se juega 20 €.",
-			"Tiros con truco (banda, carambola, pasillo): se juega 40 €.",
-			"Los imposibles de Tino: se juega 60 €. La primera serie que le ganas te perdona 100 € de deuda.",
+			"Tiros de calentamiento: paga 1 a 1 (hasta 50 €).",
+			"Tiros con truco (banda, carambola, pasillo): paga 2 a 1 (hasta 100 €).",
+			"Los imposibles de Tino: paga 3 a 1 (hasta 150 €). La primera serie que le ganas te perdona 100 € de deuda.",
 		],
 	},
 }
 
-const TINO_STAKES := [20, 40, 60]
+## Billar: apuesta máxima y cuánto paga Tino por € apostado (beneficio) en cada nivel.
+const TINO_MAX_STAKE := [50, 100, 150]
+const TINO_PAYOUT := [1, 2, 3]
 const CHENCHO_MAX := [20, 40, 60]
 const CORTADO_WHIPS := [0, 3, 5]
 

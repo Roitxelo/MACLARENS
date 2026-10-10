@@ -6,13 +6,25 @@ extends Control
 
 const BAR := preload("res://assets/concept/mclarens_bar_master_v1.png")
 const QUOTES := [
-	"\"Te pongo tres tiros. Si metes dos, te doy 20 €. Si no, me los das tú.\"",
-	"\"Ahora con truco: bandas, carambolas y pasillos. 40 €.\"",
-	"\"Los imposibles. 60 €. Si me metes dos, te perdono 100 € de lo que me debes.\"",
+	"\"Te pongo tres tiros. Si metes dos, te pago lo que apuestes. Si no, me lo das tú.\"",
+	"\"Ahora con truco: bandas, carambolas y pasillos. Te pago el doble.\"",
+	"\"Los imposibles. Te pago el triple... y si me ganas, te perdono 100 € de lo que me debes.\"",
 ]
 
 var main: Control
 var args: Dictionary
+var stake := 20
+var stake_label: Label
+var accept: Button
+
+func _set_stake(v: int) -> void:
+	var lv := Night.level("tino")
+	stake = clampi(v, 10, maxi(10, mini(Catalog.TINO_MAX_STAKE[lv - 1], Night.money)))
+	stake_label.text = "%d €" % stake
+	var pay: int = Catalog.TINO_PAYOUT[lv - 1]
+	accept.text = "ACEPTAR · ganas %d €" % (stake * pay)
+	accept.disabled = Night.money < stake or Night.minutes_left() < 20
+	accept.tooltip_text = "Si metes 2 de 3, Tino te paga %d a 1" % pay
 
 func _ready() -> void:
 	add_child(UIKit.texture_rect(BAR))
@@ -52,14 +64,27 @@ func _ready() -> void:
 	q.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	q.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(q)
-	var stake: int = Catalog.TINO_STAKES[lv - 1]
-	var b := UIKit.button("ACEPTAR POR %d €" % stake, "red", 24)
-	UIKit.place(b, Rect2(500, 548, 280, 56))
-	b.disabled = Night.money < stake or Night.minutes_left() < 20
-	if Night.money < stake:
-		b.tooltip_text = "No tienes bastante para cubrir la apuesta"
-	b.pressed.connect(func(): main.go("billar", {"rival": {"id": "tino", "name": "Tino", "stake": stake, "level": lv}}))
-	add_child(b)
+	var max_stake: int = Catalog.TINO_MAX_STAKE[lv - 1]
+	stake = clampi(stake, 10, maxi(10, mini(max_stake, Night.money)))
+	var minus := UIKit.button("-", "wood", 26)
+	UIKit.place(minus, Rect2(372, 548, 50, 56))
+	minus.pressed.connect(func(): _set_stake(stake - 10))
+	add_child(minus)
+	stake_label = UIKit.label("", 26, UIKit.GOLD)
+	stake_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	stake_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	stake_label.add_theme_stylebox_override("normal", UIKit.box(Color("#1a0f0a"), UIKit.GOLD, 2, 3, 6))
+	UIKit.place(stake_label, Rect2(428, 548, 86, 56))
+	add_child(stake_label)
+	var plus := UIKit.button("+", "wood", 26)
+	UIKit.place(plus, Rect2(520, 548, 50, 56))
+	plus.pressed.connect(func(): _set_stake(stake + 10))
+	add_child(plus)
+	accept = UIKit.button("", "red", 22)
+	UIKit.place(accept, Rect2(590, 548, 330, 56))
+	accept.pressed.connect(func(): main.go("billar", {"rival": {"id": "tino", "name": "Tino", "stake": stake, "level": lv}}))
+	add_child(accept)
+	_set_stake(stake)
 	var back := UIKit.button("MEJOR NO", "wood", 20)
 	UIKit.place(back, Rect2(24, 656, 200, 46))
 	back.pressed.connect(func(): main.go("bar"))

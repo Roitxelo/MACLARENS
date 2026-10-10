@@ -29,7 +29,7 @@ func _ready() -> void:
 			t += 0.25
 		print("ruido %.0f°: aciertos %d fallos %d dinero %d -> %d" % [noise, g.made, g.missed, money_before, Night.money])
 		if noise == 0.0:
-			ok = ok and g.made >= 2 and Night.money > money_before
+			ok = ok and g.made >= 2 and Night.money == money_before + 20
 		else:
 			ok = ok and g.made < 2 and Night.money < money_before
 	print("BILLAR_TEST_OK" if ok else "BILLAR_TEST_FAIL")

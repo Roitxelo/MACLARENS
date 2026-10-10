@@ -115,7 +115,7 @@ func _load_shot() -> void:
 	_update_score()
 
 func _update_score() -> void:
-	score_label.text = "TINO Nv%d · %d € · ACIERTOS %d  FALLOS %d  (necesitas 2)" % [level, _stake(), made, missed]
+	score_label.text = "TINO Nv%d · %d € a %d:1 · ACIERTOS %d  FALLOS %d  (necesitas 2)" % [level, _stake(), Catalog.TINO_PAYOUT[level - 1], made, missed]
 	luck_btn.disabled = Night.luck <= 0 or steady or state != "aim"
 
 func _table_mouse() -> Vector2:
@@ -229,7 +229,7 @@ func _finish() -> void:
 	var extra := ""
 	if won:
 		Night.spend(mini(stake, Night.money))
-		gained = Night.register_win("billar", stake, stake * 2) - stake
+		gained = Night.register_win("billar", stake, stake * (1 + int(Catalog.TINO_PAYOUT[level - 1]))) - stake
 		Night.log_moment("Billar: le ganas la serie a Tino (Nv%d)" % level, gained)
 		if level >= 3:
 			if not Night.tino_forgave:
@@ -238,7 +238,7 @@ func _finish() -> void:
 				extra = "Y te perdona 100 € de deuda."
 		else:
 			Night.levels["tino"] = level + 1
-			extra = "Tino sube a Nv%d: ahora se juega %d €." % [level + 1, Catalog.TINO_STAKES[level]]
+			extra = "Tino sube a Nv%d: ahora paga %d a 1." % [level + 1, Catalog.TINO_PAYOUT[level]]
 	else:
 		Night.spend(mini(stake, Night.money))
 		Night.register_loss("billar")

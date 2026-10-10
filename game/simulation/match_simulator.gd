@@ -81,7 +81,7 @@ func advance_interval() -> Dictionary:
 	minute = mini(minute + MINUTES_PER_TICK, MATCH_LENGTH_MINUTES)
 	_fatigue_home = minf(_fatigue_home + 0.01, 0.35)
 	_fatigue_away = minf(_fatigue_away + 0.01, 0.35)
-	momentum = clampf(momentum * 0.8 + _rng.randf_range(-0.45, 0.45), -1.0, 1.0)
+	momentum = clampf(momentum * 0.88 + _rng.randf_range(-0.4, 0.4), -1.0, 1.0)
 
 	var weights := _build_event_weights()
 	var event_type := _roll_event(weights)
@@ -136,8 +136,8 @@ func _build_event_weights() -> Dictionary:
 
 	var home_attack: float = float(_home_stats.get("attack", 5.0)) * (1.0 - home_attack_penalty) * (1.0 - _fatigue_home)
 	var away_attack: float = float(_away_stats.get("attack", 5.0)) * (1.0 - away_attack_penalty) * (1.0 - _fatigue_away)
-	home_attack *= 1.0 + 0.55 * momentum
-	away_attack *= 1.0 - 0.55 * momentum
+	home_attack *= 1.0 + 0.65 * momentum
+	away_attack *= 1.0 - 0.65 * momentum
 	var home_defense: float = float(_home_stats.get("defense", 5.0))
 	var away_defense: float = float(_away_stats.get("defense", 5.0))
 	var home_discipline: float = float(_home_stats.get("discipline", 5.0))
