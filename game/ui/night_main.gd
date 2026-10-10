@@ -19,6 +19,17 @@ const SCREENS := {
 	"end": preload("res://ui/screens/end_screen.gd"),
 }
 const HudScript := preload("res://ui/hud.gd")
+const SCREEN_HELP := {
+	"bar": "bar",
+	"salon": "salon",
+	"machine": "machine",
+	"match_tv": "pressure",
+	"race_tv": "whip",
+	"cards": "cards",
+	"billar": "billar",
+	"shop": "shop",
+	"end": "end",
+}
 
 var screen_layer: Control
 var current: Control
@@ -27,6 +38,8 @@ var hud: Control
 var toast_box: VBoxContainer
 var toast_limit := 4
 var fade: ColorRect
+var help_overlay: Control
+var seen_help := {}
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -61,6 +74,7 @@ func _ready() -> void:
 
 func go(screen_name: String, args: Dictionary = {}) -> void:
 	var previous_name := current_name
+	_close_help()
 	if current != null:
 		current.queue_free()
 		current = null
@@ -80,6 +94,9 @@ func go(screen_name: String, args: Dictionary = {}) -> void:
 	fade.color.a = 0.7
 	create_tween().tween_property(fade, "color:a", 0.0, 0.25)
 	_on_changed()
+	var help_key: String = SCREEN_HELP.get(screen_name, "")
+	if help_key != "":
+		show_help(help_key)
 
 func _on_changed() -> void:
 	if hud.visible:
@@ -113,6 +130,41 @@ func _on_toast(text: String, kind: String) -> void:
 func _clear_toasts() -> void:
 	for child in toast_box.get_children():
 		child.queue_free()
+
+func show_help(key: String) -> void:
+	if seen_help.has(key) or not GameTexts.HELP.has(key):
+		return
+	_close_help()
+	seen_help[key] = true
+	var copy: Array = GameTexts.HELP[key]
+	help_overlay = Control.new()
+	help_overlay.position = Vector2(310, 500)
+	help_overlay.size = Vector2(660, 140)
+	help_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	help_overlay.z_index = 20
+	add_child(help_overlay)
+	var card := UIKit.panel(help_overlay, Rect2(0, 0, 660, 140), Color(0.05, 0.035, 0.025, 0.97), UIKit.GOLD, 3)
+	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var title := UIKit.label(str(copy[0]), 25, UIKit.GOLD, true)
+	UIKit.place(title, Rect2(20, 12, 500, 34))
+	help_overlay.add_child(title)
+	var body := UIKit.label(str(copy[1]), 18, UIKit.CREAM)
+	UIKit.place(body, Rect2(20, 48, 500, 76))
+	body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	help_overlay.add_child(body)
+	var close := UIKit.button("ENTENDIDO", "wood", 17)
+	UIKit.place(close, Rect2(526, 82, 118, 42))
+	close.pressed.connect(_close_help)
+	help_overlay.add_child(close)
+	var this_overlay := help_overlay
+	get_tree().create_timer(8.0).timeout.connect(func():
+		if is_instance_valid(this_overlay) and help_overlay == this_overlay:
+			_close_help())
+
+func _close_help() -> void:
+	if is_instance_valid(help_overlay):
+		help_overlay.queue_free()
+	help_overlay = null
 
 func _layout_toasts(screen_name: String) -> void:
 	# El HUD deja un hueco central arriba. En las TVs y el lobby se usa

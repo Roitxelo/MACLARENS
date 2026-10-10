@@ -59,6 +59,7 @@ func _open_penalty() -> void:
 	var mid: String = PitchTV.pick_match()["id"]
 	if not Night.can_penalty(mid):
 		return
+	main.show_help("penalty")
 	Night.set_pause("minigame", true)
 	var ov := Penalty.new()
 	ov.match_id = mid

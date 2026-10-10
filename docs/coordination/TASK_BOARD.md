@@ -22,7 +22,7 @@ Congelado: no entra nada nuevo, solo bloqueos, incoherencias de la economía y t
 
 | Id | Tarea | Dueño | Estado | Hecho cuando |
 |---|---|---|---|---|
-| T04 | Ayuda contextual la primera vez que se entra en cada sitio y se ve cada mecánica (presión, arreo, penalti, cartas, billar) | Claude (textos) + Codex (UI) | Textos hechos (`GameTexts.HELP`); falta la UI (Codex) | Un jugador nuevo descubre las mecánicas a tiempo sin leer la portada |
+| T04 | Ayuda contextual la primera vez que se entra en cada sitio y se ve cada mecánica (presión, arreo, penalti, cartas, billar) | Claude (textos) + Codex (UI) | Hecho | Un jugador nuevo descubre las mecánicas a tiempo sin leer la portada |
 | C05 | Portada breve: 3 líneas y a jugar; las reglas pasan a la ayuda contextual | Claude (textos) + Codex (UI) | Textos hechos (`GameTexts.TITLE_*`); falta la UI (Codex) | Portada legible en 10 s |
 | T15 | Repaso de tono y erratas en todos los textos | Claude | Pendiente | |
 | T23 | Botones de la máquina: digitales de los 90 (LCD, plástico), chapuceros pero claros; que se vea el tope de 50 € | Codex | Pendiente | Roi da el visto bueno a una captura |
