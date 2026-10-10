@@ -110,7 +110,28 @@ static func streak_line() -> String:
 		return "Sin racha. Gana con 10 € o más para empezarla."
 	return "Racha de %d: el próximo premio, +%d %%." % [Night.streak, int(round((Catalog.streak_mult(Night.streak) - 1.0) * 100.0))]
 
-const HOW_TO_LEVEL := "Invita a una ronda en la barra. A Tino, gánale al billar."
+const HOW_TO_LEVEL := "Invita a una ronda en la barra (una por noche). A Tino, gánale al billar."
+
+## Por qué no se puede comprar algo ahora en la barra ("" si se puede).
+static func round_block_reason(who: String) -> String:
+	if Night.level(who) >= Catalog.MAX_LEVEL:
+		return "Nivel máximo"
+	if Night.rounds_today.has(who):
+		return "Ya ha bebido hoy"
+	if Night.money < Night.round_price(who):
+		return "No te llega"
+	return ""
+
+static func trinket_block_reason() -> String:
+	if Night.trinkets.size() >= Catalog.MAX_TRINKETS:
+		return "Bolsillos llenos"
+	if Night.trinkets_left_today() <= 0:
+		return "Lucía no saca más hasta mañana"
+	return ""
+
+## Línea de la barra: cuántos objetos quedan hoy.
+static func shop_limits_line() -> String:
+	return "Hoy: %d de %d objetos · una ronda por cabeza" % [Night.trinkets_left_today(), Catalog.TRINKETS_PER_NIGHT]
 
 # --- T04 · Ayuda la primera vez ----------------------------------------------------
 
@@ -125,6 +146,6 @@ const HELP := {
 	"whip": ["ARREAR", "Pulsa cuando la aguja pase por lo verde: tu caballo acelera.\nFuera de lo verde, se asusta."],
 	"cards": ["MAYOR O MENOR", "¿La siguiente carta es mayor o menor? Cada acierto sube el bote.\nPlántate cuando quieras. Las cartas que han salido no vuelven."],
 	"billar": ["TIRO IMPOSIBLE", "Tres mesas con misión: mete dos y ganas.\nApunta con la guía, mantén para cargar y suelta."],
-	"shop": ["LA BARRA DE LUCÍA", "Las rondas suben de nivel a tu gente; los objetos te dan ventajas.\nTodo se queda para las noches siguientes."],
+	"shop": ["LA BARRA DE LUCÍA", "Las rondas suben de nivel a tu gente (una por noche cada uno);\nlos objetos dan ventajas (dos por noche). Todo se queda para mañana."],
 	"end": ["A LAS 02:00", "Tino cobra la cuota de la noche. Si no llegas, se acaba."],
 }

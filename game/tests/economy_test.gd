@@ -119,12 +119,25 @@ func _ready() -> void:
 	var mesa = main.current
 	mesa.stake = 20
 	mesa._deal()
-	mesa._guess(1)
+	mesa.current = {"suit": "oros", "value": 1}
+	mesa.deck = [{"suit": "copas", "value": 2}, {"suit": "bastos", "value": 7}]
+	mesa._guess(1)   # sale el 7: acierto, la mano sigue viva
+	check(mesa.playing, "la mano sigue tras acertar")
 	var money_in_hand := Night.money
 	mesa._abandon_hand()
 	await get_tree().process_frame
 	check(Night.money == money_in_hand and money_in_hand == 480, "abandonar la mano no devuelve ni cobra nada (%d)" % Night.money)
 	check(not Night.pauses.has("minigame") and main.current_name == "bar", "abandonar quita la pausa y vuelve al bar")
+
+	# --- Tienda con límites (C08)
+	fresh()
+	check(Night.buy_round("cortado") and not Night.buy_round("cortado"), "una sola ronda por personaje y noche")
+	check(Night.level("cortado") == 2, "la ronda sube un nivel")
+	Night.shop = ["tiza", "taco", "guante"]
+	check(Night.buy_trinket(0) and Night.buy_trinket(1) and not Night.buy_trinket(2), "dos objetos por noche como máximo")
+	check(GameTexts.trinket_block_reason() != "" and GameTexts.round_block_reason("cortado") == "Ya ha bebido hoy", "la tienda sabe decir por qué no se puede comprar")
+	Night.next_night()
+	check(Night.round_available("cortado") and Night.trinkets_left_today() == Catalog.TRINKETS_PER_NIGHT, "los límites se reinician cada noche")
 
 	print("ECONOMY_TEST_OK" if fails.is_empty() else "ECONOMY_TEST_FAIL %s" % str(fails))
 	get_tree().quit()

@@ -162,20 +162,20 @@ func _shop(n) -> void:
 	# planifica no gasta la cuota de Tino en la última parte de la noche.
 	if p["smart_bets"] and n.minutes_left() < 200 and n.money < n.debt + 120:
 		return
-	if n.level("cortado") < 2 and n.money >= 130:
+	# Precio + colchón: compra si le sobra dinero para seguir apostando.
+	var cushion := 90
+	if n.round_available("cortado") and n.money >= n.round_price("cortado") + cushion:
 		n.buy_round("cortado")
 	for i in 3:
 		var id: String = n.shop[i]
 		var wanted := ["gafas", "fusta"]
 		if p["billar"][0] >= 0.5:
 			wanted.append_array(["tiza", "taco"])
-		if id in wanted and n.money >= int(Catalog.TRINKETS[id]["price"]) + 90:
+		if id in wanted and n.money >= int(Catalog.TRINKETS[id]["price"]) + cushion:
 			n.buy_trinket(i)
-	if n.level("cortado") == 2 and n.money >= 220:
-		n.buy_round("cortado")
-	if n.level("buho") < 2 and n.money >= 200:
+	if n.round_available("buho") and n.money >= n.round_price("buho") + cushion + 40:
 		n.buy_round("buho")
-	if p["cards"] == "count" and n.level("chencho") < 2 and n.money >= 180:
+	if p["cards"] == "count" and n.level("chencho") < 2 and n.round_available("chencho") and n.money >= n.round_price("chencho") + cushion + 40:
 		n.buy_round("chencho")
 
 # --- Caballos ---------------------------------------------------------------------

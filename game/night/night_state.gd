@@ -50,6 +50,8 @@ var tino_forgave := false
 var moneda_used := false
 var billar_played := 0           # series de billar jugadas esta noche
 var final_discount := 0          # rebaja acumulada sobre la última cuota
+var rounds_today := {}           # personaje -> true si ya bebió esta noche
+var trinkets_bought_today := 0
 
 var levels := {"buho": 1, "cortado": 1, "chencho": 1, "tino": 1}
 var trinkets: Array = []         # ids de Catalog.TRINKETS
@@ -129,6 +131,8 @@ func _start_night() -> void:
 	perfect_whip = false
 	moneda_used = false
 	billar_played = 0
+	rounds_today.clear()
+	trinkets_bought_today = 0
 	# Cada noche los partidos caen a otra hora (en cuartos de hora).
 	kickoffs = []
 	for k in KICKOFFS:
@@ -257,10 +261,18 @@ func round_price(who: String) -> int:
 		p = int(round(p * 0.6))
 	return p
 
+## Lucía sirve una ronda por personaje y noche (C08).
+func round_available(who: String) -> bool:
+	return round_price(who) >= 0 and not rounds_today.has(who)
+
+func trinkets_left_today() -> int:
+	return maxi(0, Catalog.TRINKETS_PER_NIGHT - trinkets_bought_today)
+
 func buy_round(who: String) -> bool:
 	var p := round_price(who)
-	if p < 0 or not spend(p):
+	if p < 0 or rounds_today.has(who) or not spend(p):
 		return false
+	rounds_today[who] = true
 	levels[who] = level(who) + 1
 	log_moment("Ronda para %s (Nv%d)" % [Catalog.CHARACTERS[who]["name"], level(who)], -p)
 	toast.emit("%s sube a nivel %d" % [Catalog.CHARACTERS[who]["name"], level(who)], "win")
@@ -281,18 +293,19 @@ func _restock() -> void:
 	changed.emit()
 
 func reroll_shop() -> bool:
-	if not spend(5):
+	if not spend(Catalog.REROLL_PRICE):
 		return false
 	_restock()
 	return true
 
 func buy_trinket(slot: int) -> bool:
 	var id: String = shop[slot]
-	if id == "" or trinkets.size() >= Catalog.MAX_TRINKETS:
+	if id == "" or trinkets.size() >= Catalog.MAX_TRINKETS or trinkets_left_today() <= 0:
 		return false
 	var price: int = Catalog.TRINKETS[id]["price"]
 	if not spend(price):
 		return false
+	trinkets_bought_today += 1
 	trinkets.append(id)
 	shop[slot] = ""
 	if id == "trebol":
