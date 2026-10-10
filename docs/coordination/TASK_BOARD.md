@@ -42,6 +42,8 @@ Congelado: no entra nada nuevo, solo bloqueos, incoherencias de la economía y t
 |---|---|---|---|---|
 | C08 | Tienda más cara y con límites: rondas 45/100 € (Chencho 35/80 €), objetos +25 %, una ronda por personaje y noche, dos objetos por noche, cambiar objetos 10 € | Claude | Hecho | Simulado en `BALANCE.md`; no se puede maxear todo en una noche |
 | C09 | Guía del billar fluida: se recalcula en cada fotograma y corta la simulación en cuanto tiene lo que enseña (0,7 ms de media, < 5 ms el peor caso); rueda del ratón para afinar | Claude | Hecho | Sin saltos; la prueba del billar mide el tiempo |
+| C10 | Vender objetos a Lucía a mitad de precio (`Night.sell_trinket`, `Catalog.sell_price`, `GameTexts.sell_label`); libera el hueco, no devuelve compras del día | Claude | Hecho | Prueba en `economy_test` |
+| X11 | Botón "VENDER · N €" en cada objeto de la tienda y/o la libreta | Codex | Pendiente | Roi puede deshacerse de un objeto que no quiere |
 | X08 | Lucía en la barra: sustituir al cliente de sudadera roja por Lucía y que sea ella el acceso a la tienda | Codex | Hecho | Roi encuentra la tienda sin buscar |
 | X09 | Volver desde cartas y TV de caballos (y ESC) lleva al **salón**, no a la barra. El billar ya lo hace (Claude) | Codex | Bloqueado (la prueba de economía aún exige volver al bar; pedido a Claude) | ESC y "volver" regresan a la zona de donde vienes |
 | X10 | La tienda muestra los límites nuevos: `GameTexts.shop_limits_line()`, el motivo del bloqueo (`round_block_reason`, `trinket_block_reason`) y `Catalog.REROLL_PRICE` | Codex | Hecho | Ningún botón falla sin decir por qué |
