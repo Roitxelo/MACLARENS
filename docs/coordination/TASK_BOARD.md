@@ -10,10 +10,10 @@ Congelado: no entra nada nuevo, solo bloqueos, incoherencias de la economía y t
 
 | Id | Tarea | Dueño | Estado | Hecho cuando |
 |---|---|---|---|---|
-| C01 | Simular las 5 noches con estrategias deportivas fijas (siempre favorito, siempre empate, siempre al que va ganando en directo) | Claude | Pendiente | Ninguna estrategia fija gana la campaña sola; resultado en `BALANCE.md` |
-| C02 | Coherencia económica de la campaña: el perdón de Tino (100 €) no puede cubrir una cuota entera | Claude | Pendiente | Regla corregida, simulada y anotada en `DECISIONS.md` |
-| C03 | Prueba automática de la campaña: pagar, pasar de noche conservando dinero, niveles y objetos, y que la quinta noche cierre | Claude | Pendiente | `campaign_test` en `tools/run_tests` (rápidas) |
-| C04 | Textos de la pantalla final como datos ("Empezaste con", "Al cierre", "Tino cobra", "Te quedan") | Claude | Pendiente | En `game/data/texts.gd`; aviso a Codex |
+| C01 | Simular las 5 noches con estrategias deportivas fijas (siempre favorito, siempre empate, siempre al que va ganando en directo) | Claude | Hecho | Ninguna estrategia fija gana la campaña sola; resultado en `BALANCE.md` |
+| C02 | Coherencia económica de la campaña: el perdón de Tino (100 €) no puede cubrir una cuota entera | Claude | Hecho | Regla corregida, simulada y anotada en `DECISIONS.md` |
+| C03 | Prueba automática de la campaña: pagar, pasar de noche conservando dinero, niveles y objetos, y que la quinta noche cierre | Claude | Hecho | `campaign_test` en `tools/run_tests` (rápidas) |
+| C04 | Textos de la pantalla final como datos ("Empezaste con", "Al cierre", "Tino cobra", "Te quedan") | Claude | Hecho | En `game/data/texts.gd`; aviso a Codex |
 | X01 | Jugar una campaña completa (o hasta perder), revisar todas las capturas y apuntar problemas por noche y pantalla | Codex | En curso (Codex) | `docs/reviews/PLAYTEST_02_CODEX.md` |
 | X02 | Montar en la pantalla final los textos de C04 (la pantalla pasa a Codex) | Codex | Pendiente | El cierre se entiende sin leer el código |
 

@@ -33,6 +33,26 @@ Otras escaleras probadas (hábil gana la campaña): 150/200/300/400/500 con 100 
 - **Fútbol sin trampa fija.** A cuota de salida ninguna apuesta gana (de −16 % a 0 %). En directo, leer la presión sí da ventaja (por ejemplo, minuto 45-60, empate y presión del visitante: apostar al visitante da +0,2 a +0,3 por €). Es la habilidad buscada. Lo que Roi explotaba era que **todas las noches eran iguales**; ahora cambian horas y cruces.
 - **El modelo es pesimista con el jugador medio:** pierde dinero en casi todo salvo el billar Nv1. Si en el playtest los jugadores normales no pasan de la noche 2, la palanca es la cuota de la noche 2 (150 → 120) o el billar Nv1.
 
+### Estrategias deportivas fijas (C01, H0)
+
+`tools/dev/fixed_strategies.gd -- 300`: el bot repite lo mismo todas las noches (25 % de la banca, máx. 50 €), sin minijuegos ni compras.
+
+| Estrategia | Supera N1 | N2 | N3 | Gana | Beneficio por € |
+|---|---|---|---|---|---|
+| No apostar | 100 % | 0 % | 0 % | 0 % | 0 |
+| Siempre el favorito | 100 % | 14 % | 0 % | 0 % | −0,16 |
+| Siempre el empate | 100 % | 26 % | 3 % | 0 % | −0,05 |
+| Siempre el tapado | 100 % | 29 % | 3 % | 0 % | −0,02 |
+| Siempre McLarens FC | 100 % | 19 % | 0 % | 0 % | −0,14 |
+| Al que va ganando en el 70' | 100 % | 0 % | 0 % | 0 % | −0,04 |
+| Caballo favorito | 68 % | 20 % | 5 % | 0 % | −0,04 |
+| Caballo más tapado | 4 % | 1 % | 0 % | 0 % | −0,83 |
+
+**Ninguna estrategia fija gana la campaña.** Hace falta habilidad (presión, arreo, cartas, billar). Dos avisos para Roi:
+
+- **La noche 1 se pasa sin jugar:** 200 € iniciales cubren la cuota de 100 €. Funciona como noche de aprendizaje, pero no aprieta. Si se quiere tensión desde el principio, la cuota de N1 podría subir a 150 o la banca inicial bajar a 120.
+- **El tope de 15 a 1** hace que apostar a ciegas al tapado sea ruinoso (−83 %). Es intencionado: un tapado solo compensa con soplo (Gafas) y arreos.
+
 ## Histórico: noche única (T05, antes de la campaña)
 
 > Herramienta: `tools/dev/balance_sim.gd` juega noches completas con bots usando las reglas reales (`night_state`, mercados, carreras, catálogo). Los minijuegos de habilidad se modelan con probabilidades declaradas.

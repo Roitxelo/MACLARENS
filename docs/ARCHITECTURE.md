@@ -17,6 +17,7 @@ night/night_state.gd  (autoload "Night")   Estado de la run y reglas
 simulation/match_simulator.gd    Partido por intervalos de 3 min (gol, tarjeta, lesión, córner, momento)
 simulation/billiard_sim.gd       Física de billar determinista + comprobación de misiones
 data/billiard_layouts.gd         Mesas del "Tiro imposible" (3 por nivel) con solución guardada
+data/game_texts.gd               Textos que dependen de reglas (cierre, "esta noche"): GameTexts.end_summary(), tonight_lines()
 data/teams/team_stats.gd         8 equipos ficticios
 data/match_facts/match_fact.gd   Hecho oculto de partido (hoy sin uso en la noche, lo usa el simulador)
 ui/ui_kit.gd (class UIKit)       Paleta, fuentes, botones, hotspots, paneles, retratos
@@ -82,6 +83,7 @@ ui/widgets/race_track.gd         Pista de caballos (compacta en el salón, grand
 | Escena | Comprueba |
 |---|---|
 | `tests/night_sim_test.tscn` | Lógica headless: tres noches, compras, arreo, liquidación |
+| `tests/campaign_test.tscn` | Campaña: cuotas, pago a Tino, qué se conserva entre noches, variedad de partidos, rebaja en la última noche, textos del cierre |
 | `tests/economy_test.tscn` | Pagos, cobro con/sin comisión, racha (tope x1,5), calcetín, herradura, colocado, seguro del Chencho, perdón de Tino una sola vez |
 | `tests/night_soak_test.tscn` | Dos noches completas alternando todas las pantallas con apuestas aleatorias |
 | `tests/night_capture.tscn` | Recorre todas las pantallas y guarda capturas en `tests/output/` |
