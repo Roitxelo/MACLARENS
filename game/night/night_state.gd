@@ -49,6 +49,7 @@ var perfect_whip := false        # corazonada: el siguiente arreo es perfecto
 var tino_forgave := false
 var moneda_used := false
 var billar_played := 0           # series de billar jugadas esta noche
+var final_discount := 0          # rebaja acumulada sobre la última cuota
 
 var levels := {"buho": 1, "cortado": 1, "chencho": 1, "tino": 1}
 var trinkets: Array = []         # ids de Catalog.TRINKETS
@@ -77,6 +78,7 @@ func new_campaign(new_seed: int = -1) -> void:
 	trinkets.clear()
 	best_streak = 0
 	tino_forgave = false
+	final_discount = 0
 	_start_night()
 
 ## Tras pagar a Tino: la noche siguiente conserva dinero, niveles y objetos.
@@ -108,7 +110,7 @@ func pay_tino() -> bool:
 func _start_night() -> void:
 	seed_value = campaign_seed if night_index == 0 else absi(hash("c%d_n%d" % [campaign_seed, night_index])) % 1000000
 	rng.seed = hash("night%d" % seed_value)
-	debt = QUOTAS[night_index]
+	debt = quota(night_index)
 	night_start_money = money
 	luck = max_luck
 	clock = 0.0
@@ -301,11 +303,21 @@ func buy_trinket(slot: int) -> bool:
 	changed.emit()
 	return true
 
+## Rebajas de deuda (el perdón de Tino): se descuentan de la ÚLTIMA cuota de
+## la campaña, para que nunca cubran una noche entera (C02, D-076).
 func reduce_debt(amount: int, why: String) -> void:
-	debt = maxi(0, debt - amount)
+	if is_last_night():
+		debt = maxi(0, debt - amount)
+	else:
+		final_discount += amount
 	log_moment(why, amount)
-	toast.emit("%s: deuda -%d €" % [why, amount], "win")
+	toast.emit("%s: la última cuota baja %d €" % [why, amount], "win")
 	changed.emit()
+
+## Cuota de la noche k (0..NIGHTS-1), con las rebajas aplicadas a la última.
+func quota(k: int) -> int:
+	var q: int = QUOTAS[clampi(k, 0, NIGHTS - 1)]
+	return maxi(0, q - final_discount) if k == NIGHTS - 1 else q
 
 func log_moment(text: String, delta_money: int) -> void:
 	history.append({"time": clock_text(float(_last_minute)), "text": text, "delta": delta_money})

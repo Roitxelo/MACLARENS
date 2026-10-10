@@ -246,7 +246,7 @@ func _finish() -> void:
 			if not Night.tino_forgave:
 				Night.tino_forgave = true
 				Night.reduce_debt(100, "Tino te perdona 100 €")
-				extra = "Y te perdona 100 € de deuda."
+				extra = "Y te rebaja 100 € de la última noche."
 		else:
 			Night.levels["tino"] = level + 1
 			extra = "Tino sube a Nv%d: ahora paga %s." % [level + 1, Catalog.tino_pay_text(level + 1)]

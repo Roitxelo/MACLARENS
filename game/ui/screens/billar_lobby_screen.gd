@@ -9,7 +9,7 @@ const BAR := preload("res://assets/concept/mclarens_bar_master_v1.png")
 const QUOTES := [
 	"\"Tres tiros. Si metes dos, te pago lo que apuestes. Si no, me lo das tú.\"",
 	"\"Ahora con truco: bandas y carambolas. Te pago y medio.\"",
-	"\"Los imposibles. Te pago el doble... y si me ganas, te perdono 100 €.\"",
+	"\"Los imposibles. Te pago el doble... y si me ganas, te rebajo 100 € de lo último.\"",
 ]
 
 var main: Control

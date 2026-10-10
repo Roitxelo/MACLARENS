@@ -51,7 +51,7 @@ const CHARACTERS := {
 		"levels": [
 			"Calentamiento: paga 1 a 1, hasta 30 €.",
 			"Con truco (banda, carambola): paga 3 a 2, hasta 60 €.",
-			"Imposibles: paga 2 a 1, hasta 100 €. La 1.ª vez que le ganas, te perdona 100 €.",
+			"Imposibles: paga 2 a 1, hasta 100 €. La 1.ª vez que le ganas, rebaja 100 € la última noche.",
 		],
 	},
 }

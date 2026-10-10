@@ -109,7 +109,8 @@ func _ready() -> void:
 		while g.state != "over" and t < 60.0:
 			await get_tree().create_timer(0.2).timeout
 			t += 0.2
-	check(Night.debt == maxi(0, Night.QUOTAS[0] - 100), "Tino perdona 100 € una sola vez (deuda %d)" % Night.debt)
+	check(Night.debt == Night.QUOTAS[0] and Night.final_discount == 100, "Tino perdona 100 € una sola vez, de la última cuota (hoy %d, rebaja %d)" % [Night.debt, Night.final_discount])
+	check(Night.quota(Night.NIGHTS - 1) == Night.QUOTAS[Night.NIGHTS - 1] - 100, "la rebaja se aplica a la quinta noche")
 
 	print("ECONOMY_TEST_OK" if fails.is_empty() else "ECONOMY_TEST_FAIL %s" % str(fails))
 	get_tree().quit()
