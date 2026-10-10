@@ -23,7 +23,7 @@ Las mejoras no regalan dinero: dan **herramientas que premian jugar bien**. Apos
 | El Búho (ayuda) | Fútbol | Ronda (35 / 70 €) | Medidor de PRESIÓN (momento del partido; la casa no lo mete en la cuota) | Presión con % de gol a 10' y cobro anticipado sin comisión | Un penalti por partido que tiras tú (minijuego de puntería) |
 | El Cortado (ayuda) | Caballos | Ronda (35 / 70 €) | Ganador | 3 ARREOS de timing por carrera (TV 2) | 5 arreos y apuesta a COLOCADO (cuota/3) |
 | El Chencho (rival) | Mayor o menor | Ronda (25 / 60 €) | Calcula bien, mesa 20 € | Mesa 40 € y SEGURO por mano (si fallas tras acertar, salvas la mitad) | Mesa 60 € y paga con probabilidades de baraja entera: contar cartas da ventaja |
-| Tino (rival) | Billar "Tiro imposible" | Ganándole una serie | 20 €, tiros de calentamiento | 40 €, tiros con truco (banda, carambola, pasillo) | 60 €, los imposibles. La primera serie ganada rebaja 100 € de deuda |
+| Tino (rival) | Billar "Tiro imposible" | Ganándole una serie | Paga 1:1 (apuesta 10–50 €), tiros de calentamiento | Paga 2:1 (10–100 €), tiros con truco (banda, carambola, pasillo) | Paga 3:1 (10–150 €), los imposibles. La primera serie ganada rebaja 100 € de deuda |
 
 ### Minijuegos de habilidad
 - **Arreo (caballos):** una aguja va y viene; ESPACIO en lo verde = acelerón (perfecto en lo verde claro); fuera = el caballo se asusta. La carrera se simula en directo.
@@ -74,6 +74,8 @@ Rondas para subir de nivel, 3 objetos rotativos (cada 90 min o 5 €, máx. 5 en
 - **Ajuste de cuentas:** Tiza + Taco + Guante (+ pulso firme y Bola de la suerte) para sacar los imposibles de Tino Nv3 y quitarte 100 € de deuda.
 
 ## Calibración comprobada
+
+- Equilibrio de la noche y valor esperado de cada actividad: [`BALANCE.md`](BALANCE.md). El caballo "en forma" lleva +3–5 de nota oculta.
 
 - Billar: ventana de ángulo con solución (sumando todas las soluciones, 5 potencias, paso 0,25°): Nv1 2,0–2,75° · Nv2 1,0–2,0° · Nv3 1,0–2,0°. Las misiones de Nv3 suelen tener una sola línea limpia; las demás soluciones son rebotes de suerte.
 

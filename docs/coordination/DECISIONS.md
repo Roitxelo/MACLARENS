@@ -98,3 +98,9 @@
 ## Billar (usuario, 09/10 23:24)
 
 - **D-067 — Billar en lugar de futbolín:** el minijuego contra Tino pasa a ser billar en modo "Tiro imposible": series de 3 mesas preparadas con una misión cada una (tronera marcada, a banda, carambola, sin tocar la negra); aciertas 2 de 3 y ganas la apuesta. Mismos niveles de Tino (20/40/60 €, Nv3 perdona 100 € la primera vez). Lo implementa Claude (T19) aunque `ui/minigames/` sea área de Codex.
+
+## Equilibrio (Claude, 10/10)
+
+- **D-068 — Billar con cuotas:** Tino paga 1:1, 2:1 y 3:1 según su nivel y el jugador elige la apuesta (10 € hasta 50/100/150 €). Sustituye a las apuestas fijas de 20/40/60 €.
+- **D-069 — Ventajas calibradas con simulación:** caballo en forma +3–5 de nota (antes +14–22, rompía la economía con las Gafas); momento del fútbol más persistente. Datos en `docs/design/BALANCE.md`.
+- **Pendiente (Roi):** deuda y dinero inicial. Con 500 €/100 € el jugador hábil simulado paga a Tino un 15 % de las noches.
