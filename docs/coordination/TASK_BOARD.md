@@ -19,7 +19,6 @@ Dueño propuesto según `WORKFLOW.md`; se puede cambiar avisando aquí.
 | T08 | Prueba de regresión de economía: test que verifica pagos, cobro, racha (tope x1,5), herradura, seguro del Chencho y perdón de Tino | Claude | Hecho | `tests/economy_test.tscn` en `tools/run_tests` |
 | T20 | Corregir desbordamientos de texto en libreta y resumen de apuesta hípica | Codex | Pendiente | Ningún texto se solapa ni deja símbolos en líneas aisladas en las capturas a 1280 × 720 |
 | T21 | Venta en directo de apuestas de fútbol: hacer visible el valor de mercado y el beneficio/pérdida en máquina y TV | Codex | Hecho | Un ticket abierto se puede vender desde máquina o TV y muestra importe total y resultado neto según la cuota actual |
-
 | T21 | Mapa en dos zonas: Barra (Lucía, máquina, TVs, periódico, libreta) y Salón (billar, Chencho) | Codex | Pendiente | Un jugador nuevo sabe dónde está cada juego sin preguntar |
 | T22 | Botones de la máquina: digitales de los 90 (LCD, plástico), chapuceros pero claros | Codex | Pendiente | Roi da el visto bueno a una captura |
 | T23 | Libreta y periódico simplificados: menos reglas, más claros | Claude | Pendiente | Cada página se lee en menos de 10 s |
