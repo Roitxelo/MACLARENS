@@ -62,7 +62,7 @@ Se archivan en `docs/archive/` estos tres: `HANDOFF.md` (el antiguo), `REVIEW_02
 
 ### Una sola carpeta en el PC
 
-Propuesta: **la del escritorio** (`C:\Users\roice\Desktop\MacLarens`), que está al día y es la que usa Codex. La de F: se borra, o se pone al día descartando el `CLAUDE.md` modificado, que tiene una instrucción que no es de nadie del proyecto. **Roi decide.**
+**Decidido por Roi (06:12): la buena es `F:\JUEGOS\MacLarens`.** Ya está limpia y al día. Roi juega desde ahí. La del escritorio solo debe usarse si Codex trabaja en ella: en ese caso, `git pull` antes de empezar y `git push` al acabar.
 
 ## 3. Hito 1 (H1) propuesto: "la campaña jugable"
 
