@@ -23,9 +23,9 @@ Las mejoras no regalan dinero: dan **herramientas que premian jugar bien**. Apos
 
 | Personaje | Juego | Cómo sube | Nv1 | Nv2 | Nv3 |
 |---|---|---|---|---|---|
-| El Búho (ayuda) | Fútbol | Ronda (35 / 70 €) | Medidor de PRESIÓN (momento del partido; la casa no lo mete en la cuota) | Presión con % de gol a 10' y cobro anticipado sin comisión | Un penalti por partido que tiras tú (minijuego de puntería) |
-| El Cortado (ayuda) | Caballos | Ronda (35 / 70 €) | Ganador | 3 ARREOS de timing por carrera (TV 2) | 5 arreos y apuesta a COLOCADO (cuota/3) |
-| El Chencho (rival) | Mayor o menor | Ronda (25 / 60 €) | Calcula bien, mesa 20 € | Mesa 40 € y SEGURO por mano (si fallas tras acertar, salvas la mitad) | Mesa 60 €, no baraja entre manos y paga con probabilidades de baraja entera: contar cartas da ventaja |
+| El Búho (ayuda) | Fútbol | Ronda (45 / 100 €, una por noche) | Medidor de PRESIÓN (momento del partido; la casa no lo mete en la cuota) | Presión con % de gol a 10' y cobro anticipado sin comisión | Un penalti por partido que tiras tú (minijuego de puntería) |
+| El Cortado (ayuda) | Caballos | Ronda (45 / 100 €, una por noche) | Ganador | 3 ARREOS de timing por carrera (TV 2) | 5 arreos y apuesta a COLOCADO (cuota/3) |
+| El Chencho (rival) | Mayor o menor | Ronda (35 / 80 €, una por noche) | Calcula bien, mesa 20 € | Mesa 40 € y SEGURO por mano (si fallas tras acertar, salvas la mitad) | Mesa 60 €, no baraja entre manos y paga con probabilidades de baraja entera: contar cartas da ventaja |
 | Tino (rival) | Billar "Tiro imposible" | Ganándole una serie | Paga 1:1 (apuesta 10–30 €), tiros de calentamiento | Paga 3:2 (10–60 €), tiros con truco (banda, carambola, pasillo) | Paga 2:1 (10–100 €), los imposibles. La primera serie ganada rebaja 100 € la cuota de la **última** noche (una vez por campaña, D-076) |
 
 ### Minijuegos de habilidad
