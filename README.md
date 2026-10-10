@@ -1,7 +1,7 @@
-# McLarens: La última combinada
+# MacLarens: La última combinada
 
 Juego de apuestas y minijuegos en un bar de barrio, hecho en **Godot 4.7** con arte pixel 2.5D.
-Le debes 500 € a Tino y viene a cobrar a las 02:00. Tienes 200 € y una noche en el McLarens.
+Le debes 500 € a Tino y viene a cobrar a las 02:00. Tienes 200 € y una noche en el MacLarens.
 
 ![El bar](docs/screenshots/02_bar.jpg)
 
