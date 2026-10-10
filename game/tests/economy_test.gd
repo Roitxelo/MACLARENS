@@ -112,5 +112,19 @@ func _ready() -> void:
 	check(Night.debt == Night.QUOTAS[0] and Night.final_discount == 100, "Tino perdona 100 € una sola vez, de la última cuota (hoy %d, rebaja %d)" % [Night.debt, Night.final_discount])
 	check(Night.quota(Night.NIGHTS - 1) == Night.QUOTAS[Night.NIGHTS - 1] - 100, "la rebaja se aplica a la quinta noche")
 
+	# --- Cartas: abandonar una mano (T07) pierde la apuesta y libera el reloj
+	Night.money = 500
+	main.go("cards")
+	await get_tree().process_frame
+	var mesa = main.current
+	mesa.stake = 20
+	mesa._deal()
+	mesa._guess(1)
+	var money_in_hand := Night.money
+	mesa._abandon_hand()
+	await get_tree().process_frame
+	check(Night.money == money_in_hand and money_in_hand == 480, "abandonar la mano no devuelve ni cobra nada (%d)" % Night.money)
+	check(not Night.pauses.has("minigame") and main.current_name == "bar", "abandonar quita la pausa y vuelve al bar")
+
 	print("ECONOMY_TEST_OK" if fails.is_empty() else "ECONOMY_TEST_FAIL %s" % str(fails))
 	get_tree().quit()
