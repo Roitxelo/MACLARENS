@@ -82,7 +82,7 @@ const TRINKETS := {
 	"taco": {"name": "Taco de nácar", "price": 30, "game": "billar",
 		"text": "La barra de potencia sube más despacio: más control del golpe."},
 	"guante": {"name": "Guante de billar", "price": 25, "game": "billar",
-		"text": "Las flechas afinan la puntería cuatro veces más fino."},
+		"text": "Las flechas y la rueda afinan la puntería cuatro veces más fino."},
 	"repeticion": {"name": "Bola de la suerte", "price": 40, "game": "billar",
 		"text": "Una vez por serie de billar puedes repetir un tiro fallado."},
 	"fusta": {"name": "Fusta nueva", "price": 30, "game": "horse",

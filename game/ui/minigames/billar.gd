@@ -30,7 +30,6 @@ var steady := false                    # corazonada: trayectoria completa
 var _steady_path: Array = []
 var _steady_t := 0.0
 var _guide: Array = []                 # [camino de la blanca, camino de la bola tocada, índice]
-var _guide_t := 0.0
 var _guide_key := Vector2(INF, INF)    # (ángulo, potencia) de la última guía calculada
 var _last_power := 0.7
 var autoplay := false
@@ -118,7 +117,7 @@ func _load_shot() -> void:
 	var target: Vector2 = sim.pos[1]
 	aim = ((target - (sim.pos[0] as Vector2))).angle()
 	mission_label.text = "TIRO %d/3 · %s — %s" % [shot_index + 1, layout["name"], layout["mission"]]
-	info.text = "Apunta con el ratón: los puntos marcan el camino. Mantén el clic para cargar y suelta."
+	info.text = "Apunta con el ratón y afina con la rueda o ← →. Mantén el clic para cargar y suelta."
 	_update_score()
 
 func _update_score() -> void:
@@ -135,6 +134,10 @@ func _gui_input(event: InputEvent) -> void:
 		var d := _table_mouse() - (sim.pos[0] as Vector2)
 		if d.length() > 4.0:
 			aim = d.angle()
+	elif event is InputEventMouseButton and event.pressed and event.button_index in [MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN] and state in ["aim", "charging"]:
+		# Rueda: afina sin mover el ratón (0,1°; con el Guante, 0,025°).
+		var fine := deg_to_rad(0.025 if Night.has_trinket("guante") else 0.1)
+		aim += fine if event.button_index == MOUSE_BUTTON_WHEEL_UP else -fine
 	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT and state == "aim":
 		state = "charging"
 		charge_t = 0.0
@@ -334,12 +337,11 @@ func guide_events() -> int:
 func guide_object_length() -> float:
 	return GUIDE_BASE_OBJECT + (GUIDE_TIZA_OBJECT if Night.has_trinket("tiza") else 0.0)
 
-func _refresh_guide(delta: float, p: float) -> void:
-	_guide_t -= delta
+## Se recalcula en el mismo frame en que cambian el ángulo o la potencia.
+func _refresh_guide(_delta: float, p: float) -> void:
 	var key := Vector2(aim, p)
-	if _guide_t > 0.0 or key.distance_to(_guide_key) < 0.0005:
+	if key.distance_to(_guide_key) < 0.00005:
 		return
-	_guide_t = 0.05
 	_guide_key = key
 	_guide = guide_paths(aim, p)
 
@@ -392,7 +394,9 @@ func guide_paths(angle: float, p: float) -> Array:
 			obj.append(cur)
 			if not copy.alive[obj_i]:
 				obj_len = obj_max
-		if cue_done and obj_len >= obj_max:
+		# Se para en cuanto la guía tiene lo que va a enseñar (review 04: iba a
+		# saltos). Si la blanca acabó sin mover ninguna bola, no hay más que ver.
+		if cue_done and (obj_i < 0 or obj_len >= obj_max):
 			break
 	return [cue, obj, obj_i]
 

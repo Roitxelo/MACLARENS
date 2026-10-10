@@ -32,5 +32,26 @@ func _ready() -> void:
 			ok = ok and g.made >= 2 and Night.money == money_before + 20
 		else:
 			ok = ok and g.made < 2 and Night.money < money_before
+	# (4) La guía se calcula rápido en todas las mesas y ángulos (review 04: iba a saltos).
+	var worst := 0.0
+	var total := 0.0
+	var calls := 0
+	for lv in [1, 2, 3]:
+		for i in 3:
+			main.go("billar", {"rival": {"id": "tino", "name": "Tino", "stake": 20, "level": lv}})
+			await get_tree().process_frame
+			var b = main.current
+			b.shot_index = i
+			b._load_shot()
+			for k in 72:
+				for pw in [0.3, 1.0]:
+					var t0 := Time.get_ticks_usec()
+					b.guide_paths(deg_to_rad(k * 5.0), pw)
+					var ms := float(Time.get_ticks_usec() - t0) / 1000.0
+					worst = maxf(worst, ms)
+					total += ms
+					calls += 1
+	print("guía: media %.2f ms, peor %.2f ms (%d cálculos)" % [total / calls, worst, calls])
+	ok = ok and worst < 8.0
 	print("BILLAR_TEST_OK" if ok else "BILLAR_TEST_FAIL")
 	get_tree().quit()
