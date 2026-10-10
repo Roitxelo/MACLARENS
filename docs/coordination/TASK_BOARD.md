@@ -4,7 +4,7 @@
 > Estados: `Pendiente` · `En curso` · `Hecho` (listo para el playtest) · `Bloqueado (motivo)`. Lo aprueba Roi jugando el hito.
 > Números: `Tnn` (Roi y las reviews) · `Cnn` (los crea Claude) · `Xnn` (los crea Codex).
 
-## H0 — Validar la campaña integrada · **LISTO PARA JUGAR en `9756789`** (carpeta `F:`)
+## H0 — Validar la campaña integrada · **Jugado por Roi** (`REVIEW_03_ROI.md`)
 
 Congelado: no entra nada nuevo, solo bloqueos, incoherencias de la economía y textos engañosos. **Sale una versión concreta para que Roi juegue en `F:`.**
 
@@ -18,7 +18,7 @@ Congelado: no entra nada nuevo, solo bloqueos, incoherencias de la economía y t
 | X02 | Montar en la pantalla final los textos de C04 (la pantalla pasa a Codex) | Codex | Hecho | El cierre se entiende sin leer el código |
 | X05 | Limpiar los avisos al cambiar de noche | Codex | Hecho | La noche empieza a las 18:00 sin mensajes caducados de la anterior |
 
-## H1 — Que se entienda (tras jugar H0)
+## H1 — Que se entienda y se vea (en curso, sale de `REVIEW_03_ROI.md`)
 
 | Id | Tarea | Dueño | Estado | Hecho cuando |
 |---|---|---|---|---|
@@ -30,6 +30,10 @@ Congelado: no entra nada nuevo, solo bloqueos, incoherencias de la economía y t
 | X04 | Tienda de Lucía: cada ronda dice qué desbloquea (`Catalog.CHARACTERS[*].short`) | Codex | Pendiente | |
 | T20 | Desbordamientos de texto (símbolo `€` suelto en el resumen de apuesta hípica) | Codex | Pendiente | Ninguna captura tiene texto partido |
 | T07 | Poder salir de una mano de cartas (ESC con confirmación) | Codex | Pendiente | El reloj no se queda en pausa y el dinero cuadra |
+| C06 | Billar: guía corta de base (hasta el primer contacto y la salida de la bola tocada); la Tiza la alarga y la corazonada enseña el tiro entero | Claude | Pendiente | Roi: "ni fácil ni imposible" sin objetos; la corazonada vuelve a tener sentido |
+| C07 | Textos mínimos como datos para portada, libreta y periódico (`GameTexts`): una línea por cosa, pensados para ir con iconos | Claude | Pendiente | Ninguna pantalla con más de ~6 líneas de texto seguido |
+| X06 | Cartas: las que han salido, bocarriba, pequeñas y agrupadas por número, en la mesa del Chencho | Codex | Pendiente | Se puede contar de un vistazo |
+| X07 | Rediseño visual de portada, libreta y periódico: menos texto, más iconos/retratos/cartas; usan los textos de C07 | Codex | Pendiente | Roi las encuentra atractivas |
 | T01 | Calibrar los minijuegos jugando (arreo, penalti, billar con guía) | Codex (arreo, penalti) + Claude (billar) | Pendiente | Billar Nv1 en 1-3 intentos, el arreo perfecto ~1 de cada 3 |
 
 ## H2 — Móvil (Godot → Android, 0 €; ver `docs/design/MOBILE.md`)
