@@ -1,64 +1,64 @@
 # Tablero de tareas
 
-Estados: `Pendiente` · `En curso (dueño)` · `Hecho` · `Bloqueado (motivo)`.
-Antes de empezar una tarea, ponla `En curso` en tu primer commit. Al terminar, `Hecho` + commit.
-Dueño propuesto según `WORKFLOW.md`; se puede cambiar avisando aquí.
+> Única fuente del estado de las tareas (ver `WORKFLOW.md` v2).
+> Estados: `Pendiente` · `En curso` · `Hecho` (listo para el playtest) · `Bloqueado (motivo)`. Lo aprueba Roi jugando el hito.
+> Números: `Tnn` (Roi y las reviews) · `Cnn` (los crea Claude) · `Xnn` (los crea Codex).
 
-## P0 — Para entregar (jugable, presentable, sin sustos)
+## H0 — Validar la campaña integrada (en curso)
+
+Congelado: no entra nada nuevo, solo bloqueos, incoherencias de la economía y textos engañosos. **Sale una versión concreta para que Roi juegue en `F:`.**
 
 | Id | Tarea | Dueño | Estado | Hecho cuando |
 |---|---|---|---|---|
-| T01 | Probar jugando y calibrar los minijuegos: velocidad de la aguja del arreo (`race_screen.gd`), mirilla del penalti (`penalty_overlay.gd: SPEED`), dificultad del billar (tras T19) | Codex | Pendiente | El billar Nv1 se gana en 2-3 intentos, Nv3 cuesta; el arreo perfecto sale ~1 de cada 3 intentando; el penalti pegado al palo se consigue con práctica |
-| T02 | Audio básico: ambiente de bar, gol, silbato, salida de caballos, cartas, monedas, golpes de billar, clic de botones. Bus de música/efectos | Codex | Pendiente | Cada acción importante suena; volumen ajustable en código |
-| T03 | Export a Windows (preset + `.exe` en `builds/`, fuera del repo) | Codex | Pendiente | El `.exe` arranca en un PC sin Godot |
-| T04 | Primera noche guiada: reducir el caos, destacar la siguiente acción y los hotspots, y mostrar ayuda contextual al entrar en cada sitio | Codex (UI) + Claude (textos) | Pendiente | Un jugador nuevo sabe qué atender ahora y entiende máquina, arreo, penalti, cartas y tienda sin leer el GDD ni la portada completa |
-| T05 | Equilibrio de la deuda: aplicar la decisión 2+3 (200 € iniciales, arreo perfecto, baraja persistente Nv3 y segundo partido con más presión) y repetir la simulación | Claude + Codex | Hecho (continúa en T26, campaña) | Informe actualizado en `docs/design/BALANCE.md`: jugador al azar < 15 % de éxito, hábil 50-70 % |
-| T06 | Avisos (toasts) que tapan contenido en carrera, lobby del billar y bar: moverlos o dar zona propia por pantalla | Codex | Hecho | Ninguna captura de `night_capture` tiene texto tapado |
-| T07 | Poder salir de una mano de cartas (el billar ya trae botón de rendirse, T19) (ESC con confirmación) | Codex | Pendiente | Salir no deja el reloj en pausa ni el dinero inconsistente |
-| T19 | Sustituir el futbolín por billar "Tiro imposible": Tino prepara tiros retorcidos (a banda, carambola, sin tocar la negra, tronera marcada) en series de 3; ganar 2 = ganas la apuesta. Objetos y corazonada nuevos | Claude | Hecho | Minijuego jugable, cada mesa con solución comprobada por un buscador automático, docs al día |
-| T08 | Prueba de regresión de economía: test que verifica pagos, cobro, racha (tope x1,5), herradura, seguro del Chencho y perdón de Tino | Claude | Hecho | `tests/economy_test.tscn` en `tools/run_tests` |
-| T20 | Corregir desbordamientos de texto en libreta y resumen de apuesta hípica | Codex | Pendiente | Ningún texto se solapa ni deja símbolos en líneas aisladas en las capturas a 1280 × 720 |
-| T21 | Venta en directo de apuestas de fútbol: hacer visible el valor de mercado y el beneficio/pérdida en máquina y TV | Codex | Hecho | Un ticket abierto se puede vender desde máquina o TV y muestra importe total y resultado neto según la cuota actual |
-| T22 | Mapa en dos zonas: Barra (Lucía, máquina, TV de fútbol, periódico, libreta) y Salón (TV hípica, billar, Chencho) | Codex | Hecho | Un jugador nuevo sabe dónde está cada juego sin preguntar |
-| T23 | Botones de la máquina: digitales de los 90 (LCD, plástico), chapuceros pero claros | Codex | Pendiente | Roi da el visto bueno a una captura |
-| T24 | Libreta y periódico simplificados: menos reglas, más claros | Claude | Hecho | Cada página se lee en menos de 10 s |
-| T25 | Billar: guía de trayectoria tipo móvil (camino de la blanca y de la bola tocada) | Claude | Hecho | Nv1 se gana en 1-3 intentos; Nv3 sigue costando |
-| T26 | Campaña de varias noches: menos objetivo por noche, deuda creciente (sustituye a T16) | Claude | Hecho | Simulada y documentada en `BALANCE.md` |
-| T27 | Cerrar las apuestas predecibles que Roi explotó | Claude | Hecho (horarios y cruces cambian cada noche; tope de boleto y cuota) | La estrategia ya no gana sola |
-| T28 | Plan de versión móvil: Godot export vs Flutter (`docs/design/MOBILE.md`) | Claude (revisa Codex) | Hecho: Godot → Android, 0 € | Roi decide la vía |
-| T29 | Preset de exportación Android y `.apk` de prueba (junto a T03) | Codex | Pendiente | El `.apk` se instala y arranca en un Android |
-| T30 | Pasada táctil: botones para ESPACIO, ← →, P y ESC; textos de 20 px o más; toques de 48 px o más (ver `MOBILE.md`) | Codex + Claude (billar) | Pendiente | Una noche entera se juega solo con el dedo |
-| T31 | Probar el `.apk` en el móvil de Roi | Roi | Pendiente | Lista de molestias |
+| C01 | Simular las 5 noches con estrategias deportivas fijas (siempre favorito, siempre empate, siempre al que va ganando en directo) | Claude | Pendiente | Ninguna estrategia fija gana la campaña sola; resultado en `BALANCE.md` |
+| C02 | Coherencia económica de la campaña: el perdón de Tino (100 €) no puede cubrir una cuota entera | Claude | Pendiente | Regla corregida, simulada y anotada en `DECISIONS.md` |
+| C03 | Prueba automática de la campaña: pagar, pasar de noche conservando dinero, niveles y objetos, y que la quinta noche cierre | Claude | Pendiente | `campaign_test` en `tools/run_tests` (rápidas) |
+| C04 | Textos de la pantalla final como datos ("Empezaste con", "Al cierre", "Tino cobra", "Te quedan") | Claude | Pendiente | En `game/data/texts.gd`; aviso a Codex |
+| X01 | Jugar una campaña completa (o hasta perder), revisar todas las capturas y apuntar problemas por noche y pantalla | Codex | Pendiente | `docs/reviews/PLAYTEST_02_CODEX.md` |
+| X02 | Montar en la pantalla final los textos de C04 (la pantalla pasa a Codex) | Codex | Pendiente | El cierre se entiende sin leer el código |
 
-## P1 — Pulido
+## H1 — Que se entienda (tras jugar H0)
+
+| Id | Tarea | Dueño | Estado | Hecho cuando |
+|---|---|---|---|---|
+| T04 | Ayuda contextual la primera vez que se entra en cada sitio y se ve cada mecánica (presión, arreo, penalti, cartas, billar) | Claude (textos) + Codex (UI) | Pendiente | Un jugador nuevo descubre las mecánicas a tiempo sin leer la portada |
+| C05 | Portada breve: 3 líneas y a jugar; las reglas pasan a la ayuda contextual | Claude (textos) + Codex (UI) | Pendiente | Portada legible en 10 s |
+| T15 | Repaso de tono y erratas en todos los textos | Claude | Pendiente | |
+| T23 | Botones de la máquina: digitales de los 90 (LCD, plástico), chapuceros pero claros; que se vea el tope de 50 € | Codex | Pendiente | Roi da el visto bueno a una captura |
+| X03 | La presión del fútbol, explicada con una frase y un icono en la máquina y la TV | Codex | Pendiente | Roi la entiende sin preguntar |
+| X04 | Tienda de Lucía: cada ronda dice qué desbloquea (`Catalog.CHARACTERS[*].short`) | Codex | Pendiente | |
+| T20 | Desbordamientos de texto (símbolo `€` suelto en el resumen de apuesta hípica) | Codex | Pendiente | Ninguna captura tiene texto partido |
+| T07 | Poder salir de una mano de cartas (ESC con confirmación) | Codex | Pendiente | El reloj no se queda en pausa y el dinero cuadra |
+| T01 | Calibrar los minijuegos jugando (arreo, penalti, billar con guía) | Codex (arreo, penalti) + Claude (billar) | Pendiente | Billar Nv1 en 1-3 intentos, el arreo perfecto ~1 de cada 3 |
+
+## H2 — Móvil (Godot → Android, 0 €; ver `docs/design/MOBILE.md`)
 
 | Id | Tarea | Dueño | Estado |
 |---|---|---|---|
-| T09 | "Juice": contador de dinero animado que indique origen y signo, destello en goles, sacudida al ganar/perder, hover con sonido | Codex | Pendiente |
-| T10 | Feedback de la racha: aviso grande al subir y al romperse | Codex | Pendiente |
-| T11 | Resumen de cierre más rico: gráfica de dinero por hora y mejor jugada | Claude (datos) + Codex (UI) | Pendiente |
-| T12 | Arte: el arte de Lucía tiene "CONFIANZA" impreso que ya no significa nada; ilustración para la mesa del Chencho y el billar | Roi | Pendiente |
+| T03 | Export a Windows (`.exe` en `builds/`, fuera del repo) | Codex | Pendiente |
+| T29 | Preset de Android y `.apk` de prueba | Codex | Pendiente |
+| T30 | Pasada táctil: botones para ESPACIO, ← →, P y ESC; textos de 20 px o más; toques de 48 px o más | Codex (pantallas) + Claude (billar) | Pendiente |
+| T31 | Probar el `.apk` en el móvil de Roi | Roi | Pendiente |
+
+## H3 — Audio y acabado
+
+| Id | Tarea | Dueño | Estado |
+|---|---|---|---|
+| T02 | Audio: ambiente, gol, silbato, salida, cartas, monedas, billar, clics; bus música/efectos | Codex | Pendiente |
+| T09 | *Juice*: dinero animado con origen y signo, destellos, sacudidas | Codex | Pendiente |
+| T10 | Aviso grande al subir y al romperse la racha | Codex | Pendiente |
+| T11 | Cierre más rico: dinero por hora y mejor jugada | Claude (datos) + Codex (UI) | Pendiente |
+| T12 | Arte: quitar "CONFIANZA" del arte de Lucía; fondos secundarios antiguos | Roi | Pendiente |
 | T13 | Opciones: volumen, pantalla completa, velocidad por defecto | Codex | Pendiente |
-| T14 | `machine_screen.gd` reconstruye la lista entera cuando cambia el estado; optimizar si se nota | Codex | Pendiente |
-| T15 | Textos: repasar tono cómico y erratas en todas las pantallas | Claude | Pendiente |
+| T14 | Optimizar `machine_screen.gd` si se nota | Codex | Pendiente |
 
-## P2 — Si sobra tiempo (requiere visto bueno de Roi)
+## Ideas (necesitan el visto bueno de Roi)
 
-| Id | Tarea | Estado |
-|---|---|---|
-| T16 | Semana de noches con deuda creciente → pasa a T26 | Absorbida |
-| T17 | Eventos del bar (el Chencho interrumpe, apagón en la tele, redada cómica) | Idea |
-| T18 | Traducción al inglés | Idea |
+- T17 Eventos del bar (el Chencho interrumpe, apagón, redada cómica).
+- T18 Traducción al inglés.
+- Más deportes en la TV de la barra (Roi, review 02).
 
-## Errores conocidos
+## Hecho (pendiente de playtest de Roi salvo indicación)
 
-- Sin sonido (T02).
-- El equilibrio no se ha probado con jugadores reales (T01, T05).
-
-## Hecho (resumen)
-
-- Noche completa jugable: fútbol, caballos, billar, cartas, tienda, libreta, cierre.
-- Billar "Tiro imposible" en lugar del futbolín (T19).
-- Personajes con 3 niveles y 14 objetos de habilidad; racha con tope x1,5.
-- Minijuegos: arreo, penalti, presión del partido, contar cartas.
-- Repo organizado, pruebas automáticas y documentación (09/10).
+- T05/T08 Equilibrio de una noche y prueba de la economía · T06 avisos por pantalla · T19 billar "Tiro imposible" · T21 venta en directo del fútbol
+- **Review 02:** T22 bar en dos zonas · T24 libreta y periódico breves · T25 guía del billar · T26 campaña de 5 noches · T27 cada noche distinta + topes de la máquina · T28 plan móvil

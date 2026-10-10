@@ -1,14 +1,16 @@
 # Codex: arranque en McLarens
 
+> **Actualizado el 10/10.** Mandan [`coordination/WORKFLOW.md`](coordination/WORKFLOW.md) v2 (roles, buzones, hitos) y el [tablero por hitos](coordination/TASK_BOARD.md). Las secciones 4 y 6 de este documento quedan como historia.
+
 Hola, Codex. Este documento es tu punto de partida. Léelo entero (10 minutos) antes de tocar nada. Después, trabajaremos en paralelo Claude y tú para terminar el juego pronto y bien pulido.
 
 ---
 
 ## 1. Qué es el juego (30 segundos)
 
-**McLarens: La última combinada.** Debes 500 € a Tino, un prestamista de barrio cómico. Viene a cobrar a las 02:00. Tienes 200 € y una noche en el bar McLarens para conseguirlos.
+**McLarens: La última combinada.** Debes 1.800 € a Tino, un prestamista de barrio cómico. Te los cobra en cinco noches (100, 150, 300, 500 y 750 € a las 02:00). Empiezas con 200 €.
 
-- Una partida = **una noche de 18:00 a 02:00**, unos 13 minutos reales. Empiezas con 200 €. El reloj corre solo (P pausa, x1/x2/x4).
+- Una partida = **una campaña de 5 noches** de 18:00 a 02:00, unos 13 minutos reales cada una. Dinero, niveles y objetos pasan a la noche siguiente. El reloj corre solo (P pausa, x1/x2/x4).
 - Todo se hace desde el bar (arte pixel 2.5D, focos interactivos, sin menús abstractos):
   - **Máquina:** fútbol (2 partidos, 1X2 en directo con cobro anticipado) y 10 carreras de caballos.
   - **TV 1 / TV 2:** ver el partido (medidor de presión, penalti) y la carrera (arrear a tu caballo).

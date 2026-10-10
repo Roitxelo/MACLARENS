@@ -6,8 +6,8 @@ Proyecto: **McLarens: La última combinada**, juego en Godot 4.7 (GDScript). Idi
 
 ## Siempre
 
-1. `git pull --rebase` antes de empezar y antes de subir.
-2. Coge una tarea de `docs/coordination/TASK_BOARD.md`, márcala `En curso (tu nombre)` y respeta el reparto de áreas de `docs/coordination/WORKFLOW.md`.
+1. `git pull --rebase` antes de empezar y antes de subir. Lee **tu buzón**: Codex lee `CODEXHANDOFF.md` y Claude lee `CLAUDEHANDOFF.md`.
+2. Coge una tarea **de tu rol** del hito abierto en `docs/coordination/TASK_BOARD.md` y márcala `En curso`. Los roles y las reglas están en `docs/coordination/WORKFLOW.md` v2: Claude = sistemas, Codex = presentación. Lo que necesites del otro, pídelo en su buzón.
 3. Commits pequeños, en español, con prefijo (`feat:`, `fix:`, `balance:`, `ui:`, `audio:`, `refactor:`, `test:`, `docs:`, `chore:`).
 4. Pasa las pruebas antes de subir: `tools/run_tests.sh` (o `.\tools\run_tests.ps1` en Windows). Si tocas UI, también `todas` y mira `game/tests/output/`.
 5. Si cambias una regla del juego, actualiza `docs/design/GDD.md`; si cambias la estructura, `docs/ARCHITECTURE.md`; si tomas una decisión, una línea en `docs/coordination/DECISIONS.md`.
