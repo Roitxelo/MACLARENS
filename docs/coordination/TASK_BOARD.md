@@ -21,7 +21,7 @@ Dueño propuesto según `WORKFLOW.md`; se puede cambiar avisando aquí.
 | T21 | Venta en directo de apuestas de fútbol: hacer visible el valor de mercado y el beneficio/pérdida en máquina y TV | Codex | Hecho | Un ticket abierto se puede vender desde máquina o TV y muestra importe total y resultado neto según la cuota actual |
 | T22 | Mapa en dos zonas: Barra (Lucía, máquina, TV de fútbol, periódico, libreta) y Salón (TV hípica, billar, Chencho) | Codex | Hecho | Un jugador nuevo sabe dónde está cada juego sin preguntar |
 | T23 | Botones de la máquina: digitales de los 90 (LCD, plástico), chapuceros pero claros | Codex | Pendiente | Roi da el visto bueno a una captura |
-| T24 | Libreta y periódico simplificados: menos reglas, más claros | Claude | Pendiente | Cada página se lee en menos de 10 s |
+| T24 | Libreta y periódico simplificados: menos reglas, más claros | Claude | Hecho | Cada página se lee en menos de 10 s |
 | T25 | Billar: guía de trayectoria tipo móvil (camino de la blanca y de la bola tocada) | Claude | Hecho | Nv1 se gana en 1-3 intentos; Nv3 sigue costando |
 | T26 | Campaña de varias noches: menos objetivo por noche, deuda creciente (sustituye a T16) | Claude | Hecho | Simulada y documentada en `BALANCE.md` |
 | T27 | Cerrar las apuestas predecibles que Roi explotó | Claude | Hecho (horarios y cruces cambian cada noche; tope de boleto y cuota) | La estrategia ya no gana sola |

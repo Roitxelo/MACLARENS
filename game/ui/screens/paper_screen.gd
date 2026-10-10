@@ -35,7 +35,7 @@ func _ready() -> void:
 	UIKit.place(mid, Rect2(632, 190, 2, 430))
 	add_child(mid)
 
-	var y := _section("FÚTBOL EN LA TELE 1", 90, 190.0)
+	var y := _section("FÚTBOL · TELE DE LA BARRA", 90, 190.0)
 	for m in Night.football.matches:
 		var sim: MatchSimulator = m["sim"]
 		var head := UIKit.label("%s · %s - %s" % [Night.clock_text(m["kickoff"]), m["home"], m["away"]], 24, UIKit.PAPER_INK)
@@ -50,19 +50,18 @@ func _ready() -> void:
 		UIKit.place(st, Rect2(90, y + 32, 530, 26))
 		add_child(st)
 		y += 76
-	y = _section("LA GENTE DEL BAR", 90, y + 10)
+	y = _section("ESTA NOCHE", 90, y + 10)
 	var tips := [
-		"El Búho lee los partidos: quien aprieta suele marcar antes de que la casa lo note.",
-		"El Cortado te deja arrear a tu caballo. Hay que tener pulso.",
-		"El Chencho calcula peor cuanto más bebe. Quien cuenta cartas, gana.",
-		"Tino prepara tiros imposibles en el billar. Cuanto más le ganas, más se juega.",
+		"Noche %d de %d. Tino cobra %d € a las 02:00." % [Night.night_index + 1, Night.NIGHTS, Night.debt],
+		"Mañana cobrará %d €." % Night.QUOTAS[Night.night_index + 1] if not Night.is_last_night() else "Es la última: paga y eres libre.",
+		"Boletos de hasta 50 €. Tino juega 3 series de billar.",
 	]
-	var tl := UIKit.label("\n".join(tips), 19, Color("#3b2a1a"))
+	var tl := UIKit.label("\n".join(tips), 20, Color("#3b2a1a"))
 	UIKit.place(tl, Rect2(90, y, 530, 140))
 	tl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(tl)
 
-	y = _section("HÍPICA EN LA TELE 2", 650, 190.0)
+	y = _section("HÍPICA · TELE DEL SALÓN", 650, 190.0)
 	var lines: Array = []
 	for r in Night.races.races:
 		var txt := ""

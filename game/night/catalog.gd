@@ -3,7 +3,8 @@ extends RefCounted
 
 ## Personajes (niveles) y objetos. Filosofía: las mejoras no regalan dinero,
 ## dan herramientas que premian jugar bien (leer el partido, arrear a tiempo,
-## contar cartas, dominar el futbolín). Los efectos se aplican buscando el id.
+## contar cartas, clavar el tiro imposible). Los efectos se aplican buscando el id.
+## "short": una línea por nivel para la libreta y la tienda. "how": cómo se sube.
 
 const MAX_LEVEL := 3
 const MAX_TRINKETS := 5
@@ -12,6 +13,8 @@ const CHARACTERS := {
 	"buho": {
 		"name": "El Búho", "game": "football", "role": "Te ayuda en el fútbol",
 		"rounds": [0, 35, 70],
+		"how": "Ronda en la barra",
+		"short": ["Ves la PRESIÓN: quién aprieta ahora.", "Ves la % de gol y vendes sin comisión.", "Un penalti por partido lo tiras tú."],
 		"levels": [
 			"Te enseña el medidor de PRESIÓN: quién aprieta ahora. La casa tarda en verlo.",
 			"La presión con porcentajes de gol a 10 minutos y cobro anticipado sin comisión.",
@@ -21,6 +24,8 @@ const CHARACTERS := {
 	"cortado": {
 		"name": "El Cortado", "game": "horse", "role": "Te ayuda con los caballos",
 		"rounds": [0, 35, 70],
+		"how": "Ronda en la barra",
+		"short": ["Solo apuestas a ganador.", "Arreas 3 veces a tu caballo (TV).", "Arreas 5 veces y apuestas a colocado."],
 		"levels": [
 			"Apuestas a ganador.",
 			"ARREAR: en la TV 2, durante la carrera de tu caballo, 3 arreos de timing.",
@@ -30,6 +35,8 @@ const CHARACTERS := {
 	"chencho": {
 		"name": "El Chencho", "game": "cards", "role": "Rival en Mayor o menor",
 		"rounds": [0, 25, 60],
+		"how": "Ronda en la barra",
+		"short": ["Mesa de 20 €. Sobrio: no falla.", "Mesa de 40 € y seguro de media mano.", "Mesa de 60 €. Borracho: cuenta cartas."],
 		"levels": [
 			"Sobrio: calcula bien las cuotas. Mesa de 20 € como máximo.",
 			"Contento: mesa de 40 € y un SEGURO por mano (si fallas, salvas la mitad).",
@@ -39,6 +46,8 @@ const CHARACTERS := {
 	"tino": {
 		"name": "Tino", "game": "billar", "role": "Rival en el billar (tiro imposible)",
 		"rounds": [],
+		"how": "Gánale una serie de billar",
+		"short": ["Paga 1 a 1, hasta 30 €.", "Paga 3 a 2, hasta 60 €.", "Paga 2 a 1, hasta 100 €."],
 		"levels": [
 			"Calentamiento: paga 1 a 1, hasta 30 €.",
 			"Con truco (banda, carambola): paga 3 a 2, hasta 60 €.",

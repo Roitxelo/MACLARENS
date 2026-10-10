@@ -1,6 +1,9 @@
 extends Control
 
-## La libreta: tu gente (niveles), tus objetos y cómo va la racha.
+## La libreta: tu gente (qué hace cada uno ahora y cómo subirlo), tus objetos
+## y la racha. Una línea por cosa: nada de reglas largas (T24).
+
+const GAME_WORD := {"football": "fútbol", "horse": "caballos", "cards": "cartas", "billar": "billar"}
 
 var main: Control
 var args: Dictionary
@@ -28,27 +31,22 @@ func _ready() -> void:
 		var pic := UIKit.texture_rect(UIKit.portrait(who), Rect2(72, y, 92, 92))
 		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		add_child(pic)
-		var name_l := UIKit.label("%s  ·  %s" % [c["name"], c["role"]], 22, UIKit.PAPER_INK)
+		var name_l := UIKit.label("%s · %s" % [c["name"], GAME_WORD[c["game"]]], 22, UIKit.PAPER_INK)
 		name_l.position = Vector2(176, y - 2)
 		add_child(name_l)
 		var lvl := UIKit.label("Nv %d/3" % lv, 20, UIKit.PAPER_RED)
-		lvl.position = Vector2(176, y + 22)
+		lvl.position = Vector2(490, y - 2)
 		add_child(lvl)
-		_level_pips(Vector2(250, y + 30), lv)
-		var now := UIKit.label(c["levels"][lv - 1], 17, Color("#3b2a1a"))
-		UIKit.place(now, Rect2(176, y + 46, 446, 24))
-		now.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		_level_pips(Vector2(552, y + 8), lv)
+		var now := UIKit.label("AHORA  " + str(c["short"][lv - 1]), 19, Color("#3b2a1a"))
+		UIKit.place(now, Rect2(176, y + 30, 446, 26))
 		add_child(now)
-		var nxt := ""
+		var nxt := "Nivel máximo."
 		if lv < 3:
-			if who == "tino":
-				nxt = "Siguiente: gánale al futbolín → %s" % c["levels"][lv]
-			else:
-				nxt = "Ronda en la barra (%d €) → %s" % [Night.round_price(who), c["levels"][lv]]
-		else:
-			nxt = "Nivel máximo."
-		var nl := UIKit.label(nxt, 15, Color("#6b5236"))
-		UIKit.place(nl, Rect2(176, y + 70, 446, 40))
+			var cost := "" if who == "tino" else " (%d €)" % Night.round_price(who)
+			nxt = "SUBIR  %s%s → %s" % [c["how"], cost, c["short"][lv]]
+		var nl := UIKit.label(nxt, 16, Color("#6b5236"))
+		UIKit.place(nl, Rect2(176, y + 58, 446, 44))
 		nl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		add_child(nl)
 		y += 116
@@ -64,23 +62,25 @@ func _ready() -> void:
 			var tr: Dictionary = Catalog.TRINKETS[Night.trinkets[i]]
 			txt = "%s: %s" % [tr["name"], tr["text"]]
 			col = UIKit.PAPER_INK
-		var l := UIKit.label(txt, 18, col)
+		var l := UIKit.label(txt, 17, col)
 		UIKit.place(l, Rect2(664, y, 540, 44))
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		add_child(l)
-		y += 48
+		y += 46
 	var t3 := UIKit.label("LA RACHA", 26, UIKit.PAPER_RED)
-	t3.position = Vector2(664, 412)
+	t3.position = Vector2(664, 404)
 	add_child(t3)
-	var expl := "%s\nCada victoria seguida suma +0,1 al multiplicador del beneficio de la siguiente (máximo x1,5). Una derrota la rompe. Solo cuentan apuestas de 10 € o más. Mejor racha de la noche: %d." % [Night.streak_text(), Night.best_streak]
-	var el := UIKit.label(expl, 17, Color("#3b2a1a"))
-	UIKit.place(el, Rect2(664, 446, 540, 100))
+	var el := UIKit.label("%s\nCada acierto seguido suma +10 %% al siguiente premio (hasta +50 %%). Un fallo la rompe." % Night.streak_text(), 17, Color("#3b2a1a"))
+	UIKit.place(el, Rect2(664, 438, 540, 70))
 	el.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(el)
-	var combos := UIKit.label("Combos: lee la PRESIÓN y entra antes que la casa (Búho) · Gafas + Fusta: elige el caballo en forma y arréale bien · Chencho Nv3 + Chuleta: cuenta cartas contra un borracho · Tiza + Taco + Guante para los imposibles de Tino.", 15, Color("#6b5236"))
-	UIKit.place(combos, Rect2(664, 556, 540, 70))
-	combos.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	add_child(combos)
+	var t4 := UIKit.label("CÓMO SUBIR DE NIVEL", 22, UIKit.PAPER_RED)
+	t4.position = Vector2(664, 520)
+	add_child(t4)
+	var how := UIKit.label("Búho, Cortado y Chencho: invítales a una ronda en la barra de Lucía.\nTino: gánale una serie de billar.\nLo que subes se queda para las noches siguientes.", 16, Color("#3b2a1a"))
+	UIKit.place(how, Rect2(664, 550, 540, 80))
+	how.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	add_child(how)
 
 	var back := UIKit.button("CERRAR LA LIBRETA", "wood", 20)
 	UIKit.place(back, Rect2(24, 656, 260, 46))
