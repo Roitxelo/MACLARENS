@@ -12,7 +12,7 @@ Solo lo imprescindible. A las **14:40** se congela y se genera el `.exe`.
 |---|---|---|---|
 | X09 | Volver al salón desde las cartas y la TV de los caballos (la prueba ya lo acepta) | Codex | Pendiente |
 | X11 | Botón "VENDER · N €" en los objetos | Codex | Pendiente |
-| C11 | Build de Windows (`.exe` + `.pck` en un zip) desde la nube, comprobada, en `F:\JUEGOS\MacLarens\builds\` | Claude | Preliminar en `F:\\JUEGOS\\MacLarens\\builds\\`; final tras la congelación |
+| C11 | Build de Windows (`.exe` + `.pck` en un zip) desde la nube, comprobada, en `F:\JUEGOS\MacLarens\builds\` | Claude | Preliminar en `F:\JUEGOS\MacLarens\builds\`; final tras la congelación |
 | C12 | Notas de la versión y README "Cómo jugar" para quien lo reciba | Claude | Hecho |
 
 ## H0 — Validar la campaña integrada · **Jugado por Roi** (`REVIEW_03_ROI.md`)
