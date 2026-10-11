@@ -24,7 +24,7 @@ static func end_summary(bank: int, quota: int, paid: bool, reason: String) -> Di
 		d["banner"] = "¡HAS SALDADO LA DEUDA!"
 		d["verdict"] = "¡LIBRE! Tino cobra lo último."
 		d["quote"] = "Cuenta saldada. Ha sido un placer... casi siempre."
-		d["button"] = "EMPEZAR DE NUEVO"
+		d["button"] = "VER RESUMEN"
 	elif paid:
 		d["banner"] = "TINO COBRA. SIGUES VIVO."
 		d["verdict"] = "PAGADO. Mañana cobra %d €." % Night.quota(Night.night_index + 1)
@@ -34,7 +34,7 @@ static func end_summary(bank: int, quota: int, paid: bool, reason: String) -> Di
 		d["banner"] = "TINO NO ESTÁ CONTENTO"
 		d["verdict"] = "Sin blanca antes de las 02:00." if reason == "broke" else "Faltan %d €." % (quota - bank)
 		d["quote"] = "Tranquilo. Me quedo la bici, la tele y tu dignidad."
-		d["button"] = "EMPEZAR DE NUEVO"
+		d["button"] = "VER RESUMEN"
 	return d
 
 ## Recuadro "ESTA NOCHE" del periódico.
@@ -153,3 +153,32 @@ const HELP := {
 	"shop": ["LA BARRA DE LUCÍA", "Las rondas suben de nivel a tu gente (una por noche cada uno);\nlos objetos dan ventajas (dos por noche). Todo se queda para mañana."],
 	"end": ["A LAS 02:00", "Tino cobra la cuota de la noche. Si no llegas, se acaba."],
 }
+
+# --- Pantalla final de la campaña (compartible) -----------------------------------
+
+const GAME_ROWS := [["football", "Fútbol"], ["horse", "Caballos"], ["billar", "Billar"], ["cards", "Cartas"]]
+
+## Resumen de toda la campaña. `won` = pagó las cinco noches.
+static func campaign_summary() -> Dictionary:
+	var s: Dictionary = Night.stats
+	var paid: int = int(s.get("nights_paid", 0))
+	var won := paid >= Night.NIGHTS
+	var best: Dictionary = s.get("best", {})
+	var d := {
+		"won": won,
+		"title": "¡LIBRE DE TINO!" if won else "TINO TE PILLÓ EN LA NOCHE %d" % mini(paid + 1, Night.NIGHTS),
+		"subtitle": "Cinco noches, 1.800 € pagados." if won else "Pagaste %d de %d noches." % [paid, Night.NIGHTS],
+		"big": [
+			["NOCHES", "%d / %d" % [paid, Night.NIGHTS]],
+			["PAGADO A TINO", "%d €" % int(s.get("paid_total", 0))],
+			["GANADO APOSTANDO", "%d €" % int(s.get("won_total", 0))],
+			["MEJOR RACHA", "%d" % Night.best_streak],
+		],
+		"best": ("Mejor golpe: %s (+%d €, noche %d)" % [best["text"], best["amount"], best["night"]]) if int(best.get("amount", 0)) > 0 else "Mejor golpe: ninguno. Tino lo apunta.",
+		"games": [],
+		"quote": "Ha sido un placer... casi siempre. — Tino" if won else "Tranquilo. Me quedo la bici, la tele y tu dignidad. — Tino",
+	}
+	for row in GAME_ROWS:
+		var wl: Array = s.get("games", {}).get(row[0], [0, 0])
+		d["games"].append([row[1], "%d ganadas · %d perdidas" % [wl[0], wl[1]]])
+	return d

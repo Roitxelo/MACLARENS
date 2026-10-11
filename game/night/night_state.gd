@@ -52,6 +52,8 @@ var billar_played := 0           # series de billar jugadas esta noche
 var final_discount := 0          # rebaja acumulada sobre la última cuota
 var rounds_today := {}           # personaje -> true si ya bebió esta noche
 var trinkets_bought_today := 0
+## Estadísticas de toda la campaña, para la pantalla final compartible.
+var stats := {}
 
 var levels := {"buho": 1, "cortado": 1, "chencho": 1, "tino": 1}
 var trinkets: Array = []         # ids de Catalog.TRINKETS
@@ -81,6 +83,7 @@ func new_campaign(new_seed: int = -1) -> void:
 	best_streak = 0
 	tino_forgave = false
 	final_discount = 0
+	_reset_stats()
 	_start_night()
 
 ## Tras pagar a Tino: la noche siguiente conserva dinero, niveles y objetos.
@@ -102,9 +105,19 @@ func is_last_night() -> bool:
 	return night_index >= NIGHTS - 1
 
 ## Al cierre: si llega, Tino cobra la cuota de la noche. Devuelve si pagaste.
+func _reset_stats() -> void:
+	stats = {
+		"nights_paid": 0, "paid_total": 0, "won_total": 0, "lost_total": 0,
+		"best": {"text": "", "amount": 0, "night": 0},
+		"games": {"football": [0, 0], "horse": [0, 0], "billar": [0, 0], "cards": [0, 0]},
+		"best_streak": 0,
+	}
+
 func pay_tino() -> bool:
 	if money < debt:
 		return false
+	stats["nights_paid"] = int(stats.get("nights_paid", 0)) + 1
+	stats["paid_total"] = int(stats.get("paid_total", 0)) + debt
 	money -= debt
 	changed.emit()
 	return true
@@ -350,6 +363,15 @@ func quota(k: int) -> int:
 
 func log_moment(text: String, delta_money: int) -> void:
 	history.append({"time": clock_text(float(_last_minute)), "text": text, "delta": delta_money})
+	if stats.is_empty():
+		_reset_stats()
+	# Las compras en la barra no cuentan como perder apostando.
+	if delta_money > 0:
+		stats["won_total"] += delta_money
+		if delta_money > int(stats["best"]["amount"]):
+			stats["best"] = {"text": text, "amount": delta_money, "night": night_index + 1}
+	elif delta_money < 0 and not (text.begins_with("Compras") or text.begins_with("Ronda para")):
+		stats["lost_total"] += -delta_money
 
 # --- Racha y pagos -----------------------------------------------------------
 
@@ -358,7 +380,16 @@ func streak_mult_preview() -> float:
 
 ## Toda victoria pasa por aquí: aplica la racha al beneficio (máx. x1,5).
 ## Devuelve lo que se ingresa (apuesta incluida).
+func _count_game(game: String, won: bool) -> void:
+	if stats.is_empty():
+		_reset_stats()
+	var g: Dictionary = stats["games"]
+	if not g.has(game):
+		g[game] = [0, 0]
+	g[game][0 if won else 1] += 1
+
 func register_win(game: String, stake: int, gross: int, _tags: Dictionary = {}) -> int:
+	_count_game(game, true)
 	var profit := float(maxi(0, gross - stake))
 	var mult := 1.0
 	if stake >= 10:
@@ -373,6 +404,7 @@ func register_win(game: String, stake: int, gross: int, _tags: Dictionary = {}) 
 	return total
 
 func register_loss(_game: String) -> void:
+	_count_game(_game, false)
 	if streak == 0:
 		return
 	if has_trinket("calcetin") and not sock_used:

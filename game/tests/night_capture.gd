@@ -96,6 +96,12 @@ func _ready() -> void:
 	Night.advance(Night.NIGHT_LENGTH)
 	await _wait(1.8)
 	await _shot("n17_end")
+	Night.stats["nights_paid"] = 3
+	Night.stats["paid_total"] = 550
+	Night.stats["best"] = {"text": "Acierto: C7 · Calimocho", "amount": 245, "night": 3}
+	main.go("stats")
+	await _wait(1.5)
+	await _shot("n18_stats")
 	print("money ", Night.money, " bets ", Night.bets.size(), " screen ", main.current_name, " debt ", Night.debt)
 	print("NIGHT_CAPTURE_OK")
 	get_tree().quit()

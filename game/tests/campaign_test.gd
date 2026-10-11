@@ -80,5 +80,16 @@ func _ready() -> void:
 		check(str(GameTexts.character_card(who)["now"]) != "", "ficha de %s" % who)
 	check(GameTexts.HELP.has("pressure") and GameTexts.HELP.has("billar"), "ayudas de presión y billar")
 
+	# Estadísticas de campaña (pantalla final)
+	Night.new_campaign(9)
+	Night.money = 500
+	Night.register_win("billar", 20, 40)
+	Night.register_loss("cards")
+	Night.log_moment("Billar: prueba", 20)
+	check(Night.pay_tino() and int(Night.stats["nights_paid"]) == 1 and int(Night.stats["paid_total"]) == Night.QUOTAS[0], "las estadísticas cuentan noches y pagos")
+	check(Night.stats["games"]["billar"][0] == 1 and Night.stats["games"]["cards"][1] == 1, "cuentan victorias y derrotas por juego")
+	var cs := GameTexts.campaign_summary()
+	check(cs["games"].size() == 4 and not cs["won"] and str(cs["best"]).contains("Billar"), "resumen final listo para la pantalla")
+
 	print("CAMPAIGN_TEST_OK" if fails.is_empty() else "CAMPAIGN_TEST_FAIL %s" % str(fails))
 	get_tree().quit()
