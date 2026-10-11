@@ -1,0 +1,30 @@
+McLARENS: LA ÚLTIMA COMBINADA · versión 1.0 (PC)
+=================================================
+
+Le debes 1.800 € a Tino. Te los cobra en cinco noches, a las 02:00:
+100, 150, 300, 500 y 750 €. Empiezas con 200 €. Si una noche no llegas,
+se acaba la partida.
+
+CÓMO ARRANCAR
+- Descomprime el zip y abre McLarens.exe.
+- Windows puede avisar de que es una aplicación desconocida (no está
+  firmada). Pulsa "Más información" y luego "Ejecutar de todas formas".
+
+QUÉ HAY EN EL BAR
+- La Barra: la máquina de apuestas (fútbol y caballos), la tele del
+  fútbol, Lucía (rondas y objetos) y el periódico.
+- El Salón: la tele de los caballos, el billar con Tino y las cartas con
+  el Chencho.
+- Las rondas de Lucía suben de nivel a tu gente y los objetos te dan
+  ventajas. Todo se queda para las noches siguientes.
+
+CONTROLES
+- Ratón para todo.
+- ESPACIO: arrear a tu caballo y chutar el penalti.
+- Billar: apunta con el ratón, afina con la rueda o con las flechas
+  ← →, mantén el clic para cargar y suelta para tirar.
+- P: pausa · ESC: volver.
+- Arriba a la derecha: pausa y velocidad (x1, x2, x4).
+
+Cada noche dura unos 13 minutos. Juego de ficción: ningún caballo fue
+sobornado.

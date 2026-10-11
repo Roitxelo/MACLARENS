@@ -21,7 +21,11 @@ Una partida es **una campaña de 5 noches**, cada una de 18:00 a 02:00 (~13 minu
 
 Cada personaje tiene **3 niveles**; las mejoras y objetos **no regalan dinero**, dan herramientas que premian jugar bien. Diseño completo: [`docs/design/GDD.md`](docs/design/GDD.md).
 
-## Arrancar
+## Jugar (versión 1.0, Windows)
+
+Descomprime `McLarens_v1.0.zip` y abre `McLarens.exe`. Si Windows avisa, pulsa "Más información" y luego "Ejecutar de todas formas". Notas de la versión: [`docs/RELEASE_1.0.md`](docs/RELEASE_1.0.md).
+
+## Arrancar desde el código
 
 1. Instala [Godot 4.7](https://godotengine.org/download) (versión estándar, no .NET).
 2. Abre `game/project.godot` y pulsa **F5**. Escena principal: `res://scenes/night.tscn`.
