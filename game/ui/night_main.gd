@@ -17,6 +17,7 @@ const SCREENS := {
 	"billar": preload("res://ui/minigames/billar.gd"),
 	"cards": preload("res://ui/minigames/mayor_menor.gd"),
 	"end": preload("res://ui/screens/end_screen.gd"),
+	"stats": preload("res://ui/screens/stats_screen.gd"),
 }
 const HudScript := preload("res://ui/hud.gd")
 const SCREEN_HELP := {
@@ -78,7 +79,7 @@ func go(screen_name: String, args: Dictionary = {}) -> void:
 	if current != null:
 		current.queue_free()
 		current = null
-	if screen_name == "bar" and previous_name in ["title", "end"]:
+	if screen_name == "bar" and previous_name in ["title", "end", "stats"]:
 		_clear_toasts()
 	current_name = screen_name
 	var screen: Control = SCREENS[screen_name].new()
@@ -87,9 +88,9 @@ func go(screen_name: String, args: Dictionary = {}) -> void:
 	screen.size = Vector2(1280, 720)
 	screen_layer.add_child(screen)
 	current = screen
-	hud.visible = screen_name not in ["title", "end"]
+	hud.visible = screen_name not in ["title", "end", "stats"]
 	hud.call("set_compact", screen_name in ["billar", "cards"])
-	toast_box.visible = screen_name not in ["title", "end", "notebook", "paper", "billar"]
+	toast_box.visible = screen_name not in ["title", "end", "stats", "notebook", "paper", "billar"]
 	_layout_toasts(screen_name)
 	fade.color.a = 0.7
 	create_tween().tween_property(fade, "color:a", 0.0, 0.25)
@@ -105,7 +106,7 @@ func _on_changed() -> void:
 		current.call("refresh")
 
 func _on_toast(text: String, kind: String) -> void:
-	if current_name in ["title", "end"]:
+	if current_name in ["title", "end", "stats"]:
 		return
 	var color := UIKit.CREAM
 	var bg := Color(0.08, 0.05, 0.03, 0.92)
@@ -195,5 +196,5 @@ func _on_night_over(reason: String) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_ESCAPE and current_name not in ["title", "end", "bar", "billar", "cards"]:
+		if event.keycode == KEY_ESCAPE and current_name not in ["title", "end", "stats", "bar", "billar", "cards"]:
 			go("bar")

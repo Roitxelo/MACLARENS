@@ -73,8 +73,7 @@ func _ready() -> void:
 			Night.next_night()
 			main.go("bar")
 		else:
-			Night.new_campaign()
-			main.go("title"))
+			main.go("stats"))
 	add_child(again)
 	var quit := UIKit.button("SALIR DEL BAR", "wood", 30)
 	UIKit.place(quit, Rect2(628, 600, 412, 90))
