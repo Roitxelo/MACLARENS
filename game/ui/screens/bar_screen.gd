@@ -22,11 +22,6 @@ func _ready() -> void:
 	UIKit.hotspot(self, Rect2(525, 505, 410, 175), "Diario Gol Local · cartelera").pressed.connect(func(): main.go("paper"))
 	UIKit.hotspot(self, Rect2(150, 530, 250, 150), "Tu libreta · gente, objetos y racha").pressed.connect(func(): main.go("notebook"))
 	UIKit.hotspot(self, Rect2(580, 150, 170, 170), "Lucía · Rondas y objetos").pressed.connect(func(): main.go("shop"))
-	var lucia_tag := UIKit.label("LUCÍA · RONDAS Y OBJETOS", 16, UIKit.GOLD, true)
-	lucia_tag.add_theme_stylebox_override("normal", UIKit.box(Color(0.08, 0.04, 0.02, 0.9), Color("#8a5a1c"), 2, 3, 8))
-	UIKit.place(lucia_tag, Rect2(548, 324, 210, 30))
-	lucia_tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	add_child(lucia_tag)
 
 	var salon_btn := UIKit.button("SALÓN DE JUEGOS  →", "wood", 19)
 	UIKit.place(salon_btn, Rect2(20, 184, 220, 52))
