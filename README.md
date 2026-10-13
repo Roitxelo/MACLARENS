@@ -62,12 +62,6 @@ docs/
 tools/                Scripts de pruebas; tools/dev: simuladores de equilibrio
 ```
 
-## Cómo trabajamos
-
-Roi dirige y prueba cada hito. **Claude** lleva los sistemas (reglas, economía, simulación, pruebas, documentación, billar) y **Codex** la presentación (pantallas, controles, audio, arte, exportar). Cada uno tiene su carpeta, se sincronizan por GitHub y se escriben en `CLAUDEHANDOFF.md` / `CODEXHANDOFF.md`. Reglas: [`docs/coordination/WORKFLOW.md`](docs/coordination/WORKFLOW.md); tareas: [`docs/coordination/TASK_BOARD.md`](docs/coordination/TASK_BOARD.md).
-
-El código del prototipo de julio (slice de investigación con el caso Bruno Salas) está en la rama `archive/slice-julio`.
-
 ## Créditos
 
 Fuentes [Jersey 10](https://fonts.google.com/specimen/Jersey+10) y [VT323](https://fonts.google.com/specimen/VT323), licencia SIL OFL 1.1 (`game/assets/fonts/`).
